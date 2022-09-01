@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:percent_indicator/percent_indicator.dart';
+import 'package:vidic/widgets/card.dart';
 import 'package:vidic/widgets/navigation_rail.dart';
+// import 'package:percent_indicator/percent_indicator.dart';
 
 class MyHomePage extends StatelessWidget {
   MyHomePage({Key? key, required this.title}) : super(key: key);
@@ -46,46 +49,121 @@ class MyHomePage extends StatelessWidget {
       body: Row(
         children: [
           // create a navigation rail
-          WidgetNavigationRail(selectedIndex: _selectedIndex),
+          LayoutBuilder(
+            builder: (BuildContext context, BoxConstraints constraint) {
+              return SingleChildScrollView(
+                child: ConstrainedBox(
+                  constraints: BoxConstraints(minHeight: constraint.maxHeight),
+                  child: IntrinsicHeight(
+                    child: WidgetNavigationRail(selectedIndex: _selectedIndex),
+                  ),
+                ),
+              );
+            },
+            // child:
+          ),
 
           // end of navigation rail
 
           const VerticalDivider(thickness: 1, width: 2),
+
           Expanded(
-            child: Center(
-              child: Text('Page Number: $_selectedIndex'),
-            ),
-          ),
-          Center(
-            // Center is a layout widget. It takes a single child and positions it
-            // in the middle of the parent.
             child: Column(
-              // Column is also a layout widget. It takes a list of children and
-              // arranges them vertically. By default, it sizes itself to fit its
-              // children horizontally, and tries to be as tall as its parent.
-              //
-              // Invoke "debug painting" (press "p" in the console, choose the
-              // "Toggle Debug Paint" action from the Flutter Inspector in Android
-              // Studio, or the "Toggle Debug Paint" command in Visual Studio Code)
-              // to see the wireframe for each widget.
-              //
-              // Column has various properties to control how it sizes itself and
-              // how it positions its children. Here we use mainAxisAlignment to
-              // center the children vertically; the main axis here is the vertical
-              // axis because Columns are vertical (the cross axis would be
-              // horizontal).
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: <Widget>[
-                const Text(
-                  'You have pushed the button this many times:',
+              // mainAxisSize: MainAxisSize.max,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: [
+                // const Text('data'),
+                Row(
+                  children: [
+                    Expanded(
+                      child: Container(
+                        height: 45,
+                        decoration: const BoxDecoration(
+                          color: Colors.white,
+                        ),
+                        child: Stack(
+                          children: [
+                            const Positioned(
+                              right: 135,
+                              top: 5,
+                              child: CircleAvatar(
+                                radius: 15,
+                                foregroundImage:
+                                    AssetImage('assets/icons/vidic.png'),
+                              ),
+                            ),
+                            Positioned(
+                              right: 10,
+                              top: 1,
+                              child: Row(
+                                children: const [
+                                  Text(
+                                    'Francis Otworo',
+                                    style:
+                                        TextStyle(fontWeight: FontWeight.bold),
+                                  ),
+                                  Icon(Icons.arrow_drop_down)
+                                ],
+                              ),
+                            ),
+                            const Positioned(
+                              right: 101,
+                              top: 25,
+                              child: Text(
+                                'Admin',
+                                style: TextStyle(fontSize: 10),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                  ],
                 ),
-                Text(
-                  '$_counter',
-                  style: Theme.of(context).textTheme.headline4,
+                // Center(
+                //   child: Text('Page Number: $_selectedIndex'),
+                // ),
+                const SizedBox(
+                  height: 20,
+                ),
+                Padding(
+                  padding: const EdgeInsets.fromLTRB(10, 2, 10, 2),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      const Text(
+                        'Building Occupancy',
+                        style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          fontSize: 15,
+                        ),
+                      ),
+                      const SizedBox(
+                        height: 4,
+                      ),
+                      SingleChildScrollView(
+                        scrollDirection: Axis.horizontal,
+                        // physics: const NeverScrollableScrollPhysics(),
+                        child: Row(
+                          children: const [
+                            NewWidgetCardHome(),
+                            NewWidgetCardHome(),
+                            NewWidgetCardHome(),
+                            NewWidgetCardHome(),
+                            NewWidgetCardHome(),
+                          ],
+                        ),
+                      )
+                    ],
+                  ),
                 ),
               ],
             ),
           ),
+          // const Center(
+          //   child: Text('data'),
+          // )
         ],
       ),
       floatingActionButton: FloatingActionButton(
