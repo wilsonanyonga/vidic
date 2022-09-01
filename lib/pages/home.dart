@@ -68,97 +68,99 @@ class MyHomePage extends StatelessWidget {
           const VerticalDivider(thickness: 1, width: 2),
 
           Expanded(
-            child: Column(
-              // mainAxisSize: MainAxisSize.max,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              mainAxisAlignment: MainAxisAlignment.start,
-              children: [
-                // const Text('data'),
-                Row(
-                  children: [
-                    Expanded(
-                      child: Container(
-                        height: 45,
-                        decoration: const BoxDecoration(
-                          color: Colors.white,
-                        ),
-                        child: Stack(
-                          children: [
-                            const Positioned(
-                              right: 135,
-                              top: 5,
-                              child: CircleAvatar(
-                                radius: 15,
-                                foregroundImage:
-                                    AssetImage('assets/icons/vidic.png'),
-                              ),
-                            ),
-                            Positioned(
-                              right: 10,
-                              top: 1,
-                              child: Row(
-                                children: const [
-                                  Text(
-                                    'Francis Otworo',
-                                    style:
-                                        TextStyle(fontWeight: FontWeight.bold),
-                                  ),
-                                  Icon(Icons.arrow_drop_down)
-                                ],
-                              ),
-                            ),
-                            const Positioned(
-                              right: 101,
-                              top: 25,
-                              child: Text(
-                                'Admin',
-                                style: TextStyle(fontSize: 10),
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-                // Center(
-                //   child: Text('Page Number: $_selectedIndex'),
-                // ),
-                const SizedBox(
-                  height: 20,
-                ),
-                Padding(
-                  padding: const EdgeInsets.fromLTRB(10, 2, 10, 2),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
+            child: SingleChildScrollView(
+              child: Column(
+                // mainAxisSize: MainAxisSize.max,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: [
+                  // const Text('data'),
+                  Row(
                     children: [
-                      const Text(
-                        'Building Occupancy',
-                        style: TextStyle(
-                          fontWeight: FontWeight.bold,
-                          fontSize: 15,
+                      Expanded(
+                        child: Container(
+                          height: 45,
+                          decoration: const BoxDecoration(
+                            color: Colors.white,
+                          ),
+                          child: Stack(
+                            children: [
+                              const Positioned(
+                                right: 135,
+                                top: 5,
+                                child: CircleAvatar(
+                                  radius: 15,
+                                  foregroundImage:
+                                      AssetImage('assets/icons/vidic.png'),
+                                ),
+                              ),
+                              Positioned(
+                                right: 10,
+                                top: 1,
+                                child: Row(
+                                  children: const [
+                                    Text(
+                                      'Francis Otworo',
+                                      style: TextStyle(
+                                          fontWeight: FontWeight.bold),
+                                    ),
+                                    Icon(Icons.arrow_drop_down)
+                                  ],
+                                ),
+                              ),
+                              const Positioned(
+                                right: 101,
+                                top: 25,
+                                child: Text(
+                                  'Admin',
+                                  style: TextStyle(fontSize: 10),
+                                ),
+                              ),
+                            ],
+                          ),
                         ),
                       ),
-                      const SizedBox(
-                        height: 4,
-                      ),
-                      SingleChildScrollView(
-                        scrollDirection: Axis.horizontal,
-                        // physics: const NeverScrollableScrollPhysics(),
-                        child: Row(
-                          children: const [
-                            NewWidgetCardHome(),
-                            NewWidgetCardHome(),
-                            NewWidgetCardHome(),
-                            NewWidgetCardHome(),
-                            NewWidgetCardHome(),
-                          ],
-                        ),
-                      )
                     ],
                   ),
-                ),
-              ],
+                  // Center(
+                  //   child: Text('Page Number: $_selectedIndex'),
+                  // ),
+                  const SizedBox(
+                    height: 20,
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.fromLTRB(10, 2, 10, 2),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        const Text(
+                          'Building Occupancy',
+                          style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                            fontSize: 15,
+                          ),
+                        ),
+                        const SizedBox(
+                          height: 4,
+                        ),
+                        SingleChildScrollView(
+                          scrollDirection: Axis.horizontal,
+                          // physics: const NeverScrollableScrollPhysics(),
+                          child: Row(
+                            children: const [
+                              NewWidgetCardHome(),
+                              NewWidgetCardHome(),
+                              NewWidgetCardHome(),
+                              NewWidgetCardHome(),
+                              NewWidgetCardHome(),
+                            ],
+                          ),
+                        )
+                      ],
+                    ),
+                  ),
+                ],
+              ),
             ),
           ),
           // const Center(
