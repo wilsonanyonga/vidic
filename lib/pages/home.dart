@@ -143,18 +143,24 @@ class MyHomePage extends StatelessWidget {
                         const SizedBox(
                           height: 4,
                         ),
-                        SingleChildScrollView(
-                          scrollDirection: Axis.horizontal,
-                          // physics: const NeverScrollableScrollPhysics(),
-                          child: Row(
-                            children: const [
-                              NewWidgetCardHome(),
-                              NewWidgetCardHome(),
-                              NewWidgetCardHome(),
-                              NewWidgetCardHome(),
-                              NewWidgetCardHome(),
-                            ],
-                          ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Wrap(
+                              children: const [
+                                NewWidgetCardHome(),
+                                NewWidgetCardHome(),
+                                NewWidgetCardHome(),
+                                NewWidgetCardHome(),
+                                NewWidgetCardHome(),
+                              ],
+                            ),
+                            // NewWidgetCardHome(),
+                            // NewWidgetCardHome(),
+                            // NewWidgetCardHome(),
+                            // NewWidgetCardHome(),
+                            // NewWidgetCardHome(),
+                          ],
                         )
                       ],
                     ),
