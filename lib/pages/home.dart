@@ -143,18 +143,16 @@ class MyHomePage extends StatelessWidget {
                         const SizedBox(
                           height: 4,
                         ),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Wrap(
-                              children: const [
-                                NewWidgetCardHome(),
-                                NewWidgetCardHome(),
-                                NewWidgetCardHome(),
-                                NewWidgetCardHome(),
-                                NewWidgetCardHome(),
-                              ],
-                            ),
+                        Wrap(
+                          direction: Axis.horizontal,
+                          alignment: WrapAlignment.center,
+                          // mainAxisAlignment: MainAxisAlignment.center,
+                          children: const [
+                            NewWidgetCardHome(),
+                            NewWidgetCardHome(),
+                            NewWidgetCardHome(),
+                            NewWidgetCardHome(),
+                            NewWidgetCardHome(),
                             // NewWidgetCardHome(),
                             // NewWidgetCardHome(),
                             // NewWidgetCardHome(),
