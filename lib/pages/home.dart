@@ -147,7 +147,7 @@ class MyHomePage extends StatelessWidget {
                           direction: Axis.horizontal,
                           alignment: WrapAlignment.center,
                           // mainAxisAlignment: MainAxisAlignment.center,
-                          children: const [
+                          children: [
                             NewWidgetCardHome(),
                             NewWidgetCardHome(),
                             NewWidgetCardHome(),
