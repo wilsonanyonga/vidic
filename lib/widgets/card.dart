@@ -2,12 +2,17 @@ import 'package:flutter/material.dart';
 import 'package:percent_indicator/percent_indicator.dart';
 
 class NewWidgetCardHome extends StatelessWidget {
-  const NewWidgetCardHome({
+  var mediaQsize, mediaQheight, mediaQwidth;
+
+  NewWidgetCardHome({
     Key? key,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    mediaQsize = MediaQuery.of(context).size;
+    mediaQheight = mediaQsize.height;
+    mediaQwidth = mediaQsize.width;
     return Card(
       elevation: 5,
       shadowColor: Colors.black,
