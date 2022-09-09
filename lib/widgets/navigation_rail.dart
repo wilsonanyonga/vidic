@@ -42,6 +42,11 @@ class WidgetNavigationRail extends StatelessWidget {
       useIndicator: true,
       indicatorColor: Colors.purple[300],
       backgroundColor: Colors.white,
+      selectedIconTheme: const IconThemeData(
+        color: Colors.white,
+      ),
+      unselectedIconTheme: const IconThemeData(color: Colors.black),
+      selectedLabelTextStyle: const TextStyle(color: Colors.white),
       destinations: <NavigationRailDestination>[
         // navigation destinations
         // int i;,
@@ -92,9 +97,6 @@ class WidgetNavigationRail extends StatelessWidget {
           label: 'Complaints',
         ),
       ],
-      selectedIconTheme: const IconThemeData(color: Colors.white),
-      unselectedIconTheme: const IconThemeData(color: Colors.black),
-      selectedLabelTextStyle: const TextStyle(color: Colors.white),
     );
   }
 

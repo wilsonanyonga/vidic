@@ -146,7 +146,7 @@ class MyHomePage extends StatelessWidget {
                           height: 20,
                         ),
                         SizedBox(
-                          height: 30,
+                          height: 40,
                           width: 250,
                           child: TextField(
                             decoration: InputDecoration(
@@ -184,44 +184,42 @@ class MyHomePage extends StatelessWidget {
                         const SizedBox(
                           height: 20,
                         ),
-                        SizedBox(
-                          height: mediaQheight * 0.85,
-                          width: mediaQwidth * 0.8,
-                          child: ListView.builder(
-                            itemCount: 20,
-                            itemBuilder: (BuildContext context, int index) {
-                              return ListTile(
-                                  leading: const Icon(Icons.person),
-                                  // trailing: const Text(
-                                  //   "GFG",
-                                  //   style: TextStyle(
-                                  //       color: Colors.green, fontSize: 15),
-                                  // ),
-                                  title: Row(
-                                    children: [
-                                      Text("Tenant $index"),
-                                      const SizedBox(
-                                        width: 30,
+                        ListView.builder(
+                          shrinkWrap: true,
+                          physics: const NeverScrollableScrollPhysics(),
+                          itemCount: 20,
+                          itemBuilder: (BuildContext context, int index) {
+                            return ListTile(
+                                leading: const Icon(Icons.person),
+                                // trailing: const Text(
+                                //   "GFG",
+                                //   style: TextStyle(
+                                //       color: Colors.green, fontSize: 15),
+                                // ),
+                                title: Row(
+                                  children: [
+                                    Text("Tenant $index"),
+                                    const SizedBox(
+                                      width: 50,
+                                    ),
+                                    Text("mymail$index@gmail.com"),
+                                    const SizedBox(
+                                      width: 50,
+                                    ),
+                                    Chip(
+                                      label: const Text(
+                                        '1st Floor',
+                                        style: TextStyle(color: Colors.white),
                                       ),
-                                      Text("mymail$index@gmail.com"),
-                                      const SizedBox(
-                                        width: 30,
-                                      ),
-                                      Chip(
-                                        label: const Text(
-                                          '1st Floor',
-                                          style: TextStyle(color: Colors.white),
-                                        ),
-                                        backgroundColor: Colors.pink[300],
-                                      ),
-                                      const SizedBox(
-                                        width: 30,
-                                      ),
-                                      const Text("700 sq ft"),
-                                    ],
-                                  ));
-                            },
-                          ),
+                                      backgroundColor: Colors.pink[300],
+                                    ),
+                                    const SizedBox(
+                                      width: 50,
+                                    ),
+                                    const Text("700 sq ft"),
+                                  ],
+                                ));
+                          },
                         ),
                       ],
                     ),
