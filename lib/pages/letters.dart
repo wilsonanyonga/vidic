@@ -5,7 +5,7 @@ import 'package:vidic/widgets/navigation_rail.dart';
 class LettersScreen extends StatelessWidget {
   LettersScreen({Key? key}) : super(key: key);
 
-  int _selectedIndex = 1;
+  int _selectedIndex = 3;
   var mediaQsize, mediaQheight, mediaQwidth;
 
   @override
