@@ -1,12 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:percent_indicator/percent_indicator.dart';
 import 'package:vidic/widgets/card.dart';
+import 'package:vidic/widgets/menu_bar.dart';
 import 'package:vidic/widgets/navigation_rail.dart';
 // import 'package:percent_indicator/percent_indicator.dart';
 
 class MyHomePage extends StatelessWidget {
   MyHomePage({Key? key, required this.title}) : super(key: key);
 
+  var mediaQsize, mediaQheight, mediaQwidth;
   // This widget is the home page of your application. It is stateful, meaning
   // that it has a State object (defined below) that contains fields that affect
   // how it looks.
@@ -19,7 +21,7 @@ class MyHomePage extends StatelessWidget {
   final String title;
 
   int _counter = 0;
-  int _selectedIndex = 1;
+  int _selectedIndex = 0;
 
   void _incrementCounter() {
     // setState(() {
@@ -34,6 +36,9 @@ class MyHomePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    mediaQsize = MediaQuery.of(context).size;
+    mediaQheight = mediaQsize.height;
+    mediaQwidth = mediaQsize.width;
     // This method is rerun every time setState is called, for instance as done
     // by the _incrementCounter method above.
     //
@@ -75,53 +80,7 @@ class MyHomePage extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [
                   // const Text('data'),
-                  Row(
-                    children: [
-                      Expanded(
-                        child: Container(
-                          height: 45,
-                          decoration: const BoxDecoration(
-                            color: Colors.white,
-                          ),
-                          child: Stack(
-                            children: [
-                              const Positioned(
-                                right: 135,
-                                top: 5,
-                                child: CircleAvatar(
-                                  radius: 15,
-                                  foregroundImage:
-                                      AssetImage('assets/icons/vidic.png'),
-                                ),
-                              ),
-                              Positioned(
-                                right: 10,
-                                top: 1,
-                                child: Row(
-                                  children: const [
-                                    Text(
-                                      'Francis Otworo',
-                                      style: TextStyle(
-                                          fontWeight: FontWeight.bold),
-                                    ),
-                                    Icon(Icons.arrow_drop_down)
-                                  ],
-                                ),
-                              ),
-                              const Positioned(
-                                right: 101,
-                                top: 25,
-                                child: Text(
-                                  'Admin',
-                                  style: TextStyle(fontSize: 10),
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
+                  const MenuBarWidget(),
                   // Center(
                   //   child: Text('Page Number: $_selectedIndex'),
                   // ),
@@ -143,26 +102,130 @@ class MyHomePage extends StatelessWidget {
                         const SizedBox(
                           height: 4,
                         ),
-                        Wrap(
-                          direction: Axis.horizontal,
-                          alignment: WrapAlignment.center,
-                          // mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            NewWidgetCardHome(),
-                            NewWidgetCardHome(),
-                            NewWidgetCardHome(),
-                            NewWidgetCardHome(),
-                            NewWidgetCardHome(),
-                            // NewWidgetCardHome(),
-                            // NewWidgetCardHome(),
-                            // NewWidgetCardHome(),
-                            // NewWidgetCardHome(),
-                            // NewWidgetCardHome(),
-                          ],
+                        Align(
+                          alignment: Alignment.center,
+                          child: Wrap(
+                            direction: Axis.horizontal,
+                            alignment: WrapAlignment.center,
+                            // runAlignment: WrapAlignment.center,
+                            // mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              NewWidgetCardHome(),
+                              NewWidgetCardHome(),
+                              NewWidgetCardHome(),
+                              NewWidgetCardHome(),
+                              NewWidgetCardHome(),
+                              // NewWidgetCardHome(),
+                              // NewWidgetCardHome(),
+                              // NewWidgetCardHome(),
+                              // NewWidgetCardHome(),
+                              // NewWidgetCardHome(),
+                            ],
+                          ),
                         )
                       ],
                     ),
                   ),
+                  const SizedBox(
+                    height: 20,
+                  ),
+
+                  Padding(
+                    padding: const EdgeInsets.fromLTRB(10, 2, 10, 2),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        const Text(
+                          'Alpha House Tenants',
+                          style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                            fontSize: 15,
+                          ),
+                        ),
+                        const SizedBox(
+                          height: 20,
+                        ),
+                        SizedBox(
+                          height: 30,
+                          width: 250,
+                          child: TextField(
+                            decoration: InputDecoration(
+                              enabledBorder: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(20),
+                                borderSide: BorderSide.none,
+                                // borderSide: const BorderSide(
+                                //   color: Colors.green,
+                                //   width: 1.0,
+                                // ),
+                              ),
+                              focusedBorder: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(25),
+                                borderSide: const BorderSide(
+                                  color: Colors.white,
+                                  width: 1.0,
+                                ),
+                              ),
+                              filled: true,
+                              fillColor: Colors.grey.shade300,
+                              // input border should appear when data is being modified
+                              // border: OutlineInputBorder(
+                              //   borderRadius: BorderRadius.circular(10.0),
+                              // ),
+                              floatingLabelStyle:
+                                  const TextStyle(color: Colors.black),
+                              labelText: 'Search',
+                              prefixIcon: const Icon(
+                                Icons.search,
+                                color: Colors.black,
+                              ),
+                            ),
+                          ),
+                        ),
+                        const SizedBox(
+                          height: 20,
+                        ),
+                        SizedBox(
+                          height: mediaQheight * 0.85,
+                          width: mediaQwidth * 0.8,
+                          child: ListView.builder(
+                            itemCount: 20,
+                            itemBuilder: (BuildContext context, int index) {
+                              return ListTile(
+                                  leading: const Icon(Icons.person),
+                                  // trailing: const Text(
+                                  //   "GFG",
+                                  //   style: TextStyle(
+                                  //       color: Colors.green, fontSize: 15),
+                                  // ),
+                                  title: Row(
+                                    children: [
+                                      Text("Tenant $index"),
+                                      const SizedBox(
+                                        width: 30,
+                                      ),
+                                      Text("mymail$index@gmail.com"),
+                                      const SizedBox(
+                                        width: 30,
+                                      ),
+                                      Chip(
+                                        label: const Text(
+                                          '1st Floor',
+                                          style: TextStyle(color: Colors.white),
+                                        ),
+                                        backgroundColor: Colors.pink[300],
+                                      ),
+                                      const SizedBox(
+                                        width: 30,
+                                      ),
+                                      const Text("700 sq ft"),
+                                    ],
+                                  ));
+                            },
+                          ),
+                        ),
+                      ],
+                    ),
+                  )
                 ],
               ),
             ),
