@@ -5,7 +5,7 @@ import 'package:vidic/widgets/navigation_rail.dart';
 class OccupancyScreen extends StatelessWidget {
   OccupancyScreen({Key? key}) : super(key: key);
 
-  int _selectedIndex = 1;
+  int _selectedIndex = 4;
   var mediaQsize, mediaQheight, mediaQwidth;
 
   @override
