@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 
 class WidgetNavigationRail extends StatelessWidget {
   WidgetNavigationRail({
@@ -17,6 +18,19 @@ class WidgetNavigationRail extends StatelessWidget {
         // setState(() {
         //   _selectedIndex = index;
         // });
+        if (index == 0) {
+          context.go('/nyumba');
+        } else if (index == 1) {
+          context.go('/statement');
+        } else if (index == 2) {
+          context.go('/invoice');
+        } else if (index == 3) {
+          context.go('/letters');
+        } else if (index == 4) {
+          context.go('/occupancy');
+        } else if (index == 5) {
+          context.go('/complaints');
+        }
       },
       leading: const CircleAvatar(
         radius: 40,
