@@ -5,6 +5,7 @@ import 'package:vidic/pages/complaints.dart';
 import 'package:vidic/pages/home.dart';
 import 'package:vidic/pages/invoice.dart';
 import 'package:vidic/pages/letters.dart';
+import 'package:vidic/pages/login.dart';
 import 'package:vidic/pages/occupancy.dart';
 import 'package:vidic/pages/statement.dart';
 import 'package:vidic/utils/dio_client.dart';
@@ -51,12 +52,22 @@ class MyApp extends StatelessWidget {
     routes: <GoRoute>[
       GoRoute(
         path: '/',
-        builder: (BuildContext context, GoRouterState state) =>
-            MyHomePage(title: 'Flutter Demo Home Page'),
+        // builder: (BuildContext context, GoRouterState state) =>
+        //     MyHomePage(title: 'Flutter Demo Home Page'),
+        builder: (BuildContext context, GoRouterState state) => Login(),
         routes: [
+          GoRoute(
+            path: 'login',
+            builder: (BuildContext context, GoRouterState state) => Login(),
+          ),
           GoRoute(
             path: 'nyumba',
             redirect: (state) => '/',
+          ),
+          GoRoute(
+            path: 'dala',
+            builder: (BuildContext context, GoRouterState state) =>
+                MyHomePage(title: 'Flutter Demo Home Page'),
           ),
           GoRoute(
             path: 'statement',
