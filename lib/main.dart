@@ -1,6 +1,8 @@
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
+import 'package:vidic/firebase_options.dart';
 import 'package:vidic/pages/complaints.dart';
 import 'package:vidic/pages/home.dart';
 import 'package:vidic/pages/invoice.dart';
@@ -10,7 +12,11 @@ import 'package:vidic/pages/occupancy.dart';
 import 'package:vidic/pages/statement.dart';
 import 'package:vidic/utils/dio_client.dart';
 
-void main() {
+void main() async {
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
+
   runApp(MyApp());
 }
 
