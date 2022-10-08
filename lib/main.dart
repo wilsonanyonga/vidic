@@ -10,6 +10,7 @@ import 'package:vidic/pages/letters.dart';
 import 'package:vidic/pages/login.dart';
 import 'package:vidic/pages/occupancy.dart';
 import 'package:vidic/pages/statement.dart';
+import 'package:vidic/utils/auth.dart';
 import 'package:vidic/utils/dio_client.dart';
 
 void main() async {
@@ -58,9 +59,27 @@ class MyApp extends StatelessWidget {
     routes: <GoRoute>[
       GoRoute(
         path: '/',
+        redirect: (state) {
+          if (await Auth().authStateChanges.isEmpty) {
+            
+          } else {
+            
+          }
+          // return StreamBuilder(
+              // stream: Auth().authStateChanges,
+              // builder: (context, snapshot) {
+              //   if (snapshot.hasData) {
+              //     return MyHomePage(title: 'Flutter Demo Home Page');
+              //   } else {
+              //     return Login();
+              //   }
+              // },
+              // );
+          // return '/login';
+        },
         // builder: (BuildContext context, GoRouterState state) =>
         //     MyHomePage(title: 'Flutter Demo Home Page'),
-        builder: (BuildContext context, GoRouterState state) => Login(),
+        // builder: (BuildContext context, GoRouterState state) => Login(),
         routes: [
           GoRoute(
             path: 'login',
