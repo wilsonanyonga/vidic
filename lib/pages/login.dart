@@ -43,6 +43,8 @@ class Login extends StatelessWidget {
                       validator: (String? value) {
                         if (value == null || value.isEmpty) {
                           return 'Please enter some text';
+                        } else if (value.contains('@') == false) {
+                          return 'Please enter a valid email';
                         }
                         return null;
                       },
