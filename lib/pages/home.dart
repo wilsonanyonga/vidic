@@ -1,5 +1,7 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:percent_indicator/percent_indicator.dart';
+import 'package:vidic/utils/auth.dart';
 import 'package:vidic/widgets/card.dart';
 import 'package:vidic/widgets/menu_bar.dart';
 import 'package:vidic/widgets/navigation_rail.dart';
@@ -7,6 +9,12 @@ import 'package:vidic/widgets/navigation_rail.dart';
 
 class MyHomePage extends StatelessWidget {
   MyHomePage({Key? key, required this.title}) : super(key: key);
+
+  final User? user = Auth().currentUser;
+
+  Future<void> signOut() async {
+    await Auth().signOut();
+  }
 
   var mediaQsize, mediaQheight, mediaQwidth;
   // This widget is the home page of your application. It is stateful, meaning
