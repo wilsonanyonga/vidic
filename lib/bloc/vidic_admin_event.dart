@@ -6,3 +6,5 @@ abstract class VidicAdminEvent extends Equatable {
   @override
   List<Object> get props => [];
 }
+
+class VidicLoginEvent extends VidicAdminEvent {}
