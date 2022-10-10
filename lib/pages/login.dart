@@ -13,11 +13,17 @@ class Login extends StatelessWidget {
   final TextEditingController _controllerPassword = TextEditingController();
 
   Future<void> signInWithEmailAndPassword() async {
+    if (kDebugMode) {
+      print('we are trying lod');
+    }
     try {
       await Auth().signInWithEmailAndPassword(
         email: _controllerEmail.text,
         password: _controllerPassword.text,
       );
+      if (kDebugMode) {
+        print('we are trying');
+      }
       // email: _controllerEmail.text,
     } on FirebaseAuthException catch (e) {
       if (kDebugMode) {
@@ -108,7 +114,11 @@ class Login extends StatelessWidget {
                           // Validate will return true if the form is valid, or false if
                           // the form is invalid.
                           if (_formKey.currentState!.validate()) {
-                            // Process data.
+                            // Process data. millicent.odhiambo@vidic.co.ke
+                            signInWithEmailAndPassword();
+                            if (kDebugMode) {
+                              print('sending');
+                            }
                           }
                         },
                         child: const Text('Login'),
