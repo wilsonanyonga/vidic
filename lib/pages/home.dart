@@ -47,6 +47,11 @@ class MyHomePage extends StatelessWidget {
     mediaQsize = MediaQuery.of(context).size;
     mediaQheight = mediaQsize.height;
     mediaQwidth = mediaQsize.width;
+
+    Future<void> signOut() async {
+      await Auth().signOut();
+    }
+
     // This method is rerun every time setState is called, for instance as done
     // by the _incrementCounter method above.
     //
