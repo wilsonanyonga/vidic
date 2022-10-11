@@ -9,4 +9,15 @@ abstract class VidicAdminState extends Equatable {
 
 class VidicAdminInitial extends VidicAdminState {}
 
-class Login extends VidicAdminState {}
+class LoginState extends VidicAdminState {}
+
+class LoginLoading extends VidicAdminState {}
+
+class LoginError extends VidicAdminState {
+  String? message;
+  LoginError(this.message);
+
+  @override
+  // TODO: implement props
+  List<Object> get props => [message!];
+}
