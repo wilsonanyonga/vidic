@@ -1,4 +1,6 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:vidic/utils/auth.dart';
 
 class MenuBarWidget extends StatelessWidget {
@@ -7,6 +9,13 @@ class MenuBarWidget extends StatelessWidget {
   }) : super(key: key);
 
   Future<void> signOut() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    //Return String
+    String? stringValue = prefs.getString('email');
+    if (kDebugMode) {
+      print(stringValue);
+    }
+
     await Auth().signOut();
   }
 
