@@ -7,4 +7,14 @@ abstract class VidicAdminEvent extends Equatable {
   List<Object> get props => [];
 }
 
-class VidicLoginEvent extends VidicAdminEvent {}
+class VidicInitialEvent extends VidicAdminEvent {}
+
+class VidicLoginEvent extends VidicAdminEvent {
+  String email;
+  String password;
+  VidicLoginEvent({required this.email, required this.password});
+}
+
+class LogoutEvent extends VidicAdminEvent {}
+
+class StatementGetEvent extends VidicAdminEvent {}
