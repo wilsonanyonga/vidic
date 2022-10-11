@@ -1,7 +1,9 @@
 import 'package:bloc/bloc.dart';
 import 'package:dio/dio.dart';
 import 'package:equatable/equatable.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/foundation.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:vidic/utils/auth.dart';
 import 'package:vidic/utils/dio_client.dart';
 
@@ -29,17 +31,56 @@ class VidicAdminBloc extends Bloc<VidicAdminEvent, VidicAdminState> {
         print('object2');
       }
     });
-    on<VidicLoginEvent>((event, emit) async {
+
+    on<VidicInitialEvent>((event, emit) async {
       // TODO: implement event handler
-      // if (await Auth().authStateChanges.isEmpty) {
-      //   emit(Login());
-      //   if (kDebugMode) {
-      //     print('object1');
-      //   }
-      // }
-      // if (kDebugMode) {
-      //   print('object2');
-      // }
+      emit(LoginState());
     });
+
+    on<VidicLoginEvent>((event, emit) async {
+      if (kDebugMode) {
+        print('we are trying lod');
+      }
+      emit(LoginLoading());
+      try {
+        await Auth().signInWithEmailAndPassword(
+          email: event.email,
+          password: event.password,
+        );
+        if (kDebugMode) {
+          print('we are trying');
+        }
+
+        SharedPreferences prefs = await SharedPreferences.getInstance();
+        prefs.setString('email', event.email);
+
+        // email: _controllerEmail.text,
+      } on FirebaseAuthException catch (e) {
+        if (kDebugMode) {
+          print(e.message);
+        }
+        emit(LoginError(e.message));
+        emit(LoginState());
+      }
+      emit(LoginState());
+    });
+
+    on<LogoutEvent>((event, emit) async {
+      // TODO: implement event handler
+      // emit(LoginState());
+    });
+
+    // ------------------------------------------------------------------------------------------------------------
+    // ----------- STATEMENT --------------------------------
+    // ------------------------------------------------------------------------------------------
+
+    on<StatementGetEvent>((event, emit) async {
+      // TODO: implement event handler
+      // emit(LoginState());
+    });
+
+    // ------------------------------------------------------------------------------------------------------------
+    // ----------- STATEMENT END--------------------------------
+    // ------------------------------------------------------------------------------------------
   }
 }
