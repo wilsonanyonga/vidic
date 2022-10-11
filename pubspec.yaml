@@ -45,6 +45,10 @@ dependencies:
   firebase_core: ^1.24.0
   firebase_auth: ^3.11.1
 
+  awesome_dialog: ^3.0.1 #handling custom dialogs
+
+  shared_preferences: ^2.0.15 
+
 dev_dependencies:
   flutter_test:
     sdk: flutter
