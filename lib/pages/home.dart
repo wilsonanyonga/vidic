@@ -1,7 +1,12 @@
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:percent_indicator/percent_indicator.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'package:vidic/bloc/vidic_admin_bloc.dart';
 import 'package:vidic/utils/auth.dart';
+import 'package:vidic/utils/dio_client.dart';
 import 'package:vidic/widgets/card.dart';
 import 'package:vidic/widgets/menu_bar.dart';
 import 'package:vidic/widgets/navigation_rail.dart';
@@ -50,6 +55,13 @@ class MyHomePage extends StatelessWidget {
 
     Future<void> signOut() async {
       await Auth().signOut();
+
+      SharedPreferences prefs = await SharedPreferences.getInstance();
+      //Return String
+      String? stringValue = prefs.getString('email');
+      if (kDebugMode) {
+        print(stringValue);
+      }
     }
 
     // This method is rerun every time setState is called, for instance as done
@@ -58,199 +70,206 @@ class MyHomePage extends StatelessWidget {
     // The Flutter framework has been optimized to make rerunning build methods
     // fast, so that you can just rebuild anything that needs updating rather
     // than having to individually change instances of widgets.
-    return Scaffold(
-      // appBar: AppBar(
-      //   // Here we take the value from the MyHomePage object that was created by
-      //   // the App.build method, and use it to set our appbar title.
-      //   title: Text(title),
-      // ),
-      body: Row(
-        children: [
-          // create a navigation rail
-          LayoutBuilder(
-            builder: (BuildContext context, BoxConstraints constraint) {
-              return SingleChildScrollView(
-                child: ConstrainedBox(
-                  constraints: BoxConstraints(minHeight: constraint.maxHeight),
-                  child: IntrinsicHeight(
-                    child: WidgetNavigationRail(selectedIndex: _selectedIndex),
-                  ),
-                ),
-              );
-            },
-            // child:
-          ),
-
-          // end of navigation rail
-
-          const VerticalDivider(thickness: 1, width: 2),
-
-          Expanded(
-            child: SingleChildScrollView(
-              child: Column(
-                // mainAxisSize: MainAxisSize.max,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                mainAxisAlignment: MainAxisAlignment.start,
-                children: [
-                  // const Text('data'),
-                  const MenuBarWidget(),
-                  // Center(
-                  //   child: Text('Page Number: $_selectedIndex'),
-                  // ),
-                  const SizedBox(
-                    height: 20,
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.fromLTRB(10, 2, 10, 2),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        const Text(
-                          'Building Occupancy',
-                          style: TextStyle(
-                            fontWeight: FontWeight.bold,
-                            fontSize: 15,
-                          ),
-                        ),
-                        const SizedBox(
-                          height: 4,
-                        ),
-                        Align(
-                          alignment: Alignment.center,
-                          child: Wrap(
-                            direction: Axis.horizontal,
-                            alignment: WrapAlignment.center,
-                            // runAlignment: WrapAlignment.center,
-                            // mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              NewWidgetCardHome(),
-                              NewWidgetCardHome(),
-                              NewWidgetCardHome(),
-                              NewWidgetCardHome(),
-                              NewWidgetCardHome(),
-                              // NewWidgetCardHome(),
-                              // NewWidgetCardHome(),
-                              // NewWidgetCardHome(),
-                              // NewWidgetCardHome(),
-                              // NewWidgetCardHome(),
-                            ],
-                          ),
-                        )
-                      ],
+    return BlocProvider(
+      create: (context) => VidicAdminBloc(
+        RepositoryProvider.of<DioClient>(context),
+      )..add(StatementGetEvent()),
+      child: Scaffold(
+        // appBar: AppBar(
+        //   // Here we take the value from the MyHomePage object that was created by
+        //   // the App.build method, and use it to set our appbar title.
+        //   title: Text(title),
+        // ),
+        body: Row(
+          children: [
+            // create a navigation rail
+            LayoutBuilder(
+              builder: (BuildContext context, BoxConstraints constraint) {
+                return SingleChildScrollView(
+                  child: ConstrainedBox(
+                    constraints:
+                        BoxConstraints(minHeight: constraint.maxHeight),
+                    child: IntrinsicHeight(
+                      child:
+                          WidgetNavigationRail(selectedIndex: _selectedIndex),
                     ),
                   ),
-                  const SizedBox(
-                    height: 20,
-                  ),
+                );
+              },
+              // child:
+            ),
 
-                  Padding(
-                    padding: const EdgeInsets.fromLTRB(10, 2, 10, 2),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        const Text(
-                          'Alpha House Tenants',
-                          style: TextStyle(
-                            fontWeight: FontWeight.bold,
-                            fontSize: 15,
+            // end of navigation rail
+
+            const VerticalDivider(thickness: 1, width: 2),
+
+            Expanded(
+              child: SingleChildScrollView(
+                child: Column(
+                  // mainAxisSize: MainAxisSize.max,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: [
+                    // const Text('data'),
+                    const MenuBarWidget(),
+                    // Center(
+                    //   child: Text('Page Number: $_selectedIndex'),
+                    // ),
+                    const SizedBox(
+                      height: 20,
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.fromLTRB(10, 2, 10, 2),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          const Text(
+                            'Building Occupancy',
+                            style: TextStyle(
+                              fontWeight: FontWeight.bold,
+                              fontSize: 15,
+                            ),
                           ),
-                        ),
-                        const SizedBox(
-                          height: 20,
-                        ),
-                        SizedBox(
-                          height: 40,
-                          width: 250,
-                          child: TextField(
-                            decoration: InputDecoration(
-                              enabledBorder: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(20),
-                                borderSide: BorderSide.none,
-                                // borderSide: const BorderSide(
-                                //   color: Colors.green,
-                                //   width: 1.0,
-                                // ),
-                              ),
-                              focusedBorder: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(25),
-                                borderSide: const BorderSide(
-                                  color: Colors.white,
-                                  width: 1.0,
+                          const SizedBox(
+                            height: 4,
+                          ),
+                          Align(
+                            alignment: Alignment.center,
+                            child: Wrap(
+                              direction: Axis.horizontal,
+                              alignment: WrapAlignment.center,
+                              // runAlignment: WrapAlignment.center,
+                              // mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                NewWidgetCardHome(),
+                                NewWidgetCardHome(),
+                                NewWidgetCardHome(),
+                                NewWidgetCardHome(),
+                                NewWidgetCardHome(),
+                                // NewWidgetCardHome(),
+                                // NewWidgetCardHome(),
+                                // NewWidgetCardHome(),
+                                // NewWidgetCardHome(),
+                                // NewWidgetCardHome(),
+                              ],
+                            ),
+                          )
+                        ],
+                      ),
+                    ),
+                    const SizedBox(
+                      height: 20,
+                    ),
+
+                    Padding(
+                      padding: const EdgeInsets.fromLTRB(10, 2, 10, 2),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          const Text(
+                            'Alpha House Tenants',
+                            style: TextStyle(
+                              fontWeight: FontWeight.bold,
+                              fontSize: 15,
+                            ),
+                          ),
+                          const SizedBox(
+                            height: 20,
+                          ),
+                          SizedBox(
+                            height: 40,
+                            width: 250,
+                            child: TextField(
+                              decoration: InputDecoration(
+                                enabledBorder: OutlineInputBorder(
+                                  borderRadius: BorderRadius.circular(20),
+                                  borderSide: BorderSide.none,
+                                  // borderSide: const BorderSide(
+                                  //   color: Colors.green,
+                                  //   width: 1.0,
+                                  // ),
                                 ),
-                              ),
-                              filled: true,
-                              fillColor: Colors.grey.shade300,
-                              // input border should appear when data is being modified
-                              // border: OutlineInputBorder(
-                              //   borderRadius: BorderRadius.circular(10.0),
-                              // ),
-                              floatingLabelStyle:
-                                  const TextStyle(color: Colors.black),
-                              labelText: 'Search',
-                              prefixIcon: const Icon(
-                                Icons.search,
-                                color: Colors.black,
+                                focusedBorder: OutlineInputBorder(
+                                  borderRadius: BorderRadius.circular(25),
+                                  borderSide: const BorderSide(
+                                    color: Colors.white,
+                                    width: 1.0,
+                                  ),
+                                ),
+                                filled: true,
+                                fillColor: Colors.grey.shade300,
+                                // input border should appear when data is being modified
+                                // border: OutlineInputBorder(
+                                //   borderRadius: BorderRadius.circular(10.0),
+                                // ),
+                                floatingLabelStyle:
+                                    const TextStyle(color: Colors.black),
+                                labelText: 'Search',
+                                prefixIcon: const Icon(
+                                  Icons.search,
+                                  color: Colors.black,
+                                ),
                               ),
                             ),
                           ),
-                        ),
-                        const SizedBox(
-                          height: 20,
-                        ),
-                        ListView.builder(
-                          shrinkWrap: true,
-                          physics: const NeverScrollableScrollPhysics(),
-                          itemCount: 20,
-                          itemBuilder: (BuildContext context, int index) {
-                            return ListTile(
-                                leading: const Icon(Icons.person),
-                                // trailing: const Text(
-                                //   "GFG",
-                                //   style: TextStyle(
-                                //       color: Colors.green, fontSize: 15),
-                                // ),
-                                title: Row(
-                                  children: [
-                                    Text("Tenant $index"),
-                                    const SizedBox(
-                                      width: 50,
-                                    ),
-                                    Text("mymail$index@gmail.com"),
-                                    const SizedBox(
-                                      width: 50,
-                                    ),
-                                    Chip(
-                                      label: const Text(
-                                        '1st Floor',
-                                        style: TextStyle(color: Colors.white),
+                          const SizedBox(
+                            height: 20,
+                          ),
+                          ListView.builder(
+                            shrinkWrap: true,
+                            physics: const NeverScrollableScrollPhysics(),
+                            itemCount: 20,
+                            itemBuilder: (BuildContext context, int index) {
+                              return ListTile(
+                                  leading: const Icon(Icons.person),
+                                  // trailing: const Text(
+                                  //   "GFG",
+                                  //   style: TextStyle(
+                                  //       color: Colors.green, fontSize: 15),
+                                  // ),
+                                  title: Row(
+                                    children: [
+                                      Text("Tenant "),
+                                      const SizedBox(
+                                        width: 50,
                                       ),
-                                      backgroundColor: Colors.pink[300],
-                                    ),
-                                    const SizedBox(
-                                      width: 50,
-                                    ),
-                                    const Text("700 sq ft"),
-                                  ],
-                                ));
-                          },
-                        ),
-                      ],
-                    ),
-                  )
-                ],
+                                      Text("mymail@gmail.com"),
+                                      const SizedBox(
+                                        width: 50,
+                                      ),
+                                      Chip(
+                                        label: const Text(
+                                          '1st Floor',
+                                          style: TextStyle(color: Colors.white),
+                                        ),
+                                        backgroundColor: Colors.pink[300],
+                                      ),
+                                      const SizedBox(
+                                        width: 50,
+                                      ),
+                                      const Text("700 sq ft"),
+                                    ],
+                                  ));
+                            },
+                          ),
+                        ],
+                      ),
+                    )
+                  ],
+                ),
               ),
             ),
-          ),
-          // const Center(
-          //   child: Text('data'),
-          // )
-        ],
+            // const Center(
+            //   child: Text('data'),
+            // )
+          ],
+        ),
+        floatingActionButton: FloatingActionButton(
+          onPressed: _incrementCounter,
+          tooltip: 'Increment',
+          child: const Icon(Icons.add),
+        ), // This trailing comma makes auto-formatting nicer for build methods.
       ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: _incrementCounter,
-        tooltip: 'Increment',
-        child: const Icon(Icons.add),
-      ), // This trailing comma makes auto-formatting nicer for build methods.
     );
   }
 }
