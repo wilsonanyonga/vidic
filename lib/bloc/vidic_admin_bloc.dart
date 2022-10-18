@@ -50,7 +50,7 @@ class VidicAdminBloc extends Bloc<VidicAdminEvent, VidicAdminState> {
         if (kDebugMode) {
           print('we are trying');
         }
-
+        
         SharedPreferences prefs = await SharedPreferences.getInstance();
         prefs.setString('email', event.email);
 
