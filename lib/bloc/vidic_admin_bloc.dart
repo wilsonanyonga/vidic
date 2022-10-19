@@ -50,9 +50,15 @@ class VidicAdminBloc extends Bloc<VidicAdminEvent, VidicAdminState> {
         if (kDebugMode) {
           print('we are trying');
         }
-        
+        final myJwt = await _client.getToken(event.email);
         SharedPreferences prefs = await SharedPreferences.getInstance();
         prefs.setString('email', event.email);
+        prefs.setString('jwt_token', myJwt!.data);
+
+        if (kDebugMode) {
+          print('email is ${event.email}');
+          print('token is ${myJwt.data}');
+        }
 
         // email: _controllerEmail.text,
       } on FirebaseAuthException catch (e) {
@@ -76,7 +82,9 @@ class VidicAdminBloc extends Bloc<VidicAdminEvent, VidicAdminState> {
 
     on<StatementGetEvent>((event, emit) async {
       // TODO: implement event handler
-      // emit(LoginState());
+      emit(StatementLoading());
+      await Future.delayed(const Duration(seconds: 2));
+      emit(StatementLoaded());
     });
 
     // ------------------------------------------------------------------------------------------------------------
