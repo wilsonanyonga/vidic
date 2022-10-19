@@ -110,51 +110,58 @@ class StatementScreen extends StatelessWidget {
                         // TODO: implement listener
                       },
                       builder: (context, state) {
-                        return ListView.builder(
-                          shrinkWrap: true,
-                          physics: const NeverScrollableScrollPhysics(),
-                          itemCount: 20,
-                          itemBuilder: (BuildContext context, int index) {
-                            return ListTile(
-                                leading: const Icon(Icons.person),
-                                // trailing: const Text(
-                                //   "GFG",
-                                //   style: TextStyle(
-                                //       color: Colors.green, fontSize: 15),
-                                // ),
-                                title: Row(
-                                  children: [
-                                    Text("Tenant $index"),
-                                    const SizedBox(
-                                      width: 50,
-                                    ),
-                                    Text("mymail@gmail.com"),
-                                    const SizedBox(
-                                      width: 50,
-                                    ),
-                                    Chip(
-                                      label: const Text(
-                                        '1st Floor',
-                                        style: TextStyle(color: Colors.white),
+                        if (state is StatementLoading) {
+                          return const Center(
+                              child: CircularProgressIndicator());
+                        }
+                        if (state is StatementLoaded) {
+                          return ListView.builder(
+                            shrinkWrap: true,
+                            physics: const NeverScrollableScrollPhysics(),
+                            itemCount: 4,
+                            itemBuilder: (BuildContext context, int index) {
+                              return ListTile(
+                                  leading: const Icon(Icons.person),
+                                  // trailing: const Text(
+                                  //   "GFG",
+                                  //   style: TextStyle(
+                                  //       color: Colors.green, fontSize: 15),
+                                  // ),
+                                  title: Row(
+                                    children: [
+                                      Text("Tenant $index"),
+                                      const SizedBox(
+                                        width: 50,
                                       ),
-                                      backgroundColor: Colors.pink[300],
-                                    ),
-                                    const SizedBox(
-                                      width: 50,
-                                    ),
-                                    const Text("700 sq ft"),
-                                    const SizedBox(
-                                      width: 50,
-                                    ),
-                                    const Text("18/5/2021"),
-                                    const SizedBox(
-                                      width: 50,
-                                    ),
-                                    const Text("Ksh 24,000"),
-                                  ],
-                                ));
-                          },
-                        );
+                                      const Text("mymail@gmail.com"),
+                                      const SizedBox(
+                                        width: 50,
+                                      ),
+                                      Chip(
+                                        label: const Text(
+                                          '1st Floor',
+                                          style: TextStyle(color: Colors.white),
+                                        ),
+                                        backgroundColor: Colors.pink[300],
+                                      ),
+                                      const SizedBox(
+                                        width: 50,
+                                      ),
+                                      const Text("700 sq ft"),
+                                      const SizedBox(
+                                        width: 50,
+                                      ),
+                                      const Text("18/5/2021"),
+                                      const SizedBox(
+                                        width: 50,
+                                      ),
+                                      const Text("Ksh 24,000"),
+                                    ],
+                                  ));
+                            },
+                          );
+                        }
+                        return const Text('Error Occured');
                       },
                     ),
                   ],
