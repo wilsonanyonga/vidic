@@ -21,3 +21,7 @@ class LoginError extends VidicAdminState {
   // TODO: implement props
   List<Object> get props => [message!];
 }
+
+class StatementLoading extends VidicAdminState {}
+
+class StatementLoaded extends VidicAdminState {}
