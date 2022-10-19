@@ -6,22 +6,23 @@ import 'package:vidic/utils/logging.dart';
 class DioClient {
   final Dio _dio = Dio(
     BaseOptions(
+      baseUrl: 'http://127.0.0.1:8010/api',
       // baseUrl: 'https://go.khostess.co.ke/api',
-      baseUrl: 'https://mwambaapp.mwambabuilders.com/mwambaApp/api',
+      // baseUrl: 'https://mwambaapp.mwambabuilders.com/mwambaApp/api',
       connectTimeout: 5000,
       receiveTimeout: 3000,
     ),
   )..interceptors.add(Logging());
 
-  Future<Jwt?> verifyNumber(number, amount) async {
+  Future<Jwt?> getToken(email) async {
     Jwt? mpesaPay;
 
     try {
       Response userData = await _dio.post(
-        '/sendNumber',
+        '/getJWT',
         data: {
-          "number": number.toString(),
-          "amount": amount.toString(),
+          "email": email,
+          // "amount": amount.toString(),
         },
       );
 
