@@ -84,7 +84,7 @@ class VidicAdminBloc extends Bloc<VidicAdminEvent, VidicAdminState> {
       // TODO: implement event handler
       emit(StatementLoading());
       await Future.delayed(const Duration(seconds: 2));
-      // final myJwt = await _client.getToken(event.email);
+      final statements = await _client.getStatement();
       emit(StatementLoaded());
     });
 
