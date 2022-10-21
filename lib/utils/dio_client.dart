@@ -3,6 +3,7 @@ import 'package:flutter/foundation.dart';
 import 'package:vidic/models/jwt.dart';
 import 'package:vidic/models/statement/get_statement.dart';
 import 'package:vidic/utils/logging.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class DioClient {
   final Dio _dio = Dio(
@@ -56,9 +57,21 @@ class DioClient {
 
   Future<GetStatement?> getStatement() async {
     GetStatement? user;
-
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    //Return String
+    String? stringValue = prefs.getString('jwt_token');
+    if (kDebugMode) {
+      print(stringValue);
+    }
     try {
-      Response userData = await _dio.get('/listHome');
+      Response userData = await _dio.get(
+        '/getStatement',
+        options: Options(
+          headers: {
+            "authorization": stringValue, // set content-length
+          },
+        ),
+      );
 
       if (kDebugMode) {
         print('User Info: ${userData.data}');
