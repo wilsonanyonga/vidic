@@ -4,6 +4,8 @@ import 'package:equatable/equatable.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/foundation.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:vidic/models/statement/get_statement.dart';
+import 'package:vidic/models/statement/get_statement_data.dart';
 import 'package:vidic/utils/auth.dart';
 import 'package:vidic/utils/dio_client.dart';
 
@@ -85,7 +87,7 @@ class VidicAdminBloc extends Bloc<VidicAdminEvent, VidicAdminState> {
       emit(StatementLoading());
       await Future.delayed(const Duration(seconds: 2));
       final statements = await _client.getStatement();
-      emit(StatementLoaded());
+      emit(StatementLoaded(statements!.data));
     });
 
     // ------------------------------------------------------------------------------------------------------------
