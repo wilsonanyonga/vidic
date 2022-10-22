@@ -118,7 +118,7 @@ class StatementScreen extends StatelessWidget {
                           return ListView.builder(
                             shrinkWrap: true,
                             physics: const NeverScrollableScrollPhysics(),
-                            itemCount: 4,
+                            itemCount: state.data.length,
                             itemBuilder: (BuildContext context, int index) {
                               return ListTile(
                                   leading: const Icon(Icons.person),
@@ -129,7 +129,8 @@ class StatementScreen extends StatelessWidget {
                                   // ),
                                   title: Row(
                                     children: [
-                                      Text("Tenant $index"),
+                                      Text(
+                                          "Tenant ${state.data[index].statementName}"),
                                       const SizedBox(
                                         width: 50,
                                       ),
