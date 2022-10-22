@@ -24,4 +24,11 @@ class LoginError extends VidicAdminState {
 
 class StatementLoading extends VidicAdminState {}
 
-class StatementLoaded extends VidicAdminState {}
+class StatementLoaded extends VidicAdminState {
+  List<Datum> data;
+  StatementLoaded(this.data);
+
+  @override
+  // TODO: implement props
+  List<Object> get props => [data];
+}
