@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:dio/dio.dart';
 import 'package:flutter/foundation.dart';
 import 'package:vidic/models/jwt.dart';
@@ -6,6 +8,7 @@ import 'package:vidic/utils/logging.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class DioClient {
+  String? stringValue;
   final Dio _dio = Dio(
     BaseOptions(
       baseUrl: 'http://127.0.0.1:8010/api',
@@ -13,6 +16,12 @@ class DioClient {
       // baseUrl: 'https://mwambaapp.mwambabuilders.com/mwambaApp/api',
       connectTimeout: 5000,
       receiveTimeout: 3000,
+      // headers: {
+      //   "Access-Control-Allow-Origin": "*",
+      //   "Access-Control-Allow-Headers": "Content-Type, Authorization",
+      //   "Access-Control-Allow-Methods": "GET, POST, PUT, DELETE,PATCH",
+      //   "Content-Type": "application/json",
+      // },
     ),
   )..interceptors.add(Logging());
 
@@ -59,16 +68,24 @@ class DioClient {
     GetStatement? user;
     SharedPreferences prefs = await SharedPreferences.getInstance();
     //Return String
-    String? stringValue = prefs.getString('jwt_token');
+    stringValue = prefs.getString('jwt_token');
     if (kDebugMode) {
       print(stringValue);
     }
     try {
+      // _dio.options.headers[HttpHeaders.authorizationHeader] = "stringValue";
       Response userData = await _dio.get(
         '/getStatement',
         options: Options(
           headers: {
-            "authorization": stringValue, // set content-length
+            // "authorization": stringValue, // set content-length
+            "Authorization": stringValue, // set content-length
+            // "Content-Type": "application/json",
+            // 'Accept': '*/*',
+            // "Access-Control-Allow-Origin": "*",
+            // "Access-Control-Allow-Headers": "Content-Type, Authorization",
+            // "Access-Control-Allow-Methods": "GET, POST, PUT, DELETE,PATCH",
+            // "Content-Type": "application/json",
           },
         ),
       );
