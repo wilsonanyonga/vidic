@@ -35,6 +35,18 @@ class DioClient {
           "email": email,
           // "amount": amount.toString(),
         },
+        options: Options(
+          headers: {
+            // "authorization": stringValue, // set content-length
+            "Authorization": 'stringValue', // set content-length
+            // "Content-Type": "application/json",
+            // 'Accept': '*/*',
+            // "Access-Control-Allow-Origin": "*",
+            // "Access-Control-Allow-Headers": "Content-Type, Authorization",
+            // "Access-Control-Allow-Methods": "GET, POST, PUT, DELETE,PATCH",
+            // "Content-Type": "application/json",
+          },
+        ),
       );
 
       if (kDebugMode) {
