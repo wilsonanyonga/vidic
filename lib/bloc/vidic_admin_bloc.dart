@@ -87,6 +87,10 @@ class VidicAdminBloc extends Bloc<VidicAdminEvent, VidicAdminState> {
       emit(StatementLoading());
       await Future.delayed(const Duration(seconds: 2));
       final statements = await _client.getStatement();
+      if (kDebugMode) {
+        print("hehe");
+        print(statements!.data);
+      }
       emit(StatementLoaded(statements!.data));
     });
 
