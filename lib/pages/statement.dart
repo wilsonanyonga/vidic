@@ -129,8 +129,7 @@ class StatementScreen extends StatelessWidget {
                                   // ),
                                   title: Row(
                                     children: [
-                                      Text(
-                                          "Tenant ${state.data[index].statementName}"),
+                                      Text("Tenant ${state.data[index].name}"),
                                       const SizedBox(
                                         width: 50,
                                       ),
