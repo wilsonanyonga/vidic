@@ -13,7 +13,7 @@ StatementType _$StatementTypeFromJson(Map<String, dynamic> json) =>
       updatedAt: DateTime.parse(json['UpdatedAt'] as String),
       deletedAt: json['DeletedAt'],
       statementTypeId: json['id'] as int,
-      statementName: json['statement_name'] as String,
+      statementName: json['statement_name'] as String?,
       startDate: DateTime.parse(json['start_date'] as String),
       endDate: DateTime.parse(json['end_date'] as String),
       amount: json['amount'] as int,
