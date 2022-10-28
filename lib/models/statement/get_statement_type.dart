@@ -31,7 +31,7 @@ class StatementType {
   @JsonKey(name: 'id')
   int statementTypeId;
   @JsonKey(name: 'statement_name')
-  String statementName;
+  String? statementName;
   @JsonKey(name: 'start_date')
   DateTime startDate;
   @JsonKey(name: 'end_date')
