@@ -129,33 +129,41 @@ class StatementScreen extends StatelessWidget {
                                   // ),
                                   title: Row(
                                     children: [
-                                      Text("Tenant ${state.data[index].name}"),
+                                      Text(state.data[index].name),
                                       const SizedBox(
                                         width: 50,
                                       ),
-                                      const Text("mymail@gmail.com"),
+                                      Text(state.data[index].officialEmail),
                                       const SizedBox(
                                         width: 50,
                                       ),
                                       Chip(
-                                        label: const Text(
-                                          '1st Floor',
-                                          style: TextStyle(color: Colors.white),
+                                        label: Text(
+                                          '${state.data[index].floor} Floor',
+                                          style: const TextStyle(
+                                              color: Colors.white),
                                         ),
                                         backgroundColor: Colors.pink[300],
                                       ),
                                       const SizedBox(
                                         width: 50,
                                       ),
-                                      const Text("700 sq ft"),
+                                      Text("${state.data[index].size} sq ft"),
                                       const SizedBox(
                                         width: 50,
                                       ),
-                                      const Text("18/5/2021"),
+                                      for (var i = 0;
+                                          i <
+                                              state.data[index].statementTypes
+                                                  .length;
+                                          i++)
+                                        Text(state.data[index].statementTypes[i]
+                                            .amount
+                                            .toString()),
                                       const SizedBox(
                                         width: 50,
                                       ),
-                                      const Text("Ksh 24,000"),
+                                      Text("Ksh ${state.data[index].rent}"),
                                     ],
                                   ));
                             },
