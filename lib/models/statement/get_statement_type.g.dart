@@ -11,9 +11,11 @@ StatementType _$StatementTypeFromJson(Map<String, dynamic> json) =>
       id: json['ID'] as int,
       createdAt: DateTime.parse(json['CreatedAt'] as String),
       updatedAt: DateTime.parse(json['UpdatedAt'] as String),
-      deletedAt: json['DeletedAt'],
+      deletedAt: json['DeletedAt'] == null
+          ? null
+          : DateTime.parse(json['DeletedAt'] as String),
       statementTypeId: json['id'] as int,
-      statementName: json['statement_name'] as String?,
+      statementName: json['statement_name'] as String,
       startDate: DateTime.parse(json['start_date'] as String),
       endDate: DateTime.parse(json['end_date'] as String),
       amount: json['amount'] as int,
@@ -27,7 +29,7 @@ Map<String, dynamic> _$StatementTypeToJson(StatementType instance) =>
       'ID': instance.id,
       'CreatedAt': instance.createdAt.toIso8601String(),
       'UpdatedAt': instance.updatedAt.toIso8601String(),
-      'DeletedAt': instance.deletedAt,
+      'DeletedAt': instance.deletedAt?.toIso8601String(),
       'id': instance.statementTypeId,
       'statement_name': instance.statementName,
       'start_date': instance.startDate.toIso8601String(),
