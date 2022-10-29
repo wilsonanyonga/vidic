@@ -9,7 +9,7 @@ class StatementType {
     required this.id,
     required this.createdAt,
     required this.updatedAt,
-    required this.deletedAt,
+    this.deletedAt,
     required this.statementTypeId,
     required this.statementName,
     required this.startDate,
@@ -27,11 +27,11 @@ class StatementType {
   @JsonKey(name: 'UpdatedAt')
   DateTime updatedAt;
   @JsonKey(name: 'DeletedAt')
-  dynamic deletedAt;
+  DateTime? deletedAt;
   @JsonKey(name: 'id')
   int statementTypeId;
   @JsonKey(name: 'statement_name')
-  String? statementName;
+  String statementName;
   @JsonKey(name: 'start_date')
   DateTime startDate;
   @JsonKey(name: 'end_date')
