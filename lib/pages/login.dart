@@ -141,7 +141,25 @@ class Login extends StatelessWidget {
                           },
                           builder: (context, state) {
                             if (state is LoginLoading) {
-                              return const CircularProgressIndicator();
+                              return ElevatedButton(
+                                onPressed: () {},
+                                child: Row(
+                                  children: const [
+                                    Text('Login'),
+                                    SizedBox(
+                                      width: 10,
+                                    ),
+                                    SizedBox(
+                                      width: 15,
+                                      height: 15,
+                                      child: CircularProgressIndicator(
+                                        color: Colors.white,
+                                        strokeWidth: 2,
+                                      ),
+                                    )
+                                  ],
+                                ),
+                              );
                             }
                             if (state is LoginState) {
                               return ElevatedButton(
@@ -163,7 +181,11 @@ class Login extends StatelessWidget {
                                     );
                                   }
                                 },
-                                child: const Text('Login'),
+                                child: Row(
+                                  children: const [
+                                    Text('Login'),
+                                  ],
+                                ),
                               );
                             }
                             return const Text('Error has Occured');
