@@ -8,7 +8,7 @@ part of 'get_invoice.dart';
 
 GetInvoice _$GetInvoiceFromJson(Map<String, dynamic> json) => GetInvoice(
       data: (json['data'] as List<dynamic>)
-          .map((e) => Datum.fromJson(e as Map<String, dynamic>))
+          .map((e) => DatumInvoice.fromJson(e as Map<String, dynamic>))
           .toList(),
       status: json['status'] as int,
     );
