@@ -5,8 +5,8 @@ import 'package:json_annotation/json_annotation.dart';
 part 'get_invoice2.g.dart';
 
 @JsonSerializable()
-class Datum {
-  Datum({
+class DatumInvoice {
+  DatumInvoice({
     required this.id,
     required this.createdAt,
     required this.updatedAt,
@@ -75,7 +75,8 @@ class Datum {
   @JsonKey(name: 'LettersTenantTypes')
   dynamic lettersTenantTypes;
 
-  factory Datum.fromJson(Map<String, dynamic> json) => _$DatumFromJson(json);
+  factory DatumInvoice.fromJson(Map<String, dynamic> json) =>
+      _$DatumInvoiceFromJson(json);
 
-  Map<String, dynamic> toJson() => _$DatumToJson(this);
+  Map<String, dynamic> toJson() => _$DatumInvoiceToJson(this);
 }
