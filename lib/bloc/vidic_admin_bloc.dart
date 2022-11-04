@@ -4,8 +4,12 @@ import 'package:equatable/equatable.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/foundation.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:vidic/models/invoice/get_invoice2.dart';
+import 'package:vidic/models/letter/get_letter2.dart';
+import 'package:vidic/models/occupancy/get_occupancy2.dart';
 import 'package:vidic/models/statement/get_statement.dart';
 import 'package:vidic/models/statement/get_statement_data.dart';
+import 'package:vidic/models/tenant_letter/get_tenant_letter2.dart';
 import 'package:vidic/utils/auth.dart';
 import 'package:vidic/utils/dio_client.dart';
 
@@ -85,7 +89,7 @@ class VidicAdminBloc extends Bloc<VidicAdminEvent, VidicAdminState> {
     on<StatementGetEvent>((event, emit) async {
       // TODO: implement event handler
       emit(StatementLoading());
-      await Future.delayed(const Duration(seconds: 2));
+      // await Future.delayed(const Duration(seconds: 2));
       final statements = await _client.getStatement();
       if (kDebugMode) {
         print("hehe");
@@ -96,6 +100,86 @@ class VidicAdminBloc extends Bloc<VidicAdminEvent, VidicAdminState> {
 
     // ------------------------------------------------------------------------------------------------------------
     // ----------- STATEMENT END--------------------------------
+    // ------------------------------------------------------------------------------------------
+
+    // ------------------------------------------------------------------------------------------------------------
+    // ----------- INVOICE --------------------------------
+    // ------------------------------------------------------------------------------------------
+
+    on<InvoiceGetEvent>((event, emit) async {
+      // TODO: implement event handler
+      emit(InvoiceLoading());
+      // await Future.delayed(const Duration(seconds: 2));
+      final invoices = await _client.getInvoice();
+      if (kDebugMode) {
+        print("hehe");
+        print(invoices!.data);
+      }
+      emit(InvoiceLoaded(invoices!.data));
+    });
+
+    // ------------------------------------------------------------------------------------------------------------
+    // ----------- INVOICE END--------------------------------
+    // ------------------------------------------------------------------------------------------
+
+    // ------------------------------------------------------------------------------------------------------------
+    // ----------- Letter --------------------------------
+    // ------------------------------------------------------------------------------------------
+
+    on<LetterGetEvent>((event, emit) async {
+      // TODO: implement event handler
+      emit(LetterLoading());
+      // await Future.delayed(const Duration(seconds: 2));
+      final letters = await _client.getLetter();
+      if (kDebugMode) {
+        print("hehe");
+        print(letters!.data);
+      }
+      emit(LetterLoaded(letters!.data));
+    });
+
+    // ------------------------------------------------------------------------------------------------------------
+    // ----------- Letter END--------------------------------
+    // ------------------------------------------------------------------------------------------
+
+    // ------------------------------------------------------------------------------------------------------------
+    // ----------- Letter Complaint --------------------------------
+    // ------------------------------------------------------------------------------------------
+
+    on<ComplaintGetEvent>((event, emit) async {
+      // TODO: implement event handler
+      emit(ComplaintLoading());
+      // await Future.delayed(const Duration(seconds: 2));
+      final complaint = await _client.getTenantLetter();
+      if (kDebugMode) {
+        print("hehe");
+        print(complaint!.data);
+      }
+      emit(ComplaintLoaded(complaint!.data));
+    });
+
+    // ------------------------------------------------------------------------------------------------------------
+    // ----------- Letter Complaint END--------------------------------
+    // ------------------------------------------------------------------------------------------
+
+    // ------------------------------------------------------------------------------------------------------------
+    // ----------- Letter Complaint --------------------------------
+    // ------------------------------------------------------------------------------------------
+
+    on<OccupancyGetEvent>((event, emit) async {
+      // TODO: implement event handler
+      emit(OccupancyLoading());
+      // await Future.delayed(const Duration(seconds: 2));
+      final occupancy = await _client.getOccupancy();
+      if (kDebugMode) {
+        print("hehe");
+        print(occupancy!.data);
+      }
+      emit(OccupancyLoaded(occupancy!.data));
+    });
+
+    // ------------------------------------------------------------------------------------------------------------
+    // ----------- Letter Complaint END--------------------------------
     // ------------------------------------------------------------------------------------------
   }
 }
