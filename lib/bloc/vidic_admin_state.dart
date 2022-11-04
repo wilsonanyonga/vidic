@@ -24,6 +24,7 @@ class LoginError extends VidicAdminState {
 
 class StatementLoading extends VidicAdminState {}
 
+// ---------STATEMENT---------------------------
 class StatementLoaded extends VidicAdminState {
   List<Datum> data;
   StatementLoaded(this.data);
@@ -32,3 +33,65 @@ class StatementLoaded extends VidicAdminState {
   // TODO: implement props
   List<Object> get props => [data];
 }
+
+// ---------STATEMENT END---------------------------
+
+// ---------INVOICE---------------------------
+
+class InvoiceLoading extends VidicAdminState {}
+
+class InvoiceLoaded extends VidicAdminState {
+  List<DatumInvoice> data;
+  InvoiceLoaded(this.data);
+
+  @override
+  // TODO: implement props
+  List<Object> get props => [data];
+}
+
+// ---------INVOICE END---------------------------
+
+// ---------LETTER---------------------------
+
+class LetterLoading extends VidicAdminState {}
+
+class LetterLoaded extends VidicAdminState {
+  List<DatumLetter> data;
+  LetterLoaded(this.data);
+
+  @override
+  // TODO: implement props
+  List<Object> get props => [data];
+}
+
+// ---------LETTER END---------------------------
+
+// ---------LETTER complaint---------------------------
+
+class ComplaintLoading extends VidicAdminState {}
+
+class ComplaintLoaded extends VidicAdminState {
+  List<DatumTenantLetter> data;
+  ComplaintLoaded(this.data);
+
+  @override
+  // TODO: implement props
+  List<Object> get props => [data];
+}
+
+// ---------LETTER complaint END---------------------------
+
+// ---------Occupancy---------------------------
+
+class OccupancyLoading extends VidicAdminState {}
+
+class OccupancyLoaded extends VidicAdminState {
+  List<DatumOccupancy> data;
+  OccupancyLoaded(this.data);
+
+  @override
+  // TODO: implement props
+  List<Object> get props => [data];
+}
+
+// ---------Occupancy END---------------------------
