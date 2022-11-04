@@ -138,13 +138,51 @@ class LettersScreen extends StatelessWidget {
                                         width: 50,
                                       ),
                                       Chip(
-                                        label: Text(
-                                          '${state.data[index].floor} Floor',
-                                          style: const TextStyle(
-                                              color: Colors.white),
-                                        ),
+                                        label: (state.data[index].floor == "0")
+                                            ? const Text(
+                                                'Ground Floor',
+                                                style: TextStyle(
+                                                    color: Colors.white),
+                                              )
+                                            : (state.data[index].floor == "1")
+                                                ? const Text(
+                                                    '1st Floor',
+                                                    style: TextStyle(
+                                                        color: Colors.white),
+                                                  )
+                                                : (state.data[index].floor ==
+                                                        "2")
+                                                    ? const Text(
+                                                        '2nd Floor',
+                                                        style: TextStyle(
+                                                            color:
+                                                                Colors.white),
+                                                      )
+                                                    : (state.data[index]
+                                                                .floor ==
+                                                            "3")
+                                                        ? const Text(
+                                                            '3rd Floor',
+                                                            style: TextStyle(
+                                                                color: Colors
+                                                                    .white),
+                                                          )
+                                                        : const Text(
+                                                            '4th Floor',
+                                                            style: TextStyle(
+                                                                color: Colors
+                                                                    .white),
+                                                          ),
                                         backgroundColor: Colors.pink[300],
                                       ),
+                                      // Chip(
+                                      //   label: Text(
+                                      //     '${state.data[index].floor} Floor',
+                                      //     style: const TextStyle(
+                                      //         color: Colors.white),
+                                      //   ),
+                                      //   backgroundColor: Colors.pink[300],
+                                      // ),
                                       const SizedBox(
                                         width: 50,
                                       ),
