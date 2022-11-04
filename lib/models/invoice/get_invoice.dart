@@ -11,7 +11,7 @@ class GetInvoice {
     required this.status,
   });
 
-  List<Datum> data;
+  List<DatumInvoice> data;
   int status;
 
   factory GetInvoice.fromJson(Map<String, dynamic> json) =>
