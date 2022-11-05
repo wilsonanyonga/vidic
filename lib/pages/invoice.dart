@@ -123,7 +123,7 @@ class InvoiceScreen extends StatelessWidget {
                               return Column(
                                 children: [
                                   ListTile(
-                                    leading: const Icon(Icons.person),
+                                    // leading: const Icon(Icons.person),
                                     // trailing: const Text(
                                     //   "GFG",
                                     //   style: TextStyle(
@@ -135,10 +135,10 @@ class InvoiceScreen extends StatelessWidget {
                                         const SizedBox(
                                           width: 50,
                                         ),
-                                        Text(state.data[index].officialEmail),
-                                        const SizedBox(
-                                          width: 50,
-                                        ),
+                                        // Text(state.data[index].officialEmail),
+                                        // const SizedBox(
+                                        //   width: 50,
+                                        // ),
                                         Chip(
                                           label: (state.data[index].floor ==
                                                   "0")
@@ -186,10 +186,10 @@ class InvoiceScreen extends StatelessWidget {
                                         //   ),
                                         //   backgroundColor: Colors.pink[300],
                                         // ),
-                                        const SizedBox(
-                                          width: 50,
-                                        ),
-                                        Text("${state.data[index].size} sq ft"),
+                                        // const SizedBox(
+                                        //   width: 50,
+                                        // ),
+                                        // Text("${state.data[index].size} sq ft"),
                                         // const SizedBox(
                                         //   width: 50,
                                         // ),
@@ -204,9 +204,30 @@ class InvoiceScreen extends StatelessWidget {
                                   for (var i = 0;
                                       i < state.data[index].invoiceTypes.length;
                                       i++)
-                                    Text(state
-                                        .data[index].invoiceTypes[i].amount
-                                        .toString()),
+                                    ListTile(
+                                      leading: const Icon(Icons.edit),
+                                      title: Row(
+                                        children: [
+                                          Text(
+                                              "Purpose: ${state.data[index].invoiceTypes[i].purpose}"),
+                                          const SizedBox(
+                                            width: 20,
+                                          ),
+                                          Text(
+                                              "Month: ${state.data[index].invoiceTypes[i].month}"),
+                                          const SizedBox(
+                                            width: 20,
+                                          ),
+                                          Text(
+                                            "Amount: Ksh ${state.data[index].invoiceTypes[i].amount.toString()}",
+                                          ),
+                                          const SizedBox(
+                                            width: 20,
+                                          ),
+                                          const Icon(Icons.delete),
+                                        ],
+                                      ),
+                                    ),
                                 ],
                               );
                             },
