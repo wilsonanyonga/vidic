@@ -230,6 +230,10 @@ class StatementScreen extends StatelessWidget {
                                           ),
                                           Text(
                                               "Amount: Ksh ${state.data[index].statementTypes[i].amount.toString()}"),
+                                          const SizedBox(
+                                            width: 20,
+                                          ),
+                                          const Icon(Icons.delete),
                                         ],
                                       ),
                                     ),
