@@ -120,90 +120,121 @@ class StatementScreen extends StatelessWidget {
                             physics: const NeverScrollableScrollPhysics(),
                             itemCount: state.data.length,
                             itemBuilder: (BuildContext context, int index) {
-                              return ListTile(
-                                  leading: const Icon(Icons.person),
-                                  // trailing: const Text(
-                                  //   "GFG",
-                                  //   style: TextStyle(
-                                  //       color: Colors.green, fontSize: 15),
-                                  // ),
-                                  title: Row(
-                                    children: [
-                                      Text(state.data[index].name),
-                                      const SizedBox(
-                                        width: 50,
+                              return Column(
+                                children: [
+                                  ListTile(
+                                    // leading: const Icon(Icons.person),
+                                    // trailing: const Text(
+                                    //   "GFG",
+                                    //   style: TextStyle(
+                                    //       color: Colors.green, fontSize: 15),
+                                    // ),
+                                    title: Row(
+                                      children: [
+                                        Text(state.data[index].name),
+                                        const SizedBox(
+                                          width: 50,
+                                        ),
+                                        Text(state.data[index].officialEmail),
+                                        const SizedBox(
+                                          width: 50,
+                                        ),
+                                        Chip(
+                                          label: (state.data[index].floor ==
+                                                  "0")
+                                              ? const Text(
+                                                  'Ground Floor',
+                                                  style: TextStyle(
+                                                      color: Colors.white),
+                                                )
+                                              : (state.data[index].floor == "1")
+                                                  ? const Text(
+                                                      '1st Floor',
+                                                      style: TextStyle(
+                                                          color: Colors.white),
+                                                    )
+                                                  : (state.data[index].floor ==
+                                                          "2")
+                                                      ? const Text(
+                                                          '2nd Floor',
+                                                          style: TextStyle(
+                                                              color:
+                                                                  Colors.white),
+                                                        )
+                                                      : (state.data[index]
+                                                                  .floor ==
+                                                              "3")
+                                                          ? const Text(
+                                                              '3rd Floor',
+                                                              style: TextStyle(
+                                                                  color: Colors
+                                                                      .white),
+                                                            )
+                                                          : const Text(
+                                                              '4th Floor',
+                                                              style: TextStyle(
+                                                                  color: Colors
+                                                                      .white),
+                                                            ),
+                                          backgroundColor: Colors.pink[300],
+                                        ),
+                                        // Chip(
+                                        //   label: Text(
+                                        //     '${state.data[index].floor} Floor',
+                                        //     style: const TextStyle(
+                                        //         color: Colors.white),
+                                        //   ),
+                                        //   backgroundColor: Colors.pink[300],
+                                        // ),
+                                        const SizedBox(
+                                          width: 50,
+                                        ),
+                                        Text("${state.data[index].size} sq ft"),
+                                        const SizedBox(
+                                          width: 50,
+                                        ),
+
+                                        const SizedBox(
+                                          width: 50,
+                                        ),
+                                        Text("Ksh ${state.data[index].rent}"),
+                                      ],
+                                    ),
+                                  ),
+                                  for (var i = 0;
+                                      i <
+                                          state.data[index].statementTypes
+                                              .length;
+                                      i++)
+                                    ListTile(
+                                      leading: const Icon(Icons.edit),
+                                      title: Row(
+                                        children: [
+                                          Text(state.data[index]
+                                              .statementTypes[i].startDate
+                                              .toString()
+                                              .replaceAll('21:00:00.000Z', '')),
+                                          const SizedBox(
+                                            width: 20,
+                                          ),
+                                          const Text('--'),
+                                          const SizedBox(
+                                            width: 20,
+                                          ),
+                                          Text(state.data[index]
+                                              .statementTypes[i].endDate
+                                              .toString()
+                                              .replaceAll('21:00:00.000Z', '')),
+                                          const SizedBox(
+                                            width: 50,
+                                          ),
+                                          Text(
+                                              "Amount: Ksh ${state.data[index].statementTypes[i].amount.toString()}"),
+                                        ],
                                       ),
-                                      Text(state.data[index].officialEmail),
-                                      const SizedBox(
-                                        width: 50,
-                                      ),
-                                      Chip(
-                                        label: (state.data[index].floor == "0")
-                                            ? const Text(
-                                                'Ground Floor',
-                                                style: TextStyle(
-                                                    color: Colors.white),
-                                              )
-                                            : (state.data[index].floor == "1")
-                                                ? const Text(
-                                                    '1st Floor',
-                                                    style: TextStyle(
-                                                        color: Colors.white),
-                                                  )
-                                                : (state.data[index].floor ==
-                                                        "2")
-                                                    ? const Text(
-                                                        '2nd Floor',
-                                                        style: TextStyle(
-                                                            color:
-                                                                Colors.white),
-                                                      )
-                                                    : (state.data[index]
-                                                                .floor ==
-                                                            "3")
-                                                        ? const Text(
-                                                            '3rd Floor',
-                                                            style: TextStyle(
-                                                                color: Colors
-                                                                    .white),
-                                                          )
-                                                        : const Text(
-                                                            '4th Floor',
-                                                            style: TextStyle(
-                                                                color: Colors
-                                                                    .white),
-                                                          ),
-                                        backgroundColor: Colors.pink[300],
-                                      ),
-                                      // Chip(
-                                      //   label: Text(
-                                      //     '${state.data[index].floor} Floor',
-                                      //     style: const TextStyle(
-                                      //         color: Colors.white),
-                                      //   ),
-                                      //   backgroundColor: Colors.pink[300],
-                                      // ),
-                                      const SizedBox(
-                                        width: 50,
-                                      ),
-                                      Text("${state.data[index].size} sq ft"),
-                                      const SizedBox(
-                                        width: 50,
-                                      ),
-                                      for (var i = 0;
-                                          i <
-                                              state.data[index].statementTypes
-                                                  .length;
-                                          i++)
-                                        Text(state.data[index].statementTypes[i]
-                                            .amount
-                                            .toString()),
-                                      const SizedBox(
-                                        width: 50,
-                                      ),
-                                      Text("Ksh ${state.data[index].rent}"),
-                                    ],
-                                  ));
+                                    ),
+                                ],
+                              );
                             },
                           );
                         }
