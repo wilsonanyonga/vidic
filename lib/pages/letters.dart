@@ -121,7 +121,7 @@ class LettersScreen extends StatelessWidget {
                             return Column(
                               children: [
                                 ListTile(
-                                  leading: const Icon(Icons.person),
+                                  // leading: const Icon(Icons.person),
                                   // trailing: const Text(
                                   //   "GFG",
                                   //   style: TextStyle(
@@ -130,10 +130,10 @@ class LettersScreen extends StatelessWidget {
                                   title: Row(
                                     children: [
                                       Text(state.data[index].name),
-                                      const SizedBox(
-                                        width: 50,
-                                      ),
-                                      Text(state.data[index].officialEmail),
+                                      // const SizedBox(
+                                      //   width: 50,
+                                      // ),
+                                      // Text(state.data[index].officialEmail),
                                       const SizedBox(
                                         width: 50,
                                       ),
@@ -183,18 +183,18 @@ class LettersScreen extends StatelessWidget {
                                       //   ),
                                       //   backgroundColor: Colors.pink[300],
                                       // ),
-                                      const SizedBox(
-                                        width: 50,
-                                      ),
-                                      Text("${state.data[index].size} sq ft"),
+                                      // const SizedBox(
+                                      //   width: 50,
+                                      // ),
+                                      // Text("${state.data[index].size} sq ft"),
                                       // const SizedBox(
                                       //   width: 50,
                                       // ),
                                       // const Text("18/5/2021"),
-                                      const SizedBox(
-                                        width: 50,
-                                      ),
-                                      Text("Ksh ${state.data[index].rent}"),
+                                      // const SizedBox(
+                                      //   width: 50,
+                                      // ),
+                                      // Text("Ksh ${state.data[index].rent}"),
                                     ],
                                   ),
                                 ),
@@ -203,9 +203,24 @@ class LettersScreen extends StatelessWidget {
                                     i++)
                                   ListTile(
                                     leading: const Icon(Icons.edit),
-                                    title: Text(state
-                                        .data[index].lettersTypes[i].subject
-                                        .toString()),
+                                    title: Row(
+                                      children: [
+                                        Text(
+                                          state.data[index].lettersTypes[i]
+                                              .subject,
+                                        ),
+                                        const SizedBox(
+                                          width: 50,
+                                        ),
+                                        Text(
+                                          "Date: ${state.data[index].lettersTypes[i].date.toString().replaceAll('21:00:00.000Z', '')}",
+                                        ),
+                                        const SizedBox(
+                                          width: 50,
+                                        ),
+                                        const Icon(Icons.delete)
+                                      ],
+                                    ),
                                   ),
                               ],
                             );
