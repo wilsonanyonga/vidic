@@ -79,7 +79,7 @@ class OccupancyScreen extends StatelessWidget {
                             return Column(
                               children: [
                                 ListTile(
-                                  leading: const Icon(Icons.person),
+                                  leading: const Icon(Icons.edit),
                                   // trailing: const Text(
                                   //   "GFG",
                                   //   style: TextStyle(
