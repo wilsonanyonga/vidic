@@ -133,10 +133,10 @@ class ComplaintsScreen extends StatelessWidget {
                                       const SizedBox(
                                         width: 50,
                                       ),
-                                      Text(state.data[index].officialEmail),
-                                      const SizedBox(
-                                        width: 50,
-                                      ),
+                                      // Text(state.data[index].officialEmail),
+                                      // const SizedBox(
+                                      //   width: 50,
+                                      // ),
                                       Chip(
                                         label: (state.data[index].floor == "0")
                                             ? const Text(
@@ -183,18 +183,18 @@ class ComplaintsScreen extends StatelessWidget {
                                       //   ),
                                       //   backgroundColor: Colors.pink[300],
                                       // ),
-                                      const SizedBox(
-                                        width: 50,
-                                      ),
-                                      Text("${state.data[index].size} sq ft"),
                                       // const SizedBox(
                                       //   width: 50,
                                       // ),
-                                      // const Text("18/5/2021"),
-                                      const SizedBox(
-                                        width: 50,
-                                      ),
-                                      Text("Ksh ${state.data[index].rent}"),
+                                      // Text("${state.data[index].size} sq ft"),
+                                      // // const SizedBox(
+                                      // //   width: 50,
+                                      // // ),
+                                      // // const Text("18/5/2021"),
+                                      // const SizedBox(
+                                      //   width: 50,
+                                      // ),
+                                      // Text("Ksh ${state.data[index].rent}"),
                                     ],
                                   ),
                                 ),
@@ -203,9 +203,27 @@ class ComplaintsScreen extends StatelessWidget {
                                         state.data[index].lettersTenantTypes
                                             .length;
                                     i++)
-                                  Text(state
-                                      .data[index].lettersTenantTypes[i].subject
-                                      .toString()),
+                                  ListTile(
+                                    title: Row(
+                                      children: [
+                                        Text(
+                                          state.data[index]
+                                              .lettersTenantTypes[i].subject
+                                              .toString(),
+                                        ),
+                                        const SizedBox(
+                                          width: 50,
+                                        ),
+                                        Text(
+                                          "Date: ${state.data[index].lettersTenantTypes[i].date.toString().replaceAll('21:00:00.000Z', '')}",
+                                        ),
+                                        const SizedBox(
+                                          width: 50,
+                                        ),
+                                        const Icon(Icons.delete)
+                                      ],
+                                    ),
+                                  ),
                               ],
                             );
                           },
