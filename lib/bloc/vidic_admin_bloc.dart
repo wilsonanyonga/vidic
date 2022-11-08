@@ -5,6 +5,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/foundation.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:vidic/models/invoice/get_invoice2.dart';
+import 'package:vidic/models/landing/tenants2.dart';
 import 'package:vidic/models/letter/get_letter2.dart';
 import 'package:vidic/models/occupancy/get_occupancy2.dart';
 import 'package:vidic/models/statement/get_statement.dart';
@@ -81,6 +82,34 @@ class VidicAdminBloc extends Bloc<VidicAdminEvent, VidicAdminState> {
       // TODO: implement event handler
       // emit(LoginState());
     });
+
+    // ------------------------------------------------------------------------------------------------------------
+    // ----------- Tenants List --------------------------------
+    // ------------------------------------------------------------------------------------------
+
+    on<TenantGetEvent>((event, emit) async {
+      // TODO: implement event handler
+      emit(TenantLoading());
+      if (kDebugMode) {
+        print("hehe start");
+      }
+      // delay for token to be stored well in shared preferences
+      await Future.delayed(const Duration(seconds: 1));
+
+      final statements = await _client.getTenants();
+
+      final occupancy = await _client.getOccupancy();
+
+      if (kDebugMode) {
+        print("hehe");
+        print(statements!.data);
+      }
+      emit(TenantLoaded(statements!.data, occupancy!.data));
+    });
+
+    // ------------------------------------------------------------------------------------------------------------
+    // ----------- Tenants END--------------------------------
+    // ------------------------------------------------------------------------------------------
 
     // ------------------------------------------------------------------------------------------------------------
     // ----------- STATEMENT --------------------------------
