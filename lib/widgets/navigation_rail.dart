@@ -19,7 +19,7 @@ class WidgetNavigationRail extends StatelessWidget {
         //   _selectedIndex = index;
         // });
         if (index == 0) {
-          context.go('/nyumba');
+          context.go('/dala');
         } else if (index == 1) {
           context.go('/statement');
         } else if (index == 2) {
