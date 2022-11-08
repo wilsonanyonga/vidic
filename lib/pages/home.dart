@@ -52,7 +52,9 @@ class MyHomePage extends StatelessWidget {
     mediaQsize = MediaQuery.of(context).size;
     mediaQheight = mediaQsize.height;
     mediaQwidth = mediaQsize.width;
-
+    if (kDebugMode) {
+      print('object is home');
+    }
     Future<void> signOut() async {
       await Auth().signOut();
 
@@ -73,7 +75,7 @@ class MyHomePage extends StatelessWidget {
     return BlocProvider(
       create: (context) => VidicAdminBloc(
         RepositoryProvider.of<DioClient>(context),
-      )..add(StatementGetEvent()),
+      )..add(TenantGetEvent()),
       child: Scaffold(
         // appBar: AppBar(
         //   // Here we take the value from the MyHomePage object that was created by
@@ -133,26 +135,42 @@ class MyHomePage extends StatelessWidget {
                           const SizedBox(
                             height: 4,
                           ),
-                          Align(
-                            alignment: Alignment.center,
-                            child: Wrap(
-                              direction: Axis.horizontal,
-                              alignment: WrapAlignment.center,
-                              // runAlignment: WrapAlignment.center,
-                              // mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                NewWidgetCardHome(),
-                                NewWidgetCardHome(),
-                                NewWidgetCardHome(),
-                                NewWidgetCardHome(),
-                                NewWidgetCardHome(),
-                                // NewWidgetCardHome(),
-                                // NewWidgetCardHome(),
-                                // NewWidgetCardHome(),
-                                // NewWidgetCardHome(),
-                                // NewWidgetCardHome(),
-                              ],
-                            ),
+                          BlocConsumer<VidicAdminBloc, VidicAdminState>(
+                            listener: (context, state) {
+                              // TODO: implement listener
+                            },
+                            builder: (context, state) {
+                              if (state is TenantLoading) {
+                                return const Center(
+                                    child: CircularProgressIndicator());
+                              }
+                              if (state is TenantLoaded) {
+                                return Align(
+                                  alignment: Alignment.center,
+                                  child: Wrap(
+                                    direction: Axis.horizontal,
+                                    alignment: WrapAlignment.center,
+                                    children: [
+                                      Row(
+                                        children: [
+                                          for (var i = 0;
+                                              i < state.occupy.length;
+                                              i++)
+                                            NewWidgetCardHome(
+                                                capacity:
+                                                    state.occupy[i].capacity,
+                                                floor: state.occupy[i].floor,
+                                                occupancy:
+                                                    state.occupy[i].occupancy),
+                                          // NewWidgetCardHome(),
+                                        ],
+                                      ),
+                                    ],
+                                  ),
+                                );
+                              }
+                              return const Text('Error Occured');
+                            },
                           )
                         ],
                       ),
@@ -215,41 +233,112 @@ class MyHomePage extends StatelessWidget {
                           const SizedBox(
                             height: 20,
                           ),
-                          ListView.builder(
-                            shrinkWrap: true,
-                            physics: const NeverScrollableScrollPhysics(),
-                            itemCount: 20,
-                            itemBuilder: (BuildContext context, int index) {
-                              return ListTile(
-                                  leading: const Icon(Icons.person),
-                                  // trailing: const Text(
-                                  //   "GFG",
-                                  //   style: TextStyle(
-                                  //       color: Colors.green, fontSize: 15),
-                                  // ),
-                                  title: Row(
-                                    children: [
-                                      Text("Tenant "),
-                                      const SizedBox(
-                                        width: 50,
-                                      ),
-                                      Text("mymail@gmail.com"),
-                                      const SizedBox(
-                                        width: 50,
-                                      ),
-                                      Chip(
-                                        label: const Text(
-                                          '1st Floor',
-                                          style: TextStyle(color: Colors.white),
-                                        ),
-                                        backgroundColor: Colors.pink[300],
-                                      ),
-                                      const SizedBox(
-                                        width: 50,
-                                      ),
-                                      const Text("700 sq ft"),
-                                    ],
-                                  ));
+                          BlocConsumer<VidicAdminBloc, VidicAdminState>(
+                            listener: (context, state) {
+                              // TODO: implement listener
+                            },
+                            builder: (context, state) {
+                              if (state is TenantLoading) {
+                                return const Center(
+                                    child: CircularProgressIndicator());
+                              }
+                              if (state is TenantLoaded) {
+                                return ListView.builder(
+                                  shrinkWrap: true,
+                                  physics: const NeverScrollableScrollPhysics(),
+                                  itemCount: state.data.length,
+                                  itemBuilder:
+                                      (BuildContext context, int index) {
+                                    return ListTile(
+                                        leading: const Icon(Icons.person),
+                                        // trailing: const Text(
+                                        //   "GFG",
+                                        //   style: TextStyle(
+                                        //       color: Colors.green, fontSize: 15),
+                                        // ),
+                                        title: Row(
+                                          children: [
+                                            Text(state.data[index].name),
+                                            const SizedBox(
+                                              width: 50,
+                                            ),
+                                            Text(state
+                                                .data[index].officialEmail),
+                                            const SizedBox(
+                                              width: 50,
+                                            ),
+                                            Chip(
+                                              label: (state.data[index].floor ==
+                                                      "0")
+                                                  ? const Text(
+                                                      'Ground Floor',
+                                                      style: TextStyle(
+                                                          color: Colors.white),
+                                                    )
+                                                  : (state.data[index].floor ==
+                                                          "1")
+                                                      ? const Text(
+                                                          '1st Floor',
+                                                          style: TextStyle(
+                                                              color:
+                                                                  Colors.white),
+                                                        )
+                                                      : (state.data[index]
+                                                                  .floor ==
+                                                              "2")
+                                                          ? const Text(
+                                                              '2nd Floor',
+                                                              style: TextStyle(
+                                                                  color: Colors
+                                                                      .white),
+                                                            )
+                                                          : (state.data[index]
+                                                                      .floor ==
+                                                                  "3")
+                                                              ? const Text(
+                                                                  '3rd Floor',
+                                                                  style: TextStyle(
+                                                                      color: Colors
+                                                                          .white),
+                                                                )
+                                                              : const Text(
+                                                                  '4th Floor',
+                                                                  style: TextStyle(
+                                                                      color: Colors
+                                                                          .white),
+                                                                ),
+                                              backgroundColor: Colors.pink[300],
+                                            ),
+                                            // Chip(
+                                            //   label: const Text(
+                                            //     '1st Floor',
+                                            //     style: TextStyle(
+                                            //         color: Colors.white),
+                                            //   ),
+                                            //   backgroundColor: Colors.pink[300],
+                                            // ),
+                                            const SizedBox(
+                                              width: 50,
+                                            ),
+                                            Text(
+                                              "${state.data[index].size} sq ft",
+                                            ),
+                                            const SizedBox(
+                                              width: 50,
+                                            ),
+                                            Text(
+                                              "Ksh ${state.data[index].rent}",
+                                            ),
+                                            const SizedBox(
+                                              width: 20,
+                                            ),
+                                            const Icon(Icons.delete),
+                                          ],
+                                        ));
+                                  },
+                                );
+                              }
+                              return const Text('Error Occured');
                             },
                           ),
                         ],
