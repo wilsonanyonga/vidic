@@ -17,6 +17,8 @@ class VidicLoginEvent extends VidicAdminEvent {
 
 class LogoutEvent extends VidicAdminEvent {}
 
+class TenantGetEvent extends VidicAdminEvent {}
+
 class StatementGetEvent extends VidicAdminEvent {}
 
 class InvoiceGetEvent extends VidicAdminEvent {}
