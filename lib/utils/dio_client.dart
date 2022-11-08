@@ -4,6 +4,7 @@ import 'package:dio/dio.dart';
 import 'package:flutter/foundation.dart';
 import 'package:vidic/models/invoice/get_invoice.dart';
 import 'package:vidic/models/jwt.dart';
+import 'package:vidic/models/landing/tenants.dart';
 import 'package:vidic/models/letter/get_letter.dart';
 import 'package:vidic/models/occupancy/get_occupancy.dart';
 import 'package:vidic/models/statement/get_statement.dart';
@@ -80,6 +81,61 @@ class DioClient {
     return mpesaPay;
   }
 
+  // get tenants
+  Future<GetTenant?> getTenants() async {
+    GetTenant? user;
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    //Return String
+    stringValue = prefs.getString('jwt_token');
+    if (kDebugMode) {
+      print(stringValue);
+    }
+    try {
+      // _dio.options.headers[HttpHeaders.authorizationHeader] = "stringValue";
+      Response userData = await _dio.get(
+        '/getTenant',
+        options: Options(
+          headers: {
+            // "authorization": stringValue, // set content-length
+            "authorization": stringValue, // set content-length
+            // "Content-Type": "application/json",
+            // 'Accept': '*/*',
+            // "Access-Control-Allow-Origin": "*",
+            // "Access-Control-Allow-Headers": "Content-Type, Authorization",
+            // "Access-Control-Allow-Methods": "GET, POST, PUT, DELETE,PATCH",
+            // "Content-Type": "application/json",
+          },
+        ),
+      );
+
+      if (kDebugMode) {
+        print('User Info: ${userData.data}');
+      }
+
+      user = GetTenant.fromJson(userData.data);
+    } on DioError catch (e) {
+      // The request was made and the server responded with a status code
+      // that falls out of the range of 2xx and is also not 304.
+      if (e.response != null) {
+        if (kDebugMode) {
+          print('Dio error!');
+          print('STATUS: ${e.response?.statusCode}');
+          print('DATA: ${e.response?.data}');
+          print('HEADERS: ${e.response?.headers}');
+        }
+      } else {
+        // Error due to setting up or sending the request
+        if (kDebugMode) {
+          print('Error sending request!');
+          print(e.message);
+        }
+      }
+    }
+
+    return user;
+  }
+
+  // get statement
   Future<GetStatement?> getStatement() async {
     GetStatement? user;
     SharedPreferences prefs = await SharedPreferences.getInstance();
