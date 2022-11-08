@@ -1,10 +1,17 @@
+import 'dart:core';
+
 import 'package:flutter/material.dart';
 import 'package:percent_indicator/percent_indicator.dart';
 
 class NewWidgetCardHome extends StatelessWidget {
   var mediaQsize, mediaQheight, mediaQwidth;
-
+  int capacity;
+  int floor;
+  int occupancy;
   NewWidgetCardHome({
+    required this.capacity,
+    required this.floor,
+    required this.occupancy,
     Key? key,
   }) : super(key: key);
 
@@ -19,18 +26,27 @@ class NewWidgetCardHome extends StatelessWidget {
       color: Colors.white,
       child: SizedBox(
         height: 80,
-        width: 210,
+        width: 220,
         child: Stack(
           children: [
-            const Positioned(
+            Positioned(
               top: 20,
               left: 10,
-              child: Text('1st Floor (10 offices)'),
+              child: (floor == 0)
+                  ? const Text('Ground Floor')
+                  : (floor == 1)
+                      ? const Text('1st Floor')
+                      : (floor == 2)
+                          ? const Text('2nd Floor')
+                          : (floor == 3)
+                              ? const Text('3rd Floor')
+                              : const Text('4th Floor'),
             ),
-            const Positioned(
+            Positioned(
               top: 40,
               left: 10,
-              child: Text('7 offices Occupied'),
+              child: Text(
+                  '${occupancy.toString()}/${capacity.toString()} offices Occupied'),
             ),
             // const Positioned(
             //   top: 60,
@@ -39,15 +55,16 @@ class NewWidgetCardHome extends StatelessWidget {
             // ),
             Positioned(
               top: 10,
-              left: 145,
+              left: 155,
               child: CircularPercentIndicator(
                 radius: 30.0,
                 lineWidth: 4.0,
                 animation: true,
-                percent: 7 / 10,
-                center: const Text(
-                  "70.0%",
-                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 10.0),
+                percent: occupancy / capacity,
+                center: Text(
+                  "${(occupancy / capacity * 100).round()}%",
+                  style: const TextStyle(
+                      fontWeight: FontWeight.bold, fontSize: 10.0),
                 ),
                 // footer: const Text(
                 //   "Sales this week",
