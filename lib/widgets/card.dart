@@ -64,7 +64,7 @@ class NewWidgetCardHome extends StatelessWidget {
                 center: Text(
                   "${(occupancy / capacity * 100).round()}%",
                   style: const TextStyle(
-                      fontWeight: FontWeight.bold, fontSize: 10.0),
+                      fontWeight: FontWeight.bold, fontSize: 20.0),
                 ),
                 // footer: const Text(
                 //   "Sales this week",
