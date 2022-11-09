@@ -1,5 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/foundation.dart';
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:percent_indicator/percent_indicator.dart';
@@ -46,12 +47,42 @@ class MyHomePage extends StatelessWidget {
     //   _counter++;
     // });
   }
+  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+  String? errorMessage = '';
+  // bool isLogin = true;
+
+  final TextEditingController _controllerName = TextEditingController();
+  final TextEditingController _controllerNumber = TextEditingController();
+  final TextEditingController _controllerEmail = TextEditingController();
+  final TextEditingController _controllerAbout = TextEditingController();
+  final TextEditingController _controllerFloor = TextEditingController();
+  final TextEditingController _controllerSize = TextEditingController();
+  final TextEditingController _controllerRent = TextEditingController();
+  final TextEditingController _controllerEscalation = TextEditingController();
+  final TextEditingController _controllerPoBox = TextEditingController();
+  final TextEditingController _controllerLeaseStart = TextEditingController();
+  final TextEditingController _controllerLeaseEnd = TextEditingController();
+
+  // final List<String> floorList = <String>['0', '1', '2', '3', '4'];
+  List<DropdownMenuItem<String>> get dropdownItems {
+    List<DropdownMenuItem<String>> menuItems = [
+      const DropdownMenuItem(value: "0", child: Text("Ground Floor")),
+      const DropdownMenuItem(value: "1", child: Text("1st Floor")),
+      const DropdownMenuItem(value: "2", child: Text("2nd Floor")),
+      const DropdownMenuItem(value: "3", child: Text("3rd Floor")),
+      const DropdownMenuItem(value: "4", child: Text("4th Floor")),
+    ];
+    return menuItems;
+  }
 
   @override
   Widget build(BuildContext context) {
     mediaQsize = MediaQuery.of(context).size;
     mediaQheight = mediaQsize.height;
     mediaQwidth = mediaQsize.width;
+    // String dropdownValue = floorList.first;
+    // String selectedValue = "0";
+    String? selectedValue;
     if (kDebugMode) {
       print('object is home');
     }
@@ -105,258 +136,604 @@ class MyHomePage extends StatelessWidget {
 
             const VerticalDivider(thickness: 1, width: 2),
 
-            Expanded(
-              child: SingleChildScrollView(
-                child: Column(
-                  // mainAxisSize: MainAxisSize.max,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  children: [
-                    // const Text('data'),
-                    const MenuBarWidget(),
-                    // Center(
-                    //   child: Text('Page Number: $_selectedIndex'),
-                    // ),
-                    const SizedBox(
-                      height: 20,
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.fromLTRB(10, 2, 10, 2),
+            BlocConsumer<VidicAdminBloc, VidicAdminState>(
+              listener: (context, state) {
+                // TODO: implement listener
+              },
+              builder: (context, state) {
+                if (state is CreateTenantState) {
+                  return Expanded(
+                    child: SingleChildScrollView(
                       child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.center,
                         children: [
+                          const SizedBox(
+                            height: 30,
+                          ),
                           const Text(
-                            'Building Occupancy',
+                            'Create A New Tenant',
                             style: TextStyle(
+                              fontSize: 20,
                               fontWeight: FontWeight.bold,
-                              fontSize: 15,
+                            ),
+                          ),
+
+                          SizedBox(
+                            width: 400,
+                            child: Form(
+                              key: _formKey,
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  TextFormField(
+                                    controller: _controllerName,
+                                    keyboardType: TextInputType.name,
+                                    decoration: const InputDecoration(
+                                      hintText: 'Enter Company Name',
+                                      border: UnderlineInputBorder(),
+                                      labelText: 'Enter Company Name',
+                                    ),
+                                    validator: (String? value) {
+                                      if (value == null || value.isEmpty) {
+                                        return 'Please enter the Company Name';
+                                      }
+                                      return null;
+                                    },
+                                  ),
+                                  TextFormField(
+                                    controller: _controllerNumber,
+                                    keyboardType: TextInputType.phone,
+                                    decoration: const InputDecoration(
+                                      // hintText: 'Enter Company Phone Number',
+                                      border: UnderlineInputBorder(),
+                                      labelText: 'Enter Company Name',
+                                    ),
+                                    validator: (String? value) {
+                                      if (value == null || value.isEmpty) {
+                                        return 'Please enter the Company Phone Number';
+                                      }
+                                      return null;
+                                    },
+                                  ),
+                                  TextFormField(
+                                    controller: _controllerEmail,
+                                    keyboardType: TextInputType.emailAddress,
+                                    decoration: const InputDecoration(
+                                      border: UnderlineInputBorder(),
+                                      labelText: 'Enter your email',
+                                    ),
+                                    validator: (String? value) {
+                                      if (value == null || value.isEmpty) {
+                                        return 'Please enter some text';
+                                      } else if (value.contains('@') == false) {
+                                        return 'Please enter a valid email';
+                                      }
+                                      return null;
+                                    },
+                                  ),
+                                  TextFormField(
+                                    controller: _controllerAbout,
+                                    keyboardType: TextInputType.multiline,
+                                    // expands: true,
+                                    maxLines: null,
+                                    decoration: const InputDecoration(
+                                      // hintText: 'Enter Company Description',
+                                      border: UnderlineInputBorder(),
+                                      labelText: 'Enter Company Description',
+                                    ),
+                                    validator: (String? value) {
+                                      if (value == null || value.isEmpty) {
+                                        return 'Please enter the Company Description';
+                                      }
+                                      return null;
+                                    },
+                                  ),
+                                  DropdownButtonFormField(
+                                    decoration: const InputDecoration(
+                                      border: UnderlineInputBorder(),
+                                      labelText: 'Choose Floor',
+                                    ),
+                                    items: dropdownItems,
+                                    value: selectedValue,
+                                    validator: (String? value) {
+                                      if (value == null || value.isEmpty) {
+                                        return 'Please enter the Floor';
+                                      }
+                                      return null;
+                                    },
+                                    onChanged: ((value) {
+                                      selectedValue == value;
+                                    }),
+                                  ),
+                                  // TextFormField(
+                                  //   controller: _controllerFloor,
+                                  //   keyboardType: TextInputType.number,
+                                  //   decoration: const InputDecoration(
+                                  //     border: UnderlineInputBorder(),
+                                  //     labelText: 'Enter Floor',
+                                  //   ),
+                                  //   validator: (String? value) {
+                                  //     if (value == null || value.isEmpty) {
+                                  //       return 'Please enter the Floor';
+                                  //     }
+                                  //     return null;
+                                  //   },
+                                  // ),
+                                  TextFormField(
+                                    controller: _controllerSize,
+                                    keyboardType: TextInputType.number,
+                                    decoration: const InputDecoration(
+                                      border: UnderlineInputBorder(),
+                                      labelText: 'Enter Floor Size',
+                                    ),
+                                    validator: (String? value) {
+                                      if (value == null || value.isEmpty) {
+                                        return 'Please enter the Floor Size';
+                                      }
+                                      return null;
+                                    },
+                                  ),
+                                  TextFormField(
+                                    controller: _controllerRent,
+                                    keyboardType: TextInputType.number,
+                                    decoration: const InputDecoration(
+                                      border: UnderlineInputBorder(),
+                                      labelText: 'Enter Rent Amount',
+                                    ),
+                                    validator: (String? value) {
+                                      if (value == null || value.isEmpty) {
+                                        return 'Please enter the Rent Amount';
+                                      }
+                                      return null;
+                                    },
+                                  ),
+                                  TextFormField(
+                                    controller: _controllerEscalation,
+                                    keyboardType: TextInputType.number,
+                                    decoration: const InputDecoration(
+                                      border: UnderlineInputBorder(),
+                                      labelText: 'Enter Rent Escalation',
+                                    ),
+                                    validator: (String? value) {
+                                      if (value == null || value.isEmpty) {
+                                        return 'Please enter the Rent Escalation';
+                                      }
+                                      return null;
+                                    },
+                                  ),
+                                  TextFormField(
+                                    controller: _controllerPoBox,
+                                    keyboardType: TextInputType.text,
+                                    decoration: const InputDecoration(
+                                      border: UnderlineInputBorder(),
+                                      labelText: 'Enter P.O.Box',
+                                    ),
+                                    validator: (String? value) {
+                                      if (value == null || value.isEmpty) {
+                                        return 'Please enter the P.O.Box';
+                                      }
+                                      return null;
+                                    },
+                                  ),
+                                  TextFormField(
+                                    controller: _controllerLeaseStart,
+                                    keyboardType: TextInputType.datetime,
+                                    decoration: const InputDecoration(
+                                      border: UnderlineInputBorder(),
+                                      labelText: 'Enter Lease Start Date',
+                                    ),
+                                    validator: (String? value) {
+                                      if (value == null || value.isEmpty) {
+                                        return 'Please enter the Lease Start Date';
+                                      }
+                                      return null;
+                                    },
+                                  ),
+                                  TextFormField(
+                                    controller: _controllerLeaseEnd,
+                                    keyboardType: TextInputType.datetime,
+                                    decoration: const InputDecoration(
+                                      border: UnderlineInputBorder(),
+                                      labelText: 'Enter Lease End Date',
+                                    ),
+                                    validator: (String? value) {
+                                      if (value == null || value.isEmpty) {
+                                        return 'Please enter the Lease End Date';
+                                      }
+                                      return null;
+                                    },
+                                  ),
+                                  const SizedBox(
+                                    height: 10,
+                                  ),
+                                  ElevatedButton(
+                                    onPressed: () {
+                                      if (_formKey.currentState!.validate()) {
+                                        // Process data. millicent.odhiambo@vidic.co.ke
+                                        // signInWithEmailAndPassword();
+                                        if (kDebugMode) {
+                                          print('sending');
+                                        }
+                                        BlocProvider.of<VidicAdminBloc>(context)
+                                            .add(
+                                          CreateTenantDataEvent(
+                                            name: _controllerName.text,
+                                            number: _controllerNumber.text,
+                                            officialEmail:
+                                                _controllerEmail.text,
+                                            about: _controllerAbout.text,
+                                            floor: '',
+                                            size: '',
+                                            rent: '',
+                                            escalation: '',
+                                            pobox: '',
+                                            leaseStartDate: '',
+                                            leaseEndDate: '',
+                                            active: '1',
+                                          ),
+                                        );
+                                      }
+                                    },
+                                    child: Row(
+                                      children: const [
+                                        Text('Create New Tenant'),
+                                        SizedBox(
+                                          width: 10,
+                                        ),
+                                        // SizedBox(
+                                        //   width: 15,
+                                        //   height: 15,
+                                        //   child: CircularProgressIndicator(
+                                        //     color: Colors.white,
+                                        //     strokeWidth: 2,
+                                        //   ),
+                                        // )
+                                      ],
+                                    ),
+                                  ),
+                                  const SizedBox(
+                                    height: 30,
+                                  ),
+                                ],
+                              ),
+                            ),
+                          )
+                          // ElevatedButton(
+                          //   onPressed: () {
+                          //     BlocProvider.of<VidicAdminBloc>(context)
+                          //         .add(TenantGetEvent());
+                          //   },
+                          //   child: const Text('back'),
+                          // )
+                        ],
+                      ),
+                    ),
+                  );
+                }
+                return Expanded(
+                  child: Align(
+                    alignment: Alignment.topRight,
+                    child: SingleChildScrollView(
+                      // scrollDirection: Axis.horizontal,
+                      // physics: const NeverScrollableScrollPhysics(),
+                      child: Column(
+                        // mainAxisSize: MainAxisSize.max,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        children: [
+                          // const Text('data'),
+                          const MenuBarWidget(),
+                          // Center(
+                          //   child: Text('Page Number: $_selectedIndex'),
+                          // ),
+                          const SizedBox(
+                            height: 20,
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.fromLTRB(10, 2, 10, 2),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                const Text(
+                                  'Building Occupancy',
+                                  style: TextStyle(
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 15,
+                                  ),
+                                ),
+                                const SizedBox(
+                                  height: 4,
+                                ),
+                                BlocConsumer<VidicAdminBloc, VidicAdminState>(
+                                  listener: (context, state) {
+                                    // TODO: implement listener
+                                  },
+                                  builder: (context, state) {
+                                    if (state is TenantLoading) {
+                                      return const Center(
+                                          child: CircularProgressIndicator());
+                                    }
+                                    if (state is TenantLoaded) {
+                                      return ScrollConfiguration(
+                                        behavior:
+                                            ScrollConfiguration.of(context)
+                                                .copyWith(
+                                          dragDevices: {
+                                            PointerDeviceKind.touch,
+                                            PointerDeviceKind.mouse,
+                                          },
+                                        ),
+                                        child: SingleChildScrollView(
+                                          scrollDirection: Axis.horizontal,
+                                          child: Row(
+                                            children: [
+                                              for (var i = 0;
+                                                  i < state.occupy.length;
+                                                  i++)
+                                                NewWidgetCardHome(
+                                                    capacity: state
+                                                        .occupy[i].capacity,
+                                                    floor:
+                                                        state.occupy[i].floor,
+                                                    occupancy: state
+                                                        .occupy[i].occupancy),
+                                              // NewWidgetCardHome(),
+                                            ],
+                                          ),
+                                        ),
+                                      );
+                                    }
+                                    return const Text('Error Occured');
+                                  },
+                                )
+                              ],
                             ),
                           ),
                           const SizedBox(
-                            height: 4,
+                            height: 20,
                           ),
-                          BlocConsumer<VidicAdminBloc, VidicAdminState>(
-                            listener: (context, state) {
-                              // TODO: implement listener
-                            },
-                            builder: (context, state) {
-                              if (state is TenantLoading) {
-                                return const Center(
-                                    child: CircularProgressIndicator());
-                              }
-                              if (state is TenantLoaded) {
-                                return Align(
-                                  alignment: Alignment.center,
-                                  child: Wrap(
-                                    direction: Axis.horizontal,
-                                    alignment: WrapAlignment.center,
-                                    children: [
-                                      Row(
-                                        children: [
-                                          for (var i = 0;
-                                              i < state.occupy.length;
-                                              i++)
-                                            NewWidgetCardHome(
-                                                capacity:
-                                                    state.occupy[i].capacity,
-                                                floor: state.occupy[i].floor,
-                                                occupancy:
-                                                    state.occupy[i].occupancy),
-                                          // NewWidgetCardHome(),
-                                        ],
-                                      ),
-                                    ],
+
+                          Padding(
+                            padding: const EdgeInsets.fromLTRB(10, 2, 10, 2),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                const Text(
+                                  'Alpha House Tenants',
+                                  style: TextStyle(
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 15,
                                   ),
-                                );
-                              }
-                              return const Text('Error Occured');
-                            },
+                                ),
+                                const SizedBox(
+                                  height: 20,
+                                ),
+                                SizedBox(
+                                  height: 40,
+                                  width: 250,
+                                  child: TextField(
+                                    decoration: InputDecoration(
+                                      enabledBorder: OutlineInputBorder(
+                                        borderRadius: BorderRadius.circular(20),
+                                        borderSide: BorderSide.none,
+                                        // borderSide: const BorderSide(
+                                        //   color: Colors.green,
+                                        //   width: 1.0,
+                                        // ),
+                                      ),
+                                      focusedBorder: OutlineInputBorder(
+                                        borderRadius: BorderRadius.circular(25),
+                                        borderSide: const BorderSide(
+                                          color: Colors.white,
+                                          width: 1.0,
+                                        ),
+                                      ),
+                                      filled: true,
+                                      fillColor: Colors.grey.shade300,
+                                      // input border should appear when data is being modified
+                                      // border: OutlineInputBorder(
+                                      //   borderRadius: BorderRadius.circular(10.0),
+                                      // ),
+                                      floatingLabelStyle:
+                                          const TextStyle(color: Colors.black),
+                                      labelText: 'Search',
+                                      prefixIcon: const Icon(
+                                        Icons.search,
+                                        color: Colors.black,
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                                const SizedBox(
+                                  height: 20,
+                                ),
+                                BlocConsumer<VidicAdminBloc, VidicAdminState>(
+                                  listener: (context, state) {
+                                    // TODO: implement listener
+                                  },
+                                  builder: (context, state) {
+                                    if (state is TenantLoading) {
+                                      return const Center(
+                                          child: CircularProgressIndicator());
+                                    }
+                                    if (state is TenantLoaded) {
+                                      return ScrollConfiguration(
+                                        behavior:
+                                            ScrollConfiguration.of(context)
+                                                .copyWith(
+                                          dragDevices: {
+                                            PointerDeviceKind.touch,
+                                            PointerDeviceKind.mouse,
+                                          },
+                                        ),
+                                        child: ListView.builder(
+                                          shrinkWrap: true,
+                                          // physics:
+                                          //     const NeverScrollableScrollPhysics(),
+                                          itemCount: state.data.length,
+                                          itemBuilder: (BuildContext context,
+                                              int index) {
+                                            return ListTile(
+                                                leading:
+                                                    const Icon(Icons.person),
+                                                // trailing: const Text(
+                                                //   "GFG",
+                                                //   style: TextStyle(
+                                                //       color: Colors.green, fontSize: 15),
+                                                // ),
+                                                title: SingleChildScrollView(
+                                                  // physics:
+                                                  //     const NeverScrollableScrollPhysics(),
+                                                  scrollDirection:
+                                                      Axis.horizontal,
+                                                  child: Row(
+                                                    children: [
+                                                      Text(state
+                                                          .data[index].name),
+                                                      const SizedBox(
+                                                        width: 50,
+                                                      ),
+                                                      Text(state.data[index]
+                                                          .officialEmail),
+                                                      const SizedBox(
+                                                        width: 50,
+                                                      ),
+                                                      Chip(
+                                                        label: (state
+                                                                    .data[index]
+                                                                    .floor ==
+                                                                "0")
+                                                            ? const Text(
+                                                                'Ground Floor',
+                                                                style: TextStyle(
+                                                                    color: Colors
+                                                                        .white),
+                                                              )
+                                                            : (state.data[index]
+                                                                        .floor ==
+                                                                    "1")
+                                                                ? const Text(
+                                                                    '1st Floor',
+                                                                    style: TextStyle(
+                                                                        color: Colors
+                                                                            .white),
+                                                                  )
+                                                                : (state.data[index].floor ==
+                                                                        "2")
+                                                                    ? const Text(
+                                                                        '2nd Floor',
+                                                                        style: TextStyle(
+                                                                            color:
+                                                                                Colors.white),
+                                                                      )
+                                                                    : (state.data[index].floor ==
+                                                                            "3")
+                                                                        ? const Text(
+                                                                            '3rd Floor',
+                                                                            style:
+                                                                                TextStyle(color: Colors.white),
+                                                                          )
+                                                                        : const Text(
+                                                                            '4th Floor',
+                                                                            style:
+                                                                                TextStyle(color: Colors.white),
+                                                                          ),
+                                                        backgroundColor:
+                                                            Colors.pink[300],
+                                                      ),
+                                                      // Chip(
+                                                      //   label: const Text(
+                                                      //     '1st Floor',
+                                                      //     style: TextStyle(
+                                                      //         color: Colors.white),
+                                                      //   ),
+                                                      //   backgroundColor: Colors.pink[300],
+                                                      // ),
+                                                      const SizedBox(
+                                                        width: 50,
+                                                      ),
+                                                      Text(
+                                                        "${state.data[index].size} sq ft",
+                                                      ),
+                                                      const SizedBox(
+                                                        width: 50,
+                                                      ),
+                                                      Text(
+                                                        "Ksh ${state.data[index].rent}",
+                                                      ),
+                                                      const SizedBox(
+                                                        width: 20,
+                                                      ),
+                                                      const Icon(Icons.delete),
+                                                    ],
+                                                  ),
+                                                ));
+                                          },
+                                        ),
+                                      );
+                                    }
+                                    return const Text('Error Occured');
+                                  },
+                                ),
+                              ],
+                            ),
                           )
                         ],
                       ),
                     ),
-                    const SizedBox(
-                      height: 20,
-                    ),
-
-                    Padding(
-                      padding: const EdgeInsets.fromLTRB(10, 2, 10, 2),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          const Text(
-                            'Alpha House Tenants',
-                            style: TextStyle(
-                              fontWeight: FontWeight.bold,
-                              fontSize: 15,
-                            ),
-                          ),
-                          const SizedBox(
-                            height: 20,
-                          ),
-                          SizedBox(
-                            height: 40,
-                            width: 250,
-                            child: TextField(
-                              decoration: InputDecoration(
-                                enabledBorder: OutlineInputBorder(
-                                  borderRadius: BorderRadius.circular(20),
-                                  borderSide: BorderSide.none,
-                                  // borderSide: const BorderSide(
-                                  //   color: Colors.green,
-                                  //   width: 1.0,
-                                  // ),
-                                ),
-                                focusedBorder: OutlineInputBorder(
-                                  borderRadius: BorderRadius.circular(25),
-                                  borderSide: const BorderSide(
-                                    color: Colors.white,
-                                    width: 1.0,
-                                  ),
-                                ),
-                                filled: true,
-                                fillColor: Colors.grey.shade300,
-                                // input border should appear when data is being modified
-                                // border: OutlineInputBorder(
-                                //   borderRadius: BorderRadius.circular(10.0),
-                                // ),
-                                floatingLabelStyle:
-                                    const TextStyle(color: Colors.black),
-                                labelText: 'Search',
-                                prefixIcon: const Icon(
-                                  Icons.search,
-                                  color: Colors.black,
-                                ),
-                              ),
-                            ),
-                          ),
-                          const SizedBox(
-                            height: 20,
-                          ),
-                          BlocConsumer<VidicAdminBloc, VidicAdminState>(
-                            listener: (context, state) {
-                              // TODO: implement listener
-                            },
-                            builder: (context, state) {
-                              if (state is TenantLoading) {
-                                return const Center(
-                                    child: CircularProgressIndicator());
-                              }
-                              if (state is TenantLoaded) {
-                                return ListView.builder(
-                                  shrinkWrap: true,
-                                  physics: const NeverScrollableScrollPhysics(),
-                                  itemCount: state.data.length,
-                                  itemBuilder:
-                                      (BuildContext context, int index) {
-                                    return ListTile(
-                                        leading: const Icon(Icons.person),
-                                        // trailing: const Text(
-                                        //   "GFG",
-                                        //   style: TextStyle(
-                                        //       color: Colors.green, fontSize: 15),
-                                        // ),
-                                        title: Row(
-                                          children: [
-                                            Text(state.data[index].name),
-                                            const SizedBox(
-                                              width: 50,
-                                            ),
-                                            Text(state
-                                                .data[index].officialEmail),
-                                            const SizedBox(
-                                              width: 50,
-                                            ),
-                                            Chip(
-                                              label: (state.data[index].floor ==
-                                                      "0")
-                                                  ? const Text(
-                                                      'Ground Floor',
-                                                      style: TextStyle(
-                                                          color: Colors.white),
-                                                    )
-                                                  : (state.data[index].floor ==
-                                                          "1")
-                                                      ? const Text(
-                                                          '1st Floor',
-                                                          style: TextStyle(
-                                                              color:
-                                                                  Colors.white),
-                                                        )
-                                                      : (state.data[index]
-                                                                  .floor ==
-                                                              "2")
-                                                          ? const Text(
-                                                              '2nd Floor',
-                                                              style: TextStyle(
-                                                                  color: Colors
-                                                                      .white),
-                                                            )
-                                                          : (state.data[index]
-                                                                      .floor ==
-                                                                  "3")
-                                                              ? const Text(
-                                                                  '3rd Floor',
-                                                                  style: TextStyle(
-                                                                      color: Colors
-                                                                          .white),
-                                                                )
-                                                              : const Text(
-                                                                  '4th Floor',
-                                                                  style: TextStyle(
-                                                                      color: Colors
-                                                                          .white),
-                                                                ),
-                                              backgroundColor: Colors.pink[300],
-                                            ),
-                                            // Chip(
-                                            //   label: const Text(
-                                            //     '1st Floor',
-                                            //     style: TextStyle(
-                                            //         color: Colors.white),
-                                            //   ),
-                                            //   backgroundColor: Colors.pink[300],
-                                            // ),
-                                            const SizedBox(
-                                              width: 50,
-                                            ),
-                                            Text(
-                                              "${state.data[index].size} sq ft",
-                                            ),
-                                            const SizedBox(
-                                              width: 50,
-                                            ),
-                                            Text(
-                                              "Ksh ${state.data[index].rent}",
-                                            ),
-                                            const SizedBox(
-                                              width: 20,
-                                            ),
-                                            const Icon(Icons.delete),
-                                          ],
-                                        ));
-                                  },
-                                );
-                              }
-                              return const Text('Error Occured');
-                            },
-                          ),
-                        ],
-                      ),
-                    )
-                  ],
-                ),
-              ),
+                  ),
+                );
+              },
             ),
             // const Center(
             //   child: Text('data'),
             // )
           ],
         ),
-        floatingActionButton: FloatingActionButton(
-          onPressed: _incrementCounter,
-          tooltip: 'Increment',
-          child: const Icon(Icons.add),
+        floatingActionButton: BlocConsumer<VidicAdminBloc, VidicAdminState>(
+          listener: (context, state) {
+            // TODO: implement listener
+          },
+          builder: (context, state) {
+            if (state is TenantLoaded) {
+              return FloatingActionButton(
+                // onPressed: _incrementCounter,
+                // BlocProvider.of<PlansBloc>(context).add(GetPicsLoaded())
+                onPressed: () {
+                  BlocProvider.of<VidicAdminBloc>(context)
+                      .add(CreateTenantEvent());
+                },
+
+                tooltip: 'Increment',
+                child: const Icon(Icons.add),
+              );
+            }
+            if (state is CreateTenantState) {
+              return FloatingActionButton(
+                // onPressed: _incrementCounter,
+                // BlocProvider.of<PlansBloc>(context).add(GetPicsLoaded())
+                onPressed: () {
+                  BlocProvider.of<VidicAdminBloc>(context)
+                      .add(TenantGetEvent());
+                },
+
+                tooltip: 'Back',
+                child: const Icon(Icons.cancel),
+              );
+            }
+            return FloatingActionButton(
+              // onPressed: _incrementCounter,
+              // BlocProvider.of<PlansBloc>(context).add(GetPicsLoaded())
+              onPressed: () {
+                // BlocProvider.of<VidicAdminBloc>(context)
+                //     .add(CreateTenantEvent());
+              },
+
+              tooltip: 'Waiting',
+              child: const Icon(Icons.add),
+            );
+          },
         ), // This trailing comma makes auto-formatting nicer for build methods.
       ),
     );
