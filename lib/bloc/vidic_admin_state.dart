@@ -110,3 +110,9 @@ class OccupancyLoaded extends VidicAdminState {
 }
 
 // ---------Occupancy END---------------------------
+
+// ---------------------------------------------------------------------------------------------
+
+// ------ CREATE NEW TENANT -----------------------
+
+class CreateTenantState extends VidicAdminState {}
