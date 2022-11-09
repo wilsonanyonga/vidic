@@ -145,7 +145,6 @@ class DioClient {
       print(stringValue);
     }
     try {
-      // _dio.options.headers[HttpHeaders.authorizationHeader] = "stringValue";
       Response userData = await _dio.get(
         '/getStatement',
         options: Options(
@@ -199,19 +198,11 @@ class DioClient {
       print(stringValue);
     }
     try {
-      // _dio.options.headers[HttpHeaders.authorizationHeader] = "stringValue";
       Response userData = await _dio.get(
         '/getInvoices',
         options: Options(
           headers: {
-            // "authorization": stringValue, // set content-length
             "authorization": stringValue, // set content-length
-            // "Content-Type": "application/json",
-            // 'Accept': '*/*',
-            // "Access-Control-Allow-Origin": "*",
-            // "Access-Control-Allow-Headers": "Content-Type, Authorization",
-            // "Access-Control-Allow-Methods": "GET, POST, PUT, DELETE,PATCH",
-            // "Content-Type": "application/json",
           },
         ),
       );
@@ -258,14 +249,7 @@ class DioClient {
         '/getLetters',
         options: Options(
           headers: {
-            // "authorization": stringValue, // set content-length
             "authorization": stringValue, // set content-length
-            // "Content-Type": "application/json",
-            // 'Accept': '*/*',
-            // "Access-Control-Allow-Origin": "*",
-            // "Access-Control-Allow-Headers": "Content-Type, Authorization",
-            // "Access-Control-Allow-Methods": "GET, POST, PUT, DELETE,PATCH",
-            // "Content-Type": "application/json",
           },
         ),
       );
@@ -312,14 +296,7 @@ class DioClient {
         '/getLettersTenant',
         options: Options(
           headers: {
-            // "authorization": stringValue, // set content-length
             "authorization": stringValue, // set content-length
-            // "Content-Type": "application/json",
-            // 'Accept': '*/*',
-            // "Access-Control-Allow-Origin": "*",
-            // "Access-Control-Allow-Headers": "Content-Type, Authorization",
-            // "Access-Control-Allow-Methods": "GET, POST, PUT, DELETE,PATCH",
-            // "Content-Type": "application/json",
           },
         ),
       );
@@ -366,14 +343,7 @@ class DioClient {
         '/getOccupancy',
         options: Options(
           headers: {
-            // "authorization": stringValue, // set content-length
             "authorization": stringValue, // set content-length
-            // "Content-Type": "application/json",
-            // 'Accept': '*/*',
-            // "Access-Control-Allow-Origin": "*",
-            // "Access-Control-Allow-Headers": "Content-Type, Authorization",
-            // "Access-Control-Allow-Methods": "GET, POST, PUT, DELETE,PATCH",
-            // "Content-Type": "application/json",
           },
         ),
       );
