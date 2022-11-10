@@ -48,6 +48,8 @@ dependencies:
   awesome_dialog: ^3.0.1 #handling custom dialogs
 
   shared_preferences: ^2.0.15 
+  syncfusion_flutter_datepicker: ^20.3.56
+  file_picker: ^5.2.2
 
 dev_dependencies:
   flutter_test:
