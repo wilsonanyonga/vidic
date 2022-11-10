@@ -1,3 +1,4 @@
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:vidic/bloc/vidic_admin_bloc.dart';
@@ -10,6 +11,7 @@ class StatementScreen extends StatelessWidget {
 
   int _selectedIndex = 1;
   var mediaQsize, mediaQheight, mediaQwidth;
+  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
   @override
   Widget build(BuildContext context) {
@@ -40,230 +42,360 @@ class StatementScreen extends StatelessWidget {
               // child:
             ),
             const VerticalDivider(thickness: 1, width: 2),
-            Expanded(
-              child: Align(
-                alignment: Alignment.topRight,
-                child: SingleChildScrollView(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    children: [
-                      const MenuBarWidget(),
-                      const SizedBox(
-                        height: 20,
-                      ),
-                      const Padding(
-                        padding: EdgeInsets.fromLTRB(20, 0, 0, 0),
-                        child: Text(
-                          'Statements',
-                          style: TextStyle(
-                            fontWeight: FontWeight.bold,
-                            fontSize: 15,
+            BlocConsumer<VidicAdminBloc, VidicAdminState>(
+              listener: (context, state) {
+                // TODO: implement listener
+              },
+              builder: (context, state) {
+                if (state is CreateStatementState) {
+                  return Expanded(
+                    child: SingleChildScrollView(
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          const SizedBox(
+                            height: 30,
                           ),
-                        ),
-                      ),
-                      const SizedBox(
-                        height: 20,
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.fromLTRB(20, 0, 0, 0),
-                        child: SizedBox(
-                          height: 40,
-                          width: 250,
-                          child: TextField(
-                            decoration: InputDecoration(
-                              enabledBorder: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(20),
-                                borderSide: BorderSide.none,
-                                // borderSide: const BorderSide(
-                                //   color: Colors.green,
-                                //   width: 1.0,
-                                // ),
+                          const Text(
+                            'Create A New Statement',
+                            style: TextStyle(
+                              fontSize: 20,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                          SizedBox(
+                            width: 400,
+                            child: Form(
+                              key: _formKey,
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  TextFormField(
+                                    // controller: _controllerName,
+                                    keyboardType: TextInputType.name,
+                                    decoration: const InputDecoration(
+                                      hintText: 'Enter Company Name',
+                                      border: UnderlineInputBorder(),
+                                      labelText: 'Enter Company Name',
+                                    ),
+                                    validator: (String? value) {
+                                      if (value == null || value.isEmpty) {
+                                        return 'Please enter the Company Name';
+                                      }
+                                      return null;
+                                    },
+                                  ),
+                                ],
                               ),
-                              focusedBorder: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(25),
-                                borderSide: const BorderSide(
-                                  color: Colors.white,
-                                  width: 1.0,
-                                ),
-                              ),
-                              filled: true,
-                              fillColor: Colors.grey.shade300,
-                              // input border should appear when data is being modified
-                              // border: OutlineInputBorder(
-                              //   borderRadius: BorderRadius.circular(10.0),
-                              // ),
-                              floatingLabelStyle:
-                                  const TextStyle(color: Colors.black),
-                              labelText: 'Search',
-                              prefixIcon: const Icon(
-                                Icons.search,
-                                color: Colors.black,
+                            ),
+                          )
+                        ],
+                      ),
+                    ),
+                  );
+                }
+                return Expanded(
+                  child: Align(
+                    alignment: Alignment.topRight,
+                    child: SingleChildScrollView(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        children: [
+                          const MenuBarWidget(),
+                          const SizedBox(
+                            height: 20,
+                          ),
+                          const Padding(
+                            padding: EdgeInsets.fromLTRB(20, 0, 0, 0),
+                            child: Text(
+                              'Statements',
+                              style: TextStyle(
+                                fontWeight: FontWeight.bold,
+                                fontSize: 15,
                               ),
                             ),
                           ),
-                        ),
-                      ),
-                      const SizedBox(
-                        height: 20,
-                      ),
-                      BlocConsumer<VidicAdminBloc, VidicAdminState>(
-                        listener: (context, state) {
-                          // TODO: implement listener
-                        },
-                        builder: (context, state) {
-                          if (state is StatementLoading) {
-                            return const Center(
-                                child: CircularProgressIndicator());
-                          }
-                          if (state is StatementLoaded) {
-                            return ListView.builder(
-                              shrinkWrap: true,
-                              physics: const NeverScrollableScrollPhysics(),
-                              itemCount: state.data.length,
-                              itemBuilder: (BuildContext context, int index) {
-                                return Column(
-                                  children: [
-                                    ListTile(
-                                      // leading: const Icon(Icons.person),
-                                      // trailing: const Text(
-                                      //   "GFG",
-                                      //   style: TextStyle(
-                                      //       color: Colors.green, fontSize: 15),
-                                      // ),
-                                      title: Row(
-                                        children: [
-                                          Text(state.data[index].name),
-                                          const SizedBox(
-                                            width: 50,
-                                          ),
-                                          Text(state.data[index].officialEmail),
-                                          const SizedBox(
-                                            width: 50,
-                                          ),
-                                          Chip(
-                                            label: (state.data[index].floor ==
-                                                    "0")
-                                                ? const Text(
-                                                    'Ground Floor',
-                                                    style: TextStyle(
-                                                        color: Colors.white),
-                                                  )
-                                                : (state.data[index].floor ==
-                                                        "1")
-                                                    ? const Text(
-                                                        '1st Floor',
-                                                        style: TextStyle(
-                                                            color:
-                                                                Colors.white),
-                                                      )
-                                                    : (state.data[index]
+                          const SizedBox(
+                            height: 20,
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.fromLTRB(20, 0, 0, 0),
+                            child: SizedBox(
+                              height: 40,
+                              width: 250,
+                              child: TextField(
+                                decoration: InputDecoration(
+                                  enabledBorder: OutlineInputBorder(
+                                    borderRadius: BorderRadius.circular(20),
+                                    borderSide: BorderSide.none,
+                                    // borderSide: const BorderSide(
+                                    //   color: Colors.green,
+                                    //   width: 1.0,
+                                    // ),
+                                  ),
+                                  focusedBorder: OutlineInputBorder(
+                                    borderRadius: BorderRadius.circular(25),
+                                    borderSide: const BorderSide(
+                                      color: Colors.white,
+                                      width: 1.0,
+                                    ),
+                                  ),
+                                  filled: true,
+                                  fillColor: Colors.grey.shade300,
+                                  // input border should appear when data is being modified
+                                  // border: OutlineInputBorder(
+                                  //   borderRadius: BorderRadius.circular(10.0),
+                                  // ),
+                                  floatingLabelStyle:
+                                      const TextStyle(color: Colors.black),
+                                  labelText: 'Search',
+                                  prefixIcon: const Icon(
+                                    Icons.search,
+                                    color: Colors.black,
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ),
+                          const SizedBox(
+                            height: 20,
+                          ),
+                          BlocConsumer<VidicAdminBloc, VidicAdminState>(
+                            listener: (context, state) {
+                              // TODO: implement listener
+                            },
+                            builder: (context, state) {
+                              if (state is StatementLoading) {
+                                return const Center(
+                                    child: CircularProgressIndicator());
+                              }
+
+                              if (state is StatementLoaded) {
+                                return ListView.builder(
+                                  shrinkWrap: true,
+                                  physics: const NeverScrollableScrollPhysics(),
+                                  itemCount: state.data.length,
+                                  itemBuilder:
+                                      (BuildContext context, int index) {
+                                    return Column(
+                                      children: [
+                                        ListTile(
+                                          // leading: const Icon(Icons.person),
+                                          // trailing: const Text(
+                                          //   "GFG",
+                                          //   style: TextStyle(
+                                          //       color: Colors.green, fontSize: 15),
+                                          // ),
+                                          title: ScrollConfiguration(
+                                            behavior:
+                                                ScrollConfiguration.of(context)
+                                                    .copyWith(
+                                              dragDevices: {
+                                                PointerDeviceKind.touch,
+                                                PointerDeviceKind.mouse,
+                                              },
+                                            ),
+                                            child: SingleChildScrollView(
+                                              scrollDirection: Axis.horizontal,
+                                              child: Row(
+                                                children: [
+                                                  Text(state.data[index].name),
+                                                  const SizedBox(
+                                                    width: 50,
+                                                  ),
+                                                  Text(state.data[index]
+                                                      .officialEmail),
+                                                  const SizedBox(
+                                                    width: 50,
+                                                  ),
+                                                  Chip(
+                                                    label: (state.data[index]
                                                                 .floor ==
-                                                            "2")
+                                                            "0")
                                                         ? const Text(
-                                                            '2nd Floor',
+                                                            'Ground Floor',
                                                             style: TextStyle(
                                                                 color: Colors
                                                                     .white),
                                                           )
                                                         : (state.data[index]
                                                                     .floor ==
-                                                                "3")
+                                                                "1")
                                                             ? const Text(
-                                                                '3rd Floor',
+                                                                '1st Floor',
                                                                 style: TextStyle(
                                                                     color: Colors
                                                                         .white),
                                                               )
-                                                            : const Text(
-                                                                '4th Floor',
-                                                                style: TextStyle(
-                                                                    color: Colors
-                                                                        .white),
-                                                              ),
-                                            backgroundColor: Colors.pink[300],
-                                          ),
-                                          // Chip(
-                                          //   label: Text(
-                                          //     '${state.data[index].floor} Floor',
-                                          //     style: const TextStyle(
-                                          //         color: Colors.white),
-                                          //   ),
-                                          //   backgroundColor: Colors.pink[300],
-                                          // ),
-                                          const SizedBox(
-                                            width: 50,
-                                          ),
-                                          Text(
-                                              "${state.data[index].size} sq ft"),
-                                          const SizedBox(
-                                            width: 50,
-                                          ),
+                                                            : (state.data[index]
+                                                                        .floor ==
+                                                                    "2")
+                                                                ? const Text(
+                                                                    '2nd Floor',
+                                                                    style: TextStyle(
+                                                                        color: Colors
+                                                                            .white),
+                                                                  )
+                                                                : (state.data[index]
+                                                                            .floor ==
+                                                                        "3")
+                                                                    ? const Text(
+                                                                        '3rd Floor',
+                                                                        style: TextStyle(
+                                                                            color:
+                                                                                Colors.white),
+                                                                      )
+                                                                    : const Text(
+                                                                        '4th Floor',
+                                                                        style: TextStyle(
+                                                                            color:
+                                                                                Colors.white),
+                                                                      ),
+                                                    backgroundColor:
+                                                        Colors.pink[300],
+                                                  ),
+                                                  // Chip(
+                                                  //   label: Text(
+                                                  //     '${state.data[index].floor} Floor',
+                                                  //     style: const TextStyle(
+                                                  //         color: Colors.white),
+                                                  //   ),
+                                                  //   backgroundColor: Colors.pink[300],
+                                                  // ),
+                                                  const SizedBox(
+                                                    width: 50,
+                                                  ),
+                                                  Text(
+                                                      "${state.data[index].size} sq ft"),
+                                                  const SizedBox(
+                                                    width: 50,
+                                                  ),
 
-                                          const SizedBox(
-                                            width: 50,
+                                                  const SizedBox(
+                                                    width: 50,
+                                                  ),
+                                                  Text(
+                                                      "Ksh ${state.data[index].rent}"),
+                                                ],
+                                              ),
+                                            ),
                                           ),
-                                          Text("Ksh ${state.data[index].rent}"),
-                                        ],
-                                      ),
-                                    ),
-                                    for (var i = 0;
-                                        i <
-                                            state.data[index].statementTypes
-                                                .length;
-                                        i++)
-                                      ListTile(
-                                        leading: const Icon(Icons.edit),
-                                        title: Row(
-                                          children: [
-                                            Text(state.data[index]
-                                                .statementTypes[i].startDate
-                                                .toString()
-                                                .replaceAll(
-                                                    '21:00:00.000Z', '')),
-                                            const SizedBox(
-                                              width: 20,
-                                            ),
-                                            const Text('--'),
-                                            const SizedBox(
-                                              width: 20,
-                                            ),
-                                            Text(state.data[index]
-                                                .statementTypes[i].endDate
-                                                .toString()
-                                                .replaceAll(
-                                                    '21:00:00.000Z', '')),
-                                            const SizedBox(
-                                              width: 50,
-                                            ),
-                                            Text(
-                                                "Amount: Ksh ${state.data[index].statementTypes[i].amount.toString()}"),
-                                            const SizedBox(
-                                              width: 20,
-                                            ),
-                                            const Icon(Icons.delete),
-                                          ],
                                         ),
-                                      ),
-                                  ],
+                                        for (var i = 0;
+                                            i <
+                                                state.data[index].statementTypes
+                                                    .length;
+                                            i++)
+                                          ListTile(
+                                            leading: const Icon(Icons.edit),
+                                            title: ScrollConfiguration(
+                                              behavior: ScrollConfiguration.of(
+                                                      context)
+                                                  .copyWith(
+                                                dragDevices: {
+                                                  PointerDeviceKind.touch,
+                                                  PointerDeviceKind.mouse,
+                                                },
+                                              ),
+                                              child: SingleChildScrollView(
+                                                scrollDirection:
+                                                    Axis.horizontal,
+                                                child: Row(
+                                                  children: [
+                                                    Text(state
+                                                        .data[index]
+                                                        .statementTypes[i]
+                                                        .startDate
+                                                        .toString()
+                                                        .replaceAll(
+                                                            '21:00:00.000Z',
+                                                            '')),
+                                                    const SizedBox(
+                                                      width: 20,
+                                                    ),
+                                                    const Text('--'),
+                                                    const SizedBox(
+                                                      width: 20,
+                                                    ),
+                                                    Text(state
+                                                        .data[index]
+                                                        .statementTypes[i]
+                                                        .endDate
+                                                        .toString()
+                                                        .replaceAll(
+                                                            '21:00:00.000Z',
+                                                            '')),
+                                                    const SizedBox(
+                                                      width: 50,
+                                                    ),
+                                                    Text(
+                                                        "Amount: Ksh ${state.data[index].statementTypes[i].amount.toString()}"),
+                                                    const SizedBox(
+                                                      width: 20,
+                                                    ),
+                                                    const Icon(Icons.delete),
+                                                  ],
+                                                ),
+                                              ),
+                                            ),
+                                          ),
+                                      ],
+                                    );
+                                  },
                                 );
-                              },
-                            );
-                          }
-                          return const Text('Error Occured');
-                        },
+                              }
+                              return const Text('Error Occured');
+                            },
+                          ),
+                        ],
                       ),
-                    ],
+                    ),
                   ),
-                ),
-              ),
+                );
+              },
             ),
           ],
         ),
-        floatingActionButton: FloatingActionButton(
-          onPressed: () {},
-          tooltip: 'Increment',
-          child: const Icon(Icons.add),
+        floatingActionButton: BlocConsumer<VidicAdminBloc, VidicAdminState>(
+          listener: (context, state) {
+            // TODO: implement listener
+          },
+          builder: (context, state) {
+            if (state is CreateStatementState) {
+              return FloatingActionButton(
+                  onPressed: () {
+                    BlocProvider.of<VidicAdminBloc>(context)
+                        .add(StatementGetEvent());
+                  },
+                  tooltip: 'Go Back',
+                  child: const Icon(Icons.cancel));
+            }
+            if (state is StatementLoading) {
+              return FloatingActionButton(
+                onPressed: () {},
+                tooltip: 'Loading',
+                child: const CircularProgressIndicator(
+                  color: Colors.white,
+                ),
+              );
+            }
+            if (state is StatementLoaded) {
+              return FloatingActionButton(
+                  onPressed: () {
+                    BlocProvider.of<VidicAdminBloc>(context)
+                        .add(CreateStatementEvent());
+                  },
+                  tooltip: 'Add New Statement',
+                  child: const Icon(Icons.add));
+            }
+            return FloatingActionButton(
+              onPressed: () {},
+              tooltip: 'Increment',
+              child: const Icon(Icons.add),
+            );
+          },
         ),
       ),
     );
