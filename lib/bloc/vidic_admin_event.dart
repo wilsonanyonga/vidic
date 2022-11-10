@@ -39,6 +39,16 @@ class CreateFloorEvent extends VidicAdminEvent {
   CreateFloorEvent({required this.floor});
 }
 
+class CreateStartDateEvent extends VidicAdminEvent {
+  String? startDate;
+  CreateStartDateEvent({required this.startDate});
+}
+
+class CreateEndDateEvent extends VidicAdminEvent {
+  String? endDate;
+  CreateEndDateEvent({required this.endDate});
+}
+
 class CreateTenantDataEvent extends VidicAdminEvent {
   String name;
   String number;
@@ -68,3 +78,5 @@ class CreateTenantDataEvent extends VidicAdminEvent {
 }
 
 // ---------------------------------------------------------------
+// create new statement
+class CreateStatementEvent extends VidicAdminEvent {}
