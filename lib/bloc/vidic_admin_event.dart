@@ -34,6 +34,11 @@ class ComplaintGetEvent extends VidicAdminEvent {}
 
 class CreateTenantEvent extends VidicAdminEvent {}
 
+class CreateFloorEvent extends VidicAdminEvent {
+  String? floor;
+  CreateFloorEvent({required this.floor});
+}
+
 class CreateTenantDataEvent extends VidicAdminEvent {
   String name;
   String number;
