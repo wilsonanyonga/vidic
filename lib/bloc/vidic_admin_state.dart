@@ -115,4 +115,10 @@ class OccupancyLoaded extends VidicAdminState {
 
 // ------ CREATE NEW TENANT -----------------------
 
-class CreateTenantState extends VidicAdminState {}
+class CreateTenantState extends VidicAdminState {
+  int loadingButton;
+  CreateTenantState(this.loadingButton);
+  @override
+  // TODO: implement props
+  List<Object> get props => [loadingButton];
+}
