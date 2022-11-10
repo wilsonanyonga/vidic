@@ -20,6 +20,7 @@ part 'vidic_admin_state.dart';
 class VidicAdminBloc extends Bloc<VidicAdminEvent, VidicAdminState> {
   final DioClient _client = DioClient();
   Dio dio = Dio();
+  String? floor;
 
   VidicAdminBloc(DioClient of) : super(VidicAdminInitial()) {
     on<VidicAdminEvent>((event, emit) async {
@@ -201,11 +202,53 @@ class VidicAdminBloc extends Bloc<VidicAdminEvent, VidicAdminState> {
 
     // ----------- Create New Tenant ----------------------------
     on<CreateTenantEvent>((event, emit) {
-      emit(CreateTenantState());
+      emit(CreateTenantState(0));
     });
 
-    on<CreateTenantDataEvent>((event, emit) {
-      emit(CreateTenantState());
+    on<CreateFloorEvent>((event, emit) {
+      floor = event.floor;
+      if (kDebugMode) {
+        print("$floor is state");
+      }
+      emit(CreateTenantState(0));
+    });
+    on<CreateTenantDataEvent>((event, emit) async {
+      emit(CreateTenantState(1));
+      if (kDebugMode) {
+        print(event.name);
+        print(event.number);
+        print(event.officialEmail);
+        print(event.about);
+        print(floor);
+        print(event.size);
+        print(event.rent);
+        print(event.escalation);
+        print(event.pobox);
+        print(event.leaseStartDate);
+        print(event.leaseEndDate);
+        print(event.active);
+      }
+      await Future.delayed(const Duration(seconds: 2));
+      final newTenant = await _client.createTenant(
+        name: event.name,
+        number: event.number,
+        officialEmail: event.officialEmail,
+        about: event.about,
+        floor: floor,
+        size: event.size,
+        rent: event.rent,
+        escalation: event.escalation,
+        pobox: event.pobox,
+        leaseStartDate: event.leaseStartDate,
+        leaseEndDate: event.leaseEndDate,
+        active: event.active,
+      );
+      if (kDebugMode) {
+        print("hehe");
+        print(newTenant!.data);
+        print(newTenant.status);
+      }
+      emit(CreateTenantState(0));
     });
     // ----------- END Create New Tenant ----------------------------
   }
