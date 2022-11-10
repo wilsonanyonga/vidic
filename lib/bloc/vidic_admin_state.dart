@@ -122,3 +122,14 @@ class CreateTenantState extends VidicAdminState {
   // TODO: implement props
   List<Object> get props => [loadingButton];
 }
+
+class TenantBackOption extends VidicAdminState {}
+
+// ------ CREATE NEW Statemnt -----------------------
+class CreateStatementState extends VidicAdminState {
+  int loadingButton;
+  CreateStatementState(this.loadingButton);
+  @override
+  // TODO: implement props
+  List<Object> get props => [loadingButton];
+}
