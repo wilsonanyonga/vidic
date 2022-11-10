@@ -121,6 +121,7 @@ class Login extends StatelessWidget {
                           listener: (context, state) {
                             if (state is LoginError) {
                               AwesomeDialog(
+                                width: 600,
                                 context: context,
                                 animType: AnimType.leftSlide,
                                 headerAnimationLoop: false,
