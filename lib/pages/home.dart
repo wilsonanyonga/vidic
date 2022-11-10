@@ -83,6 +83,9 @@ class MyHomePage extends StatelessWidget {
     // String dropdownValue = floorList.first;
     // String selectedValue = "0";
     String? selectedValue;
+
+    // _controllerName.text = 'lol';
+    // _controllerNumber.text = null;
     if (kDebugMode) {
       print('object is home');
     }
@@ -187,7 +190,7 @@ class MyHomePage extends StatelessWidget {
                                     decoration: const InputDecoration(
                                       // hintText: 'Enter Company Phone Number',
                                       border: UnderlineInputBorder(),
-                                      labelText: 'Enter Company Name',
+                                      labelText: 'Enter Company Phone Number',
                                     ),
                                     validator: (String? value) {
                                       if (value == null || value.isEmpty) {
@@ -242,8 +245,14 @@ class MyHomePage extends StatelessWidget {
                                       }
                                       return null;
                                     },
-                                    onChanged: ((value) {
-                                      selectedValue == value;
+                                    onChanged: ((String? newValue) {
+                                      selectedValue = newValue!;
+                                      BlocProvider.of<VidicAdminBloc>(context)
+                                          .add(CreateFloorEvent(
+                                              floor: selectedValue));
+                                      if (kDebugMode) {
+                                        print("$selectedValue is select");
+                                      }
                                     }),
                                   ),
                                   // TextFormField(
@@ -265,7 +274,7 @@ class MyHomePage extends StatelessWidget {
                                     keyboardType: TextInputType.number,
                                     decoration: const InputDecoration(
                                       border: UnderlineInputBorder(),
-                                      labelText: 'Enter Floor Size',
+                                      labelText: 'Enter Floor Size(sq ft)',
                                     ),
                                     validator: (String? value) {
                                       if (value == null || value.isEmpty) {
@@ -279,7 +288,7 @@ class MyHomePage extends StatelessWidget {
                                     keyboardType: TextInputType.number,
                                     decoration: const InputDecoration(
                                       border: UnderlineInputBorder(),
-                                      labelText: 'Enter Rent Amount',
+                                      labelText: 'Enter Rent Amount (Ksh)',
                                     ),
                                     validator: (String? value) {
                                       if (value == null || value.isEmpty) {
@@ -293,7 +302,7 @@ class MyHomePage extends StatelessWidget {
                                     keyboardType: TextInputType.number,
                                     decoration: const InputDecoration(
                                       border: UnderlineInputBorder(),
-                                      labelText: 'Enter Rent Escalation',
+                                      labelText: 'Enter Rent Escalation (%)',
                                     ),
                                     validator: (String? value) {
                                       if (value == null || value.isEmpty) {
@@ -321,7 +330,8 @@ class MyHomePage extends StatelessWidget {
                                     keyboardType: TextInputType.datetime,
                                     decoration: const InputDecoration(
                                       border: UnderlineInputBorder(),
-                                      labelText: 'Enter Lease Start Date',
+                                      labelText:
+                                          'Enter Lease Start Date (year-month-date) (2020-01-08)',
                                     ),
                                     validator: (String? value) {
                                       if (value == null || value.isEmpty) {
@@ -335,7 +345,8 @@ class MyHomePage extends StatelessWidget {
                                     keyboardType: TextInputType.datetime,
                                     decoration: const InputDecoration(
                                       border: UnderlineInputBorder(),
-                                      labelText: 'Enter Lease End Date',
+                                      labelText:
+                                          'Enter Lease End Date (year-month-date) (2020-01-08)',
                                     ),
                                     validator: (String? value) {
                                       if (value == null || value.isEmpty) {
@@ -347,51 +358,93 @@ class MyHomePage extends StatelessWidget {
                                   const SizedBox(
                                     height: 10,
                                   ),
-                                  ElevatedButton(
-                                    onPressed: () {
-                                      if (_formKey.currentState!.validate()) {
-                                        // Process data. millicent.odhiambo@vidic.co.ke
-                                        // signInWithEmailAndPassword();
-                                        if (kDebugMode) {
-                                          print('sending');
-                                        }
-                                        BlocProvider.of<VidicAdminBloc>(context)
-                                            .add(
-                                          CreateTenantDataEvent(
-                                            name: _controllerName.text,
-                                            number: _controllerNumber.text,
-                                            officialEmail:
-                                                _controllerEmail.text,
-                                            about: _controllerAbout.text,
-                                            floor: '',
-                                            size: '',
-                                            rent: '',
-                                            escalation: '',
-                                            pobox: '',
-                                            leaseStartDate: '',
-                                            leaseEndDate: '',
-                                            active: '1',
+                                  (state.loadingButton == 0)
+                                      ? ElevatedButton(
+                                          onPressed: () {
+                                            if (_formKey.currentState!
+                                                .validate()) {
+                                              // Process data. millicent.odhiambo@vidic.co.ke
+                                              // signInWithEmailAndPassword();
+                                              if (kDebugMode) {
+                                                print('sending');
+                                              }
+                                              BlocProvider.of<VidicAdminBloc>(
+                                                      context)
+                                                  .add(
+                                                CreateTenantDataEvent(
+                                                  name: _controllerName.text,
+                                                  number: _controllerNumber.text
+                                                      .toString(),
+                                                  officialEmail:
+                                                      _controllerEmail.text,
+                                                  about: _controllerAbout.text,
+                                                  floor: selectedValue,
+                                                  size: _controllerSize.text
+                                                      .toString(),
+                                                  rent: _controllerRent.text
+                                                      .toString(),
+                                                  escalation:
+                                                      _controllerEscalation.text
+                                                          .toString(),
+                                                  pobox: _controllerPoBox.text,
+                                                  leaseStartDate:
+                                                      _controllerLeaseStart
+                                                          .text,
+                                                  leaseEndDate:
+                                                      _controllerLeaseEnd.text,
+                                                  active: '1',
+                                                ),
+                                              );
+                                              _controllerName.text = '';
+                                              _controllerNumber.text = '';
+                                              _controllerEmail.text = '';
+                                              _controllerAbout.text = '';
+                                              selectedValue = null;
+                                              _controllerSize.text = '';
+                                              _controllerRent.text = '';
+                                              _controllerEscalation.text = '';
+                                              _controllerPoBox.text = '';
+                                              _controllerLeaseStart.text = '';
+                                              _controllerLeaseEnd.text = '';
+                                            }
+                                          },
+                                          child: Row(
+                                            children: const [
+                                              Text('Create New Tenant'),
+                                              SizedBox(
+                                                width: 10,
+                                              ),
+                                              // SizedBox(
+                                              //   width: 15,
+                                              //   height: 15,
+                                              //   child: CircularProgressIndicator(
+                                              //     color: Colors.white,
+                                              //     strokeWidth: 2,
+                                              //   ),
+                                              // )
+                                            ],
                                           ),
-                                        );
-                                      }
-                                    },
-                                    child: Row(
-                                      children: const [
-                                        Text('Create New Tenant'),
-                                        SizedBox(
-                                          width: 10,
+                                        )
+                                      : ElevatedButton(
+                                          onPressed: () {},
+                                          child: Row(
+                                            children: const [
+                                              Text('Creating New Tenant'),
+                                              SizedBox(
+                                                width: 10,
+                                              ),
+                                              SizedBox(
+                                                width: 15,
+                                                height: 15,
+                                                child:
+                                                    CircularProgressIndicator(
+                                                  color: Colors.white,
+                                                  strokeWidth: 2,
+                                                ),
+                                              )
+                                            ],
+                                          ),
                                         ),
-                                        // SizedBox(
-                                        //   width: 15,
-                                        //   height: 15,
-                                        //   child: CircularProgressIndicator(
-                                        //     color: Colors.white,
-                                        //     strokeWidth: 2,
-                                        //   ),
-                                        // )
-                                      ],
-                                    ),
-                                  ),
                                   const SizedBox(
                                     height: 30,
                                   ),
