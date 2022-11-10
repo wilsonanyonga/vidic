@@ -21,6 +21,8 @@ class VidicAdminBloc extends Bloc<VidicAdminEvent, VidicAdminState> {
   final DioClient _client = DioClient();
   Dio dio = Dio();
   String? floor;
+  String? startDate;
+  String? endDate;
 
   VidicAdminBloc(DioClient of) : super(VidicAdminInitial()) {
     on<VidicAdminEvent>((event, emit) async {
@@ -212,6 +214,21 @@ class VidicAdminBloc extends Bloc<VidicAdminEvent, VidicAdminState> {
       }
       emit(CreateTenantState(0));
     });
+    on<CreateStartDateEvent>((event, emit) {
+      startDate = event.startDate;
+      if (kDebugMode) {
+        print("$startDate is state");
+      }
+      emit(CreateTenantState(0));
+    });
+    on<CreateEndDateEvent>((event, emit) {
+      endDate = event.endDate;
+      if (kDebugMode) {
+        print("$endDate is state");
+      }
+      emit(CreateTenantState(0));
+    });
+
     on<CreateTenantDataEvent>((event, emit) async {
       emit(CreateTenantState(1));
       if (kDebugMode) {
@@ -228,28 +245,44 @@ class VidicAdminBloc extends Bloc<VidicAdminEvent, VidicAdminState> {
         print(event.leaseEndDate);
         print(event.active);
       }
-      await Future.delayed(const Duration(seconds: 2));
-      final newTenant = await _client.createTenant(
-        name: event.name,
-        number: event.number,
-        officialEmail: event.officialEmail,
-        about: event.about,
-        floor: floor,
-        size: event.size,
-        rent: event.rent,
-        escalation: event.escalation,
-        pobox: event.pobox,
-        leaseStartDate: event.leaseStartDate,
-        leaseEndDate: event.leaseEndDate,
-        active: event.active,
-      );
-      if (kDebugMode) {
-        print("hehe");
-        print(newTenant!.data);
-        print(newTenant.status);
+      // await Future.delayed(const Duration(seconds: 2));
+      try {
+        final newTenant = await _client.createTenant(
+          name: event.name,
+          number: event.number,
+          officialEmail: event.officialEmail,
+          about: event.about,
+          floor: floor,
+          size: event.size,
+          rent: event.rent,
+          escalation: event.escalation,
+          pobox: event.pobox,
+          leaseStartDate: startDate,
+          leaseEndDate: endDate,
+          active: event.active,
+        );
+        if (kDebugMode) {
+          print("hehe");
+          print(newTenant!.data);
+          print(newTenant.status);
+        }
+        if (newTenant!.status == 200) {
+          emit(CreateTenantState(0));
+          emit(TenantBackOption());
+        }
+      } catch (e) {
+        if (kDebugMode) {
+          print("hehe2");
+          print(e);
+        }
       }
-      emit(CreateTenantState(0));
     });
     // ----------- END Create New Tenant ----------------------------
+
+    // ----------- Create New Statement ----------------------------
+    on<CreateStatementEvent>((event, emit) {
+      emit(CreateStatementState(0));
+    });
+    // ----------- END Create New Statement ----------------------------
   }
 }
