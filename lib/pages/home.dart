@@ -1,3 +1,4 @@
+import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/gestures.dart';
@@ -5,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:percent_indicator/percent_indicator.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:syncfusion_flutter_datepicker/datepicker.dart';
 import 'package:vidic/bloc/vidic_admin_bloc.dart';
 import 'package:vidic/utils/auth.dart';
 import 'package:vidic/utils/dio_client.dart';
@@ -83,6 +85,7 @@ class MyHomePage extends StatelessWidget {
     // String dropdownValue = floorList.first;
     // String selectedValue = "0";
     String? selectedValue;
+    String? _selectedDate;
 
     // _controllerName.text = 'lol';
     // _controllerNumber.text = null;
@@ -142,6 +145,56 @@ class MyHomePage extends StatelessWidget {
             BlocConsumer<VidicAdminBloc, VidicAdminState>(
               listener: (context, state) {
                 // TODO: implement listener
+                if (state is TenantBackOption) {
+                  AwesomeDialog(
+                    context: context,
+                    animType: AnimType.leftSlide,
+                    headerAnimationLoop: false,
+                    dismissOnBackKeyPress: false,
+                    dialogType: DialogType.success,
+                    showCloseIcon: true,
+                    title: 'Data Successfully Stored',
+                    desc:
+                        'You can choose to either go back home or add a new tenant',
+                    btnCancelText: "Back Home",
+                    btnOkText: "Add Another Tenant",
+                    btnOkOnPress: () {
+                      // debugPrint('OnClcik');
+                      BlocProvider.of<VidicAdminBloc>(context)
+                          .add(CreateTenantEvent());
+                      _controllerName.text = '';
+                      _controllerNumber.text = '';
+                      _controllerEmail.text = '';
+                      _controllerAbout.text = '';
+                      selectedValue = null;
+                      _controllerSize.text = '';
+                      _controllerRent.text = '';
+                      _controllerEscalation.text = '';
+                      _controllerPoBox.text = '';
+                      _controllerLeaseStart.text = '';
+                      _controllerLeaseEnd.text = '';
+                    },
+                    btnOkIcon: Icons.check_circle,
+                    btnCancelOnPress: () {
+                      BlocProvider.of<VidicAdminBloc>(context)
+                          .add(TenantGetEvent());
+                      _controllerName.text = '';
+                      _controllerNumber.text = '';
+                      _controllerEmail.text = '';
+                      _controllerAbout.text = '';
+                      selectedValue = null;
+                      _controllerSize.text = '';
+                      _controllerRent.text = '';
+                      _controllerEscalation.text = '';
+                      _controllerPoBox.text = '';
+                      _controllerLeaseStart.text = '';
+                      _controllerLeaseEnd.text = '';
+                    },
+                    onDismissCallback: (type) {
+                      debugPrint('Dialog Dissmiss from callback $type');
+                    },
+                  ).show();
+                }
               },
               builder: (context, state) {
                 if (state is CreateTenantState) {
@@ -325,36 +378,78 @@ class MyHomePage extends StatelessWidget {
                                       return null;
                                     },
                                   ),
-                                  TextFormField(
-                                    controller: _controllerLeaseStart,
-                                    keyboardType: TextInputType.datetime,
-                                    decoration: const InputDecoration(
-                                      border: UnderlineInputBorder(),
-                                      labelText:
-                                          'Enter Lease Start Date (year-month-date) (2020-01-08)',
-                                    ),
-                                    validator: (String? value) {
-                                      if (value == null || value.isEmpty) {
-                                        return 'Please enter the Lease Start Date';
-                                      }
-                                      return null;
-                                    },
+                                  const SizedBox(
+                                    height: 15,
                                   ),
-                                  TextFormField(
-                                    controller: _controllerLeaseEnd,
-                                    keyboardType: TextInputType.datetime,
-                                    decoration: const InputDecoration(
-                                      border: UnderlineInputBorder(),
-                                      labelText:
-                                          'Enter Lease End Date (year-month-date) (2020-01-08)',
-                                    ),
-                                    validator: (String? value) {
-                                      if (value == null || value.isEmpty) {
-                                        return 'Please enter the Lease End Date';
-                                      }
-                                      return null;
-                                    },
+                                  const Text(
+                                    'Lease Start Date',
+                                    style: TextStyle(fontSize: 17),
                                   ),
+                                  SfDateRangePicker(
+                                    onSelectionChanged:
+                                        (DateRangePickerSelectionChangedArgs
+                                            args) {
+                                      BlocProvider.of<VidicAdminBloc>(context)
+                                          .add(CreateStartDateEvent(
+                                              startDate: args.value
+                                                  .toString()
+                                                  .replaceAll(
+                                                      ' 00:00:00.000', '')));
+                                    },
+                                    selectionMode:
+                                        DateRangePickerSelectionMode.single,
+                                  ),
+                                  const SizedBox(
+                                    height: 15,
+                                  ),
+                                  const Text(
+                                    'Lease End Date',
+                                    style: TextStyle(fontSize: 17),
+                                  ),
+                                  SfDateRangePicker(
+                                    onSelectionChanged:
+                                        (DateRangePickerSelectionChangedArgs
+                                            args) {
+                                      BlocProvider.of<VidicAdminBloc>(context)
+                                          .add(CreateEndDateEvent(
+                                              endDate: args.value
+                                                  .toString()
+                                                  .replaceAll(
+                                                      ' 00:00:00.000', '')));
+                                    },
+                                    selectionMode:
+                                        DateRangePickerSelectionMode.single,
+                                  ),
+                                  // TextFormField(
+                                  //   controller: _controllerLeaseStart,
+                                  //   keyboardType: TextInputType.datetime,
+                                  //   decoration: const InputDecoration(
+                                  //     border: UnderlineInputBorder(),
+                                  //     labelText:
+                                  //         'Enter Lease Start Date (year-month-date) (2020-01-08)',
+                                  //   ),
+                                  //   validator: (String? value) {
+                                  //     if (value == null || value.isEmpty) {
+                                  //       return 'Please enter the Lease Start Date';
+                                  //     }
+                                  //     return null;
+                                  //   },
+                                  // ),
+                                  // TextFormField(
+                                  //   controller: _controllerLeaseEnd,
+                                  //   keyboardType: TextInputType.datetime,
+                                  //   decoration: const InputDecoration(
+                                  //     border: UnderlineInputBorder(),
+                                  //     labelText:
+                                  //         'Enter Lease End Date (year-month-date) (2020-01-08)',
+                                  //   ),
+                                  //   validator: (String? value) {
+                                  //     if (value == null || value.isEmpty) {
+                                  //       return 'Please enter the Lease End Date';
+                                  //     }
+                                  //     return null;
+                                  //   },
+                                  // ),
                                   const SizedBox(
                                     height: 10,
                                   ),
@@ -395,17 +490,17 @@ class MyHomePage extends StatelessWidget {
                                                   active: '1',
                                                 ),
                                               );
-                                              _controllerName.text = '';
-                                              _controllerNumber.text = '';
-                                              _controllerEmail.text = '';
-                                              _controllerAbout.text = '';
-                                              selectedValue = null;
-                                              _controllerSize.text = '';
-                                              _controllerRent.text = '';
-                                              _controllerEscalation.text = '';
-                                              _controllerPoBox.text = '';
-                                              _controllerLeaseStart.text = '';
-                                              _controllerLeaseEnd.text = '';
+                                              // _controllerName.text = '';
+                                              // _controllerNumber.text = '';
+                                              // _controllerEmail.text = '';
+                                              // _controllerAbout.text = '';
+                                              // selectedValue = null;
+                                              // _controllerSize.text = '';
+                                              // _controllerRent.text = '';
+                                              // _controllerEscalation.text = '';
+                                              // _controllerPoBox.text = '';
+                                              // _controllerLeaseStart.text = '';
+                                              // _controllerLeaseEnd.text = '';
                                             }
                                           },
                                           child: Row(
@@ -749,6 +844,21 @@ class MyHomePage extends StatelessWidget {
             // TODO: implement listener
           },
           builder: (context, state) {
+            if (state is TenantLoading) {
+              return FloatingActionButton(
+                // onPressed: _incrementCounter,
+                // BlocProvider.of<PlansBloc>(context).add(GetPicsLoaded())
+                onPressed: () {
+                  // BlocProvider.of<VidicAdminBloc>(context)
+                  //     .add(CreateTenantEvent());
+                },
+
+                tooltip: 'Loading',
+                child: const CircularProgressIndicator(
+                  color: Colors.white,
+                ),
+              );
+            }
             if (state is TenantLoaded) {
               return FloatingActionButton(
                 // onPressed: _incrementCounter,
@@ -758,7 +868,7 @@ class MyHomePage extends StatelessWidget {
                       .add(CreateTenantEvent());
                 },
 
-                tooltip: 'Increment',
+                tooltip: 'Add Tenant',
                 child: const Icon(Icons.add),
               );
             }
