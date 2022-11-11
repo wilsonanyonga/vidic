@@ -128,8 +128,10 @@ class TenantBackOption extends VidicAdminState {}
 // ------ CREATE NEW Statemnt -----------------------
 class CreateStatementState extends VidicAdminState {
   int loadingButton;
-  CreateStatementState(this.loadingButton);
+  String? fileName;
+  List<DropdownMenuItem<String>> dropdownItems;
+  CreateStatementState(this.loadingButton, this.fileName, this.dropdownItems);
   @override
   // TODO: implement props
-  List<Object> get props => [loadingButton];
+  List<Object> get props => [loadingButton, fileName!, dropdownItems];
 }
