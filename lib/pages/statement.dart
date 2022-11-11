@@ -1,6 +1,8 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:syncfusion_flutter_datepicker/datepicker.dart';
 import 'package:vidic/bloc/vidic_admin_bloc.dart';
 import 'package:vidic/utils/dio_client.dart';
 import 'package:vidic/widgets/menu_bar.dart';
@@ -13,11 +15,15 @@ class StatementScreen extends StatelessWidget {
   var mediaQsize, mediaQheight, mediaQwidth;
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
+  final TextEditingController _controllerAmount = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
     mediaQsize = MediaQuery.of(context).size;
     mediaQheight = mediaQsize.height;
     mediaQwidth = mediaQsize.width;
+
+    String? selectedValue;
 
     return BlocProvider(
       create: (context) => VidicAdminBloc(
@@ -71,20 +77,106 @@ class StatementScreen extends StatelessWidget {
                               child: Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
-                                  TextFormField(
-                                    // controller: _controllerName,
-                                    keyboardType: TextInputType.name,
+                                  DropdownButtonFormField(
                                     decoration: const InputDecoration(
-                                      hintText: 'Enter Company Name',
                                       border: UnderlineInputBorder(),
-                                      labelText: 'Enter Company Name',
+                                      labelText: 'Choose Floor',
                                     ),
+                                    items: state.dropdownItems,
+                                    value: selectedValue,
                                     validator: (String? value) {
                                       if (value == null || value.isEmpty) {
-                                        return 'Please enter the Company Name';
+                                        return 'Please enter the Floor';
                                       }
                                       return null;
                                     },
+                                    onChanged: ((String? newValue) {
+                                      selectedValue = newValue!;
+                                      BlocProvider.of<VidicAdminBloc>(context)
+                                          .add(CreateFloorEvent(
+                                              floor: selectedValue));
+                                      if (kDebugMode) {
+                                        print("$selectedValue is select");
+                                      }
+                                    }),
+                                  ),
+                                  TextFormField(
+                                    controller: _controllerAmount,
+                                    keyboardType: TextInputType.number,
+                                    decoration: const InputDecoration(
+                                      hintText: 'Enter Amount on Statement',
+                                      border: UnderlineInputBorder(),
+                                      labelText: 'Enter Amount on Statement',
+                                    ),
+                                    validator: (String? value) {
+                                      if (value == null || value.isEmpty) {
+                                        return 'Please enter the Amount on Statement';
+                                      }
+                                      return null;
+                                    },
+                                  ),
+                                  const SizedBox(
+                                    height: 10,
+                                  ),
+                                  Text(
+                                    state.fileName!,
+                                    style: const TextStyle(
+                                      fontSize: 17,
+                                    ),
+                                  ),
+                                  // (state.fileName != null)?
+                                  // Text(state.fileName!):const Text(''),
+                                  const SizedBox(
+                                    height: 10,
+                                  ),
+                                  ElevatedButton(
+                                    onPressed: () {
+                                      BlocProvider.of<VidicAdminBloc>(context)
+                                          .add(UploadStatementFileEvent());
+                                    },
+                                    child: const Text('Upload Statement'),
+                                  ),
+                                  const SizedBox(
+                                    height: 15,
+                                  ),
+                                  const Text(
+                                    'Statement Start Date',
+                                    style: TextStyle(fontSize: 17),
+                                  ),
+                                  SfDateRangePicker(
+                                    onSelectionChanged:
+                                        (DateRangePickerSelectionChangedArgs
+                                            args) {
+                                      BlocProvider.of<VidicAdminBloc>(context)
+                                          .add(CreateStatementStartDateEvent(
+                                              statementStartDate: args.value
+                                                  .toString()
+                                                  .replaceAll(
+                                                      ' 00:00:00.000', '')));
+                                    },
+                                    selectionMode:
+                                        DateRangePickerSelectionMode.single,
+                                  ),
+                                  const SizedBox(
+                                    height: 15,
+                                  ),
+                                  const Text(
+                                    'Statement End Date',
+                                    style: TextStyle(fontSize: 17),
+                                  ),
+                                  SfDateRangePicker(
+                                    onSelectionChanged:
+                                        (DateRangePickerSelectionChangedArgs
+                                            args) {
+                                      BlocProvider.of<VidicAdminBloc>(context)
+                                          .add(CreateStatementEndDateEvent(
+                                              statementEndDate: args.value
+                                                  .toString()
+                                                  .replaceAll(
+                                                      ' 00:00:00.000', '')));
+                                    },
+                                    selectionMode:
+                                        DateRangePickerSelectionMode.single,
                                   ),
                                 ],
                               ),
