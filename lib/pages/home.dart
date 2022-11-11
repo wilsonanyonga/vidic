@@ -148,6 +148,7 @@ class MyHomePage extends StatelessWidget {
                 if (state is TenantBackOption) {
                   AwesomeDialog(
                     context: context,
+                    width: 600,
                     animType: AnimType.leftSlide,
                     headerAnimationLoop: false,
                     dismissOnBackKeyPress: false,
