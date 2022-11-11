@@ -80,3 +80,15 @@ class CreateTenantDataEvent extends VidicAdminEvent {
 // ---------------------------------------------------------------
 // create new statement
 class CreateStatementEvent extends VidicAdminEvent {}
+
+class UploadStatementFileEvent extends VidicAdminEvent {}
+
+class CreateStatementStartDateEvent extends VidicAdminEvent {
+  String? statementStartDate;
+  CreateStatementStartDateEvent({required this.statementStartDate});
+}
+
+class CreateStatementEndDateEvent extends VidicAdminEvent {
+  String? statementEndDate;
+  CreateStatementEndDateEvent({required this.statementEndDate});
+}
