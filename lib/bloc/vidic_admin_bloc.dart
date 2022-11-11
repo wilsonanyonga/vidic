@@ -1,8 +1,12 @@
+import 'dart:io';
+
 import 'package:bloc/bloc.dart';
 import 'package:dio/dio.dart';
 import 'package:equatable/equatable.dart';
+import 'package:file_picker/file_picker.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/foundation.dart';
+import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:vidic/models/invoice/get_invoice2.dart';
 import 'package:vidic/models/landing/tenants2.dart';
@@ -23,6 +27,21 @@ class VidicAdminBloc extends Bloc<VidicAdminEvent, VidicAdminState> {
   String? floor;
   String? startDate;
   String? endDate;
+  // List<DatumTenant>? tenantsList;
+  List<Datum>? tenantsList;
+  String? statementStartDate;
+  String? statementEndDate;
+  String? statementFileName;
+
+  List<DropdownMenuItem<String>> get dropdownItems {
+    List<DropdownMenuItem<String>> menuItems = [
+      for (var i = 0; i < tenantsList!.length; i++)
+        DropdownMenuItem(
+            value: tenantsList![i].datumId.toString(),
+            child: Text(tenantsList![i].name)),
+    ];
+    return menuItems;
+  }
 
   VidicAdminBloc(DioClient of) : super(VidicAdminInitial()) {
     on<VidicAdminEvent>((event, emit) async {
@@ -102,7 +121,7 @@ class VidicAdminBloc extends Bloc<VidicAdminEvent, VidicAdminState> {
       final statements = await _client.getTenants();
 
       final occupancy = await _client.getOccupancy();
-
+      // tenantsList = statements!.data;
       if (kDebugMode) {
         print("hehe");
         print(statements!.data);
@@ -119,11 +138,12 @@ class VidicAdminBloc extends Bloc<VidicAdminEvent, VidicAdminState> {
       emit(StatementLoading());
       // await Future.delayed(const Duration(seconds: 2));
       final statements = await _client.getStatement();
+      tenantsList = statements!.data;
       if (kDebugMode) {
         print("hehe");
-        print(statements!.data);
+        print(statements.data);
       }
-      emit(StatementLoaded(statements!.data));
+      emit(StatementLoaded(statements.data));
     });
 
     // ----------- STATEMENT END--------------------------------
@@ -280,8 +300,68 @@ class VidicAdminBloc extends Bloc<VidicAdminEvent, VidicAdminState> {
     // ----------- END Create New Tenant ----------------------------
 
     // ----------- Create New Statement ----------------------------
-    on<CreateStatementEvent>((event, emit) {
-      emit(CreateStatementState(0));
+    on<CreateStatementEvent>((event, emit) async {
+      if (kDebugMode) {
+        print('create me');
+        print(dropdownItems);
+      }
+      emit(CreateStatementState(0, '', dropdownItems));
+    });
+
+    on<UploadStatementFileEvent>((event, emit) async {
+      try {
+        FilePickerResult? result = await FilePicker.platform.pickFiles();
+
+        if (result != null) {
+          Uint8List statementFile = result.files.single.bytes!;
+          if (kDebugMode) {
+            print(result.files.single.name);
+            print(statementFile.length);
+            print("upload worked");
+          }
+          statementFileName = result.files.single.name;
+          emit(
+              CreateStatementState(0, result.files.single.name, dropdownItems));
+        } else {
+          // User canceled the picker
+          if (kDebugMode) {
+            print("upload failed");
+          }
+          emit(CreateStatementState(0, '', dropdownItems));
+        }
+      } catch (e) {
+        if (kDebugMode) {
+          print("upload totally failed");
+        }
+        emit(CreateStatementState(0, '', dropdownItems));
+      }
+
+      // emit(CreateStatementState(0));
+    });
+
+    on<CreateStatementStartDateEvent>((event, emit) {
+      statementStartDate = event.statementStartDate;
+      if (kDebugMode) {
+        print("$statementStartDate is state");
+      }
+      if (statementFileName == null) {
+        // String statementFileName2 = '';
+        emit(CreateStatementState(0, '', dropdownItems));
+      } else {
+        // String? statementFileName2 = statementFileName;
+        emit(CreateStatementState(0, statementFileName, dropdownItems));
+      }
+    });
+    on<CreateStatementEndDateEvent>((event, emit) {
+      statementEndDate = event.statementEndDate;
+      if (kDebugMode) {
+        print("$statementEndDate is state");
+      }
+      if (statementFileName == null) {
+        emit(CreateStatementState(0, '', dropdownItems));
+      } else {
+        emit(CreateStatementState(0, statementFileName, dropdownItems));
+      }
     });
     // ----------- END Create New Statement ----------------------------
   }
