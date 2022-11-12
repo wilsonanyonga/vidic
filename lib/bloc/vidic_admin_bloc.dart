@@ -28,7 +28,7 @@ class VidicAdminBloc extends Bloc<VidicAdminEvent, VidicAdminState> {
   String? startDate;
   String? endDate;
   // List<DatumTenant>? tenantsList;
-  List<Datum>? tenantsList;
+  List<DatumTenant>? tenantsList;
   String? statementStartDate;
   String? statementEndDate;
   String? statementFileName;
@@ -138,12 +138,12 @@ class VidicAdminBloc extends Bloc<VidicAdminEvent, VidicAdminState> {
       emit(StatementLoading());
       // await Future.delayed(const Duration(seconds: 2));
       final statements = await _client.getStatement();
-      tenantsList = statements!.data;
+      // tenantsList = statements!.data;
       if (kDebugMode) {
         print("hehe");
-        print(statements.data);
+        print(statements!.data);
       }
-      emit(StatementLoaded(statements.data));
+      emit(StatementLoaded(statements!.data));
     });
 
     // ----------- STATEMENT END--------------------------------
@@ -303,9 +303,18 @@ class VidicAdminBloc extends Bloc<VidicAdminEvent, VidicAdminState> {
     on<CreateStatementEvent>((event, emit) async {
       if (kDebugMode) {
         print('create me');
-        print(dropdownItems);
+        // print(dropdownItems);
       }
+      // try {
+      final statements = await _client.getTenants();
+      tenantsList = statements!.data;
       emit(CreateStatementState(0, '', dropdownItems));
+      // } catch (e) {
+      //   if (kDebugMode) {
+      //     print(e);
+      //   }
+      //   emit(CreateStatementState(0, '', dropdownItems));
+      // }
     });
 
     on<UploadStatementFileEvent>((event, emit) async {
