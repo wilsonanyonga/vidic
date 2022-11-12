@@ -80,13 +80,13 @@ class StatementScreen extends StatelessWidget {
                                   DropdownButtonFormField(
                                     decoration: const InputDecoration(
                                       border: UnderlineInputBorder(),
-                                      labelText: 'Choose Floor',
+                                      labelText: 'Choose Tenant',
                                     ),
                                     items: state.dropdownItems,
                                     value: selectedValue,
                                     validator: (String? value) {
                                       if (value == null || value.isEmpty) {
-                                        return 'Please enter the Floor';
+                                        return 'Please enter the Tenant';
                                       }
                                       return null;
                                     },
