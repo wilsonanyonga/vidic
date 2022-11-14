@@ -28,10 +28,12 @@ class VidicAdminBloc extends Bloc<VidicAdminEvent, VidicAdminState> {
   String? startDate;
   String? endDate;
   // List<DatumTenant>? tenantsList;
+  // statents
   List<DatumTenant>? tenantsList;
   String? statementStartDate;
   String? statementEndDate;
   String? statementFileName;
+  String? tenantStatementName;
 
   List<DropdownMenuItem<String>> get dropdownItems {
     List<DropdownMenuItem<String>> menuItems = [
@@ -305,16 +307,16 @@ class VidicAdminBloc extends Bloc<VidicAdminEvent, VidicAdminState> {
         print('create me');
         // print(dropdownItems);
       }
-      // try {
-      final statements = await _client.getTenants();
-      tenantsList = statements!.data;
-      emit(CreateStatementState(0, '', dropdownItems));
-      // } catch (e) {
-      //   if (kDebugMode) {
-      //     print(e);
-      //   }
-      //   emit(CreateStatementState(0, '', dropdownItems));
-      // }
+      try {
+        final statements = await _client.getTenants();
+        tenantsList = statements!.data;
+        emit(CreateStatementState(0, '', dropdownItems));
+      } catch (e) {
+        if (kDebugMode) {
+          print(e);
+        }
+        emit(CreateStatementState(0, '', dropdownItems));
+      }
     });
 
     on<UploadStatementFileEvent>((event, emit) async {
@@ -372,6 +374,27 @@ class VidicAdminBloc extends Bloc<VidicAdminEvent, VidicAdminState> {
         emit(CreateStatementState(0, statementFileName, dropdownItems));
       }
     });
+
+    on<CreateTenantStatementEvent>(
+      (event, emit) {
+        tenantStatementName = event.tenantStatementName;
+        if (kDebugMode) {
+          print("$tenantStatementName is state");
+        }
+        // emit(CreateTenantState(0));
+        if (statementFileName == null) {
+          emit(CreateStatementState(0, '', dropdownItems));
+        } else {
+          emit(CreateStatementState(0, statementFileName, dropdownItems));
+        }
+        // emit(CreateStatementState(0, statementFileName, dropdownItems));
+      },
+    );
+
+    on<UploadTenantStatementEvent>(
+      (event, emit) {},
+    );
+
     // ----------- END Create New Statement ----------------------------
   }
 }
