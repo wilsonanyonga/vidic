@@ -93,8 +93,9 @@ class StatementScreen extends StatelessWidget {
                                     onChanged: ((String? newValue) {
                                       selectedValue = newValue!;
                                       BlocProvider.of<VidicAdminBloc>(context)
-                                          .add(CreateFloorEvent(
-                                              floor: selectedValue));
+                                          .add(CreateTenantStatementEvent(
+                                        tenantStatementName: selectedValue,
+                                      ));
                                       if (kDebugMode) {
                                         print("$selectedValue is select");
                                       }
@@ -177,6 +178,75 @@ class StatementScreen extends StatelessWidget {
                                     },
                                     selectionMode:
                                         DateRangePickerSelectionMode.single,
+                                  ),
+                                  const SizedBox(
+                                    height: 15,
+                                  ),
+                                  ElevatedButton(
+                                    onPressed: () {
+                                      if (_formKey.currentState!.validate()) {
+                                        // Process data. millicent.odhiambo@vidic.co.ke
+                                        // signInWithEmailAndPassword();
+                                        if (kDebugMode) {
+                                          print('sending');
+                                        }
+                                        BlocProvider.of<VidicAdminBloc>(context)
+                                            .add(
+                                          CreateTenantDataEvent(
+                                            name: _controllerName.text,
+                                            number: _controllerNumber.text
+                                                .toString(),
+                                            officialEmail:
+                                                _controllerEmail.text,
+                                            about: _controllerAbout.text,
+                                            floor: selectedValue,
+                                            size:
+                                                _controllerSize.text.toString(),
+                                            rent:
+                                                _controllerRent.text.toString(),
+                                            escalation: _controllerEscalation
+                                                .text
+                                                .toString(),
+                                            pobox: _controllerPoBox.text,
+                                            leaseStartDate:
+                                                _controllerLeaseStart.text,
+                                            leaseEndDate:
+                                                _controllerLeaseEnd.text,
+                                            active: '1',
+                                          ),
+                                        );
+                                        // _controllerName.text = '';
+                                        // _controllerNumber.text = '';
+                                        // _controllerEmail.text = '';
+                                        // _controllerAbout.text = '';
+                                        // selectedValue = null;
+                                        // _controllerSize.text = '';
+                                        // _controllerRent.text = '';
+                                        // _controllerEscalation.text = '';
+                                        // _controllerPoBox.text = '';
+                                        // _controllerLeaseStart.text = '';
+                                        // _controllerLeaseEnd.text = '';
+                                      }
+                                    },
+                                    child: Row(
+                                      children: const [
+                                        Text('Create New Statement'),
+                                        SizedBox(
+                                          width: 10,
+                                        ),
+                                        // SizedBox(
+                                        //   width: 15,
+                                        //   height: 15,
+                                        //   child: CircularProgressIndicator(
+                                        //     color: Colors.white,
+                                        //     strokeWidth: 2,
+                                        //   ),
+                                        // )
+                                      ],
+                                    ),
+                                  ),
+                                  const SizedBox(
+                                    height: 20,
                                   ),
                                 ],
                               ),
