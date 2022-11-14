@@ -34,6 +34,7 @@ class VidicAdminBloc extends Bloc<VidicAdminEvent, VidicAdminState> {
   String? statementEndDate;
   String? statementFileName;
   String? tenantStatementName;
+  Uint8List? statementFile;
 
   List<DropdownMenuItem<String>> get dropdownItems {
     List<DropdownMenuItem<String>> menuItems = [
@@ -324,10 +325,10 @@ class VidicAdminBloc extends Bloc<VidicAdminEvent, VidicAdminState> {
         FilePickerResult? result = await FilePicker.platform.pickFiles();
 
         if (result != null) {
-          Uint8List statementFile = result.files.single.bytes!;
+          statementFile = result.files.single.bytes!;
           if (kDebugMode) {
             print(result.files.single.name);
-            print(statementFile.length);
+            print(statementFile!.length);
             print("upload worked");
           }
           statementFileName = result.files.single.name;
@@ -392,7 +393,42 @@ class VidicAdminBloc extends Bloc<VidicAdminEvent, VidicAdminState> {
     );
 
     on<UploadTenantStatementEvent>(
-      (event, emit) {},
+      (event, emit) async {
+        emit(CreateStatementState(1, statementFileName, dropdownItems));
+        try {
+          if (kDebugMode) {
+            print(tenantStatementName);
+            print(event.amount);
+            print(statementStartDate);
+            print(statementEndDate);
+            print(statementFileName);
+          }
+          final newStatement = await _client.createStatement(
+            tenantStatementName: tenantStatementName,
+            amount: event.amount,
+            statementStartDate: statementStartDate,
+            statementEndDate: statementEndDate,
+            statementFile: statementFile,
+          );
+          if (kDebugMode) {
+            print("statement response");
+            print(newStatement!.data);
+            print(newStatement.status);
+          }
+
+          if (newStatement!.status == 2000) {
+            // emit(CreateTenantState(0));
+            emit(CreateStatementState(0, statementFileName, dropdownItems));
+            emit(StatementBackOption());
+          }
+        } catch (e) {
+          if (kDebugMode) {
+            print('statement submit error');
+            print('statement submit error is $e');
+          }
+          emit(CreateStatementState(0, statementFileName, dropdownItems));
+        }
+      },
     );
 
     // ----------- END Create New Statement ----------------------------
