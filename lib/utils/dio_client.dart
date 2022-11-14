@@ -478,4 +478,89 @@ class DioClient {
 
     return createTenant;
   }
+
+  // create new statement
+  Future<PostTenant?> createStatement({
+    required String name,
+    required String number,
+    required String officialEmail,
+    required String about,
+    String? floor,
+    required String size,
+    required String rent,
+    required String escalation,
+  }) async {
+    PostTenant? createTenant;
+    // print(imageFile);
+    if (kDebugMode) {
+      // print(us2.toJson());
+      print("object is testing............");
+    }
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    //Return String
+    stringValue = prefs.getString('jwt_token');
+    try {
+      // var formData = FormData.fromMap({
+      //   'name': us2.name,
+      //   'number': us2.number,
+      //   'email': us2.email,
+      //   'role': us2.role,
+      //   'age': us2.age,
+      //   'about': us2.about,
+      //   'location': us2.location,
+      //   // 'password': us2.password,
+      //   'paid': us2.paid,
+      //   'active': us2.active,
+      //   'file': await MultipartFile.fromFile('${us2.picture}',
+      //       filename: 'upload.png'),
+      //   'file2': await MultipartFile.fromFile('${us2.picture2}',
+      //       filename: 'upload2.png'),
+      //   'file3': await MultipartFile.fromFile('${us2.picture3}',
+      //       filename: 'upload3.png'),
+      //   'file4': await MultipartFile.fromFile('${us2.picture4}',
+      //       filename: 'upload4.png'),
+      // });
+      // print(formData);
+
+      if (kDebugMode) {
+        print("object is here");
+      }
+      Response response = await _dio.post(
+        '/postTenant',
+        options: Options(
+          headers: {
+            "authorization": stringValue, // set content-length
+          },
+        ),
+        data: {
+          "name": name,
+          "number": number,
+          "vidic_email": "vidic@vidic.co.ke",
+          "official_email": officialEmail,
+          "about": about,
+          "floor": floor,
+          "size": size,
+          "rent": rent,
+          "escalation": escalation,
+          "pobox": pobox,
+          "lease_start_date": leaseStartDate,
+          "lease_end_date": leaseEndDate,
+          "active": active
+        },
+      );
+
+      if (kDebugMode) {
+        print('User created: ${response.data['data']}');
+        print("object is creating............");
+      }
+
+      createTenant = PostTenant.fromJson(response.data);
+    } catch (e) {
+      if (kDebugMode) {
+        print('Error creating user: $e');
+      }
+    }
+
+    return createTenant;
+  }
 }
