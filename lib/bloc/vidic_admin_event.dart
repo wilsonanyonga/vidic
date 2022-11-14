@@ -92,3 +92,14 @@ class CreateStatementEndDateEvent extends VidicAdminEvent {
   String? statementEndDate;
   CreateStatementEndDateEvent({required this.statementEndDate});
 }
+
+class CreateTenantStatementEvent extends VidicAdminEvent {
+  String? tenantStatementName;
+  CreateTenantStatementEvent({required this.tenantStatementName});
+}
+
+class UploadTenantStatementEvent extends VidicAdminEvent {
+  String? amount;
+
+  UploadTenantStatementEvent({required this.amount});
+}
