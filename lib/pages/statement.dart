@@ -1,3 +1,4 @@
+import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
@@ -51,6 +52,40 @@ class StatementScreen extends StatelessWidget {
             BlocConsumer<VidicAdminBloc, VidicAdminState>(
               listener: (context, state) {
                 // TODO: implement listener
+                if (state is StatementBackOption) {
+                  AwesomeDialog(
+                    context: context,
+                    width: 600,
+                    animType: AnimType.leftSlide,
+                    headerAnimationLoop: false,
+                    dismissOnBackKeyPress: false,
+                    dialogType: DialogType.success,
+                    showCloseIcon: true,
+                    title: 'Data Successfully Stored',
+                    desc:
+                        'You can choose to either go back home or add a new tenant',
+                    btnCancelText: "Back Home",
+                    btnOkText: "Add Another Tenant",
+                    btnOkOnPress: () {
+                      // debugPrint('OnClcik');
+                      BlocProvider.of<VidicAdminBloc>(context)
+                          .add(CreateStatementEvent());
+                      _controllerAmount.text = '';
+
+                      selectedValue = null;
+                    },
+                    btnOkIcon: Icons.check_circle,
+                    btnCancelOnPress: () {
+                      BlocProvider.of<VidicAdminBloc>(context)
+                          .add(StatementGetEvent());
+                      _controllerAmount.text = '';
+                      selectedValue = null;
+                    },
+                    onDismissCallback: (type) {
+                      debugPrint('Dialog Dissmiss from callback $type');
+                    },
+                  ).show();
+                }
               },
               builder: (context, state) {
                 if (state is CreateStatementState) {
@@ -182,69 +217,63 @@ class StatementScreen extends StatelessWidget {
                                   const SizedBox(
                                     height: 15,
                                   ),
-                                  ElevatedButton(
-                                    onPressed: () {
-                                      if (_formKey.currentState!.validate()) {
-                                        // Process data. millicent.odhiambo@vidic.co.ke
-                                        // signInWithEmailAndPassword();
-                                        if (kDebugMode) {
-                                          print('sending');
-                                        }
-                                        BlocProvider.of<VidicAdminBloc>(context)
-                                            .add(
-                                          CreateTenantDataEvent(
-                                            name: _controllerName.text,
-                                            number: _controllerNumber.text
-                                                .toString(),
-                                            officialEmail:
-                                                _controllerEmail.text,
-                                            about: _controllerAbout.text,
-                                            floor: selectedValue,
-                                            size:
-                                                _controllerSize.text.toString(),
-                                            rent:
-                                                _controllerRent.text.toString(),
-                                            escalation: _controllerEscalation
-                                                .text
-                                                .toString(),
-                                            pobox: _controllerPoBox.text,
-                                            leaseStartDate:
-                                                _controllerLeaseStart.text,
-                                            leaseEndDate:
-                                                _controllerLeaseEnd.text,
-                                            active: '1',
+                                  (state.loadingButton == 0)
+                                      ? ElevatedButton(
+                                          onPressed: () {
+                                            if (_formKey.currentState!
+                                                .validate()) {
+                                              // Process data. millicent.odhiambo@vidic.co.ke
+                                              // signInWithEmailAndPassword();
+                                              if (kDebugMode) {
+                                                print('sending');
+                                              }
+                                              BlocProvider.of<VidicAdminBloc>(
+                                                      context)
+                                                  .add(
+                                                UploadTenantStatementEvent(
+                                                  amount:
+                                                      _controllerAmount.text,
+                                                ),
+                                              );
+                                            }
+                                          },
+                                          child: Row(
+                                            children: const [
+                                              Text('Create New Statement'),
+                                              SizedBox(
+                                                width: 10,
+                                              ),
+                                              // SizedBox(
+                                              //   width: 15,
+                                              //   height: 15,
+                                              //   child: CircularProgressIndicator(
+                                              //     color: Colors.white,
+                                              //     strokeWidth: 2,
+                                              //   ),
+                                              // )
+                                            ],
                                           ),
-                                        );
-                                        // _controllerName.text = '';
-                                        // _controllerNumber.text = '';
-                                        // _controllerEmail.text = '';
-                                        // _controllerAbout.text = '';
-                                        // selectedValue = null;
-                                        // _controllerSize.text = '';
-                                        // _controllerRent.text = '';
-                                        // _controllerEscalation.text = '';
-                                        // _controllerPoBox.text = '';
-                                        // _controllerLeaseStart.text = '';
-                                        // _controllerLeaseEnd.text = '';
-                                      }
-                                    },
-                                    child: Row(
-                                      children: const [
-                                        Text('Create New Statement'),
-                                        SizedBox(
-                                          width: 10,
+                                        )
+                                      : ElevatedButton(
+                                          onPressed: null,
+                                          child: Row(
+                                            children: const [
+                                              Text('Creating New Statement'),
+                                              SizedBox(
+                                                width: 10,
+                                              ),
+                                              SizedBox(
+                                                width: 15,
+                                                height: 15,
+                                                child:
+                                                    CircularProgressIndicator(
+                                                  color: Colors.white,
+                                                  strokeWidth: 2,
+                                                ),
+                                              )
+                                            ],
+                                          ),
                                         ),
-                                        // SizedBox(
-                                        //   width: 15,
-                                        //   height: 15,
-                                        //   child: CircularProgressIndicator(
-                                        //     color: Colors.white,
-                                        //     strokeWidth: 2,
-                                        //   ),
-                                        // )
-                                      ],
-                                    ),
-                                  ),
                                   const SizedBox(
                                     height: 20,
                                   ),
