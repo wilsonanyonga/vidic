@@ -135,3 +135,5 @@ class CreateStatementState extends VidicAdminState {
   // TODO: implement props
   List<Object> get props => [loadingButton, fileName!, dropdownItems];
 }
+
+class StatementBackOption extends VidicAdminState {}
