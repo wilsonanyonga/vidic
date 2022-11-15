@@ -36,6 +36,10 @@ class VidicAdminBloc extends Bloc<VidicAdminEvent, VidicAdminState> {
   String? tenantStatementName;
   Uint8List? statementFile;
 
+  String invoiceFileName = '';
+  String? tenantInvoiceId;
+  String? tenantInvoiceMonth;
+
   List<DropdownMenuItem<String>> get dropdownItems {
     List<DropdownMenuItem<String>> menuItems = [
       for (var i = 0; i < tenantsList!.length; i++)
@@ -432,5 +436,43 @@ class VidicAdminBloc extends Bloc<VidicAdminEvent, VidicAdminState> {
     );
 
     // ----------- END Create New Statement ----------------------------
+
+    // ----------- Create New Invoice ----------------------------
+    on<CreateInvoiceEvent>(
+      (event, emit) async {
+        if (kDebugMode) {
+          print('create invoice');
+          // print(dropdownItems);
+        }
+        try {
+          final invoice = await _client.getTenants();
+          tenantsList = invoice!.data;
+          emit(CreateInvoiceState(0, invoiceFileName, dropdownItems));
+        } catch (e) {
+          if (kDebugMode) {
+            print(e);
+          }
+          emit(CreateInvoiceState(0, invoiceFileName, dropdownItems));
+        }
+      },
+    );
+    on<SetTenantInvoiceIdEvent>(
+      (event, emit) {
+        tenantInvoiceId = event.tenantInvoiceId;
+        if (kDebugMode) {
+          print("$tenantInvoiceId is state");
+        }
+        emit(CreateInvoiceState(0, invoiceFileName, dropdownItems));
+      },
+    );
+    on<SetTenantInvoiceMonthEvent>(
+      (event, emit) {
+        tenantInvoiceMonth = event.tenantInvoiceMonth;
+        if (kDebugMode) {
+          print("$tenantInvoiceMonth is state");
+        }
+        emit(CreateInvoiceState(0, invoiceFileName, dropdownItems));
+      },
+    );
   }
 }
