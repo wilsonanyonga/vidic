@@ -107,3 +107,13 @@ class UploadTenantStatementEvent extends VidicAdminEvent {
 // ---------------------------------------------------------------
 // create new invoice
 class CreateInvoiceEvent extends VidicAdminEvent {}
+
+class SetTenantInvoiceIdEvent extends VidicAdminEvent {
+  String? tenantInvoiceId;
+  SetTenantInvoiceIdEvent({required this.tenantInvoiceId});
+}
+
+class SetTenantInvoiceMonthEvent extends VidicAdminEvent {
+  String? tenantInvoiceMonth;
+  SetTenantInvoiceMonthEvent({required this.tenantInvoiceMonth});
+}
