@@ -574,12 +574,13 @@ class StatementScreen extends StatelessWidget {
             }
             if (state is StatementLoaded) {
               return FloatingActionButton(
-                  onPressed: () {
-                    BlocProvider.of<VidicAdminBloc>(context)
-                        .add(CreateStatementEvent());
-                  },
-                  tooltip: 'Add New Statement',
-                  child: const Icon(Icons.add));
+                onPressed: () {
+                  BlocProvider.of<VidicAdminBloc>(context)
+                      .add(CreateStatementEvent());
+                },
+                tooltip: 'Add New Statement',
+                child: const Icon(Icons.add),
+              );
             }
             return FloatingActionButton(
               onPressed: () {},
