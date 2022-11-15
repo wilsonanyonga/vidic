@@ -137,3 +137,21 @@ class CreateStatementState extends VidicAdminState {
 }
 
 class StatementBackOption extends VidicAdminState {}
+
+// ---------------------------------------------------------------------------------------------
+
+// ------ CREATE NEW Invoice -----------------------
+
+class CreateInvoiceState extends VidicAdminState {
+  int loadingButton;
+  List<DropdownMenuItem<String>> dropdownItems;
+  String invoiceFileName;
+  CreateInvoiceState(
+    this.loadingButton,
+    this.invoiceFileName,
+    this.dropdownItems,
+  );
+  @override
+  // TODO: implement props
+  List<Object> get props => [loadingButton, invoiceFileName, dropdownItems];
+}
