@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:dio/dio.dart';
 import 'package:flutter/foundation.dart';
 import 'package:vidic/models/invoice/get_invoice.dart';
+import 'package:vidic/models/invoice/post/post_invoice.dart';
 import 'package:vidic/models/jwt.dart';
 import 'package:vidic/models/landing/post/post_tenant.dart';
 import 'package:vidic/models/landing/tenants.dart';
@@ -507,19 +508,6 @@ class DioClient {
         'end_date': statementEndDate,
         'amount': amount,
         'tenant_id': tenantStatementName
-        // 'about': us2.about,
-        // 'location': us2.location,
-        // // 'password': us2.password,
-        // 'paid': us2.paid,
-        // 'active': us2.active,
-        // 'file': await MultipartFile.fromFile('${us2.picture}',
-        //     filename: 'upload.png'),
-        // 'file2': await MultipartFile.fromFile('${us2.picture2}',
-        //     filename: 'upload2.png'),
-        // 'file3': await MultipartFile.fromFile('${us2.picture3}',
-        //     filename: 'upload3.png'),
-        // 'file4': await MultipartFile.fromFile('${us2.picture4}',
-        //     filename: 'upload4.png'),
       });
       if (kDebugMode) {
         print(formData);
@@ -551,5 +539,65 @@ class DioClient {
     }
 
     return createStatement;
+  }
+
+  // create new invoice
+  Future<PostInvoice?> createInvoice({
+    String? tenantInvoiceId,
+    String? amount,
+    String? purpose,
+    String? invoiceMonth,
+    Uint8List? invoiceFile,
+    // String? floor,
+  }) async {
+    PostInvoice? createInvoice;
+    // print(imageFile);
+    if (kDebugMode) {
+      // print(us2.toJson());
+      print("object is testing............");
+    }
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    //Return String
+    stringValue = prefs.getString('jwt_token');
+    try {
+      var formData = FormData.fromMap({
+        'file_invoice': MultipartFile.fromBytes(invoiceFile!.toList(),
+            filename: 'upload.pdf'),
+        // 'file_statement': statementFile,
+        'month': invoiceMonth,
+        'amount': amount,
+        'purpose': purpose,
+        'tenant_id': tenantInvoiceId
+      });
+      if (kDebugMode) {
+        print(formData);
+      }
+
+      if (kDebugMode) {
+        print("object is here");
+      }
+      Response response = await _dio.post(
+        '/postInvoice',
+        options: Options(
+          headers: {
+            "authorization": stringValue, // set content-length
+          },
+        ),
+        data: formData,
+      );
+
+      if (kDebugMode) {
+        print('User created: ${response.data}');
+        print("statement is creating............");
+      }
+
+      createInvoice = PostInvoice.fromJson(response.data);
+    } catch (e) {
+      if (kDebugMode) {
+        print('Error creating user: $e');
+      }
+    }
+
+    return createInvoice;
   }
 }
