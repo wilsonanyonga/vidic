@@ -1,3 +1,4 @@
+import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
@@ -70,6 +71,43 @@ class InvoiceScreen extends StatelessWidget {
             BlocConsumer<VidicAdminBloc, VidicAdminState>(
               listener: (context, state) {
                 // TODO: implement listener
+                if (state is InvoiceBackOption) {
+                  AwesomeDialog(
+                    context: context,
+                    width: 600,
+                    animType: AnimType.leftSlide,
+                    headerAnimationLoop: false,
+                    dismissOnBackKeyPress: false,
+                    dialogType: DialogType.success,
+                    showCloseIcon: true,
+                    title: 'Invoice Successfully Stored',
+                    desc:
+                        'You can choose to either go back home or add a new Invoice',
+                    btnCancelText: "Back Home",
+                    btnOkText: "Add Another Invoice",
+                    btnOkOnPress: () {
+                      // debugPrint('OnClcik');
+                      BlocProvider.of<VidicAdminBloc>(context)
+                          .add(CreateInvoiceEvent());
+                      _controllerAmount.text = '';
+                      _controllerPurpose.text = '';
+                      selectedValue = null;
+                      selectedTenant = null;
+                    },
+                    btnOkIcon: Icons.check_circle,
+                    btnCancelOnPress: () {
+                      BlocProvider.of<VidicAdminBloc>(context)
+                          .add(InvoiceGetEvent());
+                      _controllerAmount.text = '';
+                      _controllerPurpose.text = '';
+                      selectedValue = null;
+                      selectedTenant = null;
+                    },
+                    onDismissCallback: (type) {
+                      debugPrint('Dialog Dissmiss from callback $type');
+                    },
+                  ).show();
+                }
               },
               builder: (context, state) {
                 if (state is CreateInvoiceState) {
@@ -112,8 +150,8 @@ class InvoiceScreen extends StatelessWidget {
                                     onChanged: ((String? newValue) {
                                       selectedTenant = newValue!;
                                       BlocProvider.of<VidicAdminBloc>(context)
-                                          .add(CreateTenantStatementEvent(
-                                        tenantStatementName: selectedTenant,
+                                          .add(SetTenantInvoiceIdEvent(
+                                        tenantInvoiceId: selectedTenant,
                                       ));
                                       if (kDebugMode) {
                                         print("$selectedTenant is select");
@@ -124,13 +162,14 @@ class InvoiceScreen extends StatelessWidget {
                                     controller: _controllerAmount,
                                     keyboardType: TextInputType.number,
                                     decoration: const InputDecoration(
-                                      hintText: 'Enter Amount on Invoice',
+                                      hintText: 'Enter Amount on Invoice (Ksh)',
                                       border: UnderlineInputBorder(),
-                                      labelText: 'Enter Amount on Invoice',
+                                      labelText:
+                                          'Enter Amount on Invoice (Ksh)',
                                     ),
                                     validator: (String? value) {
                                       if (value == null || value.isEmpty) {
-                                        return 'Please enter the Amount on Invoice';
+                                        return 'Please enter the Amount on Invoice (Ksh)';
                                       }
                                       return null;
                                     },
@@ -172,8 +211,9 @@ class InvoiceScreen extends StatelessWidget {
                                     onChanged: ((String? newValue) {
                                       selectedValue = newValue!;
                                       BlocProvider.of<VidicAdminBloc>(context)
-                                          .add(CreateFloorEvent(
-                                              floor: selectedValue));
+                                          .add(SetTenantInvoiceMonthEvent(
+                                              tenantInvoiceMonth:
+                                                  selectedValue));
                                       if (kDebugMode) {
                                         print("$selectedValue is select");
                                       }
@@ -196,7 +236,7 @@ class InvoiceScreen extends StatelessWidget {
                                   ElevatedButton(
                                     onPressed: () {
                                       BlocProvider.of<VidicAdminBloc>(context)
-                                          .add(UploadStatementFileEvent());
+                                          .add(UploadInvoiceFileEvent());
                                     },
                                     child: const Text('Upload Statement'),
                                   ),
@@ -216,9 +256,11 @@ class InvoiceScreen extends StatelessWidget {
                                               BlocProvider.of<VidicAdminBloc>(
                                                       context)
                                                   .add(
-                                                UploadTenantStatementEvent(
+                                                UploadTenantInvoiceEvent(
                                                   amount:
                                                       _controllerAmount.text,
+                                                  purpose:
+                                                      _controllerPurpose.text,
                                                 ),
                                               );
                                             }
