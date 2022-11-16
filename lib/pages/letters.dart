@@ -201,7 +201,7 @@ class LettersScreen extends StatelessWidget {
                                           },
                                           child: Row(
                                             children: const [
-                                              Text('Create New Statement'),
+                                              Text('Create New Letter'),
                                               SizedBox(
                                                 width: 10,
                                               ),
@@ -216,25 +216,14 @@ class LettersScreen extends StatelessWidget {
                                             ],
                                           ),
                                         )
-                                      : ElevatedButton(
-                                          onPressed: null,
-                                          child: Row(
-                                            children: const [
-                                              Text('Creating New Statement'),
-                                              SizedBox(
-                                                width: 10,
-                                              ),
-                                              SizedBox(
-                                                width: 15,
-                                                height: 15,
-                                                child:
-                                                    CircularProgressIndicator(
-                                                  color: Colors.white,
-                                                  strokeWidth: 2,
-                                                ),
-                                              )
-                                            ],
+                                      : ElevatedButton.icon(
+                                          icon: const CircularProgressIndicator(
+                                            // color: Colors.white,
+                                            strokeWidth: 2,
                                           ),
+                                          onPressed: null,
+                                          label:
+                                              const Text('Creating New Letter'),
                                         ),
                                 ],
                               ),
@@ -404,73 +393,193 @@ class LettersScreen extends StatelessWidget {
                                                     backgroundColor:
                                                         Colors.pink[300],
                                                   ),
-                                                  // Chip(
-                                                  //   label: Text(
-                                                  //     '${state.data[index].floor} Floor',
-                                                  //     style: const TextStyle(
-                                                  //         color: Colors.white),
-                                                  //   ),
-                                                  //   backgroundColor: Colors.pink[300],
-                                                  // ),
-                                                  // const SizedBox(
-                                                  //   width: 50,
-                                                  // ),
-                                                  // Text("${state.data[index].size} sq ft"),
-                                                  // const SizedBox(
-                                                  //   width: 50,
-                                                  // ),
-                                                  // const Text("18/5/2021"),
-                                                  // const SizedBox(
-                                                  //   width: 50,
-                                                  // ),
-                                                  // Text("Ksh ${state.data[index].rent}"),
                                                 ],
                                               ),
                                             ),
                                           ),
                                         ),
-                                        for (var i = 0;
-                                            i <
-                                                state.data[index].lettersTypes
-                                                    .length;
-                                            i++)
-                                          ListTile(
-                                            leading: const Icon(Icons.edit),
-                                            title: ScrollConfiguration(
-                                              behavior: ScrollConfiguration.of(
-                                                      context)
-                                                  .copyWith(
-                                                dragDevices: {
-                                                  PointerDeviceKind.touch,
-                                                  PointerDeviceKind.mouse,
-                                                },
-                                              ),
-                                              child: SingleChildScrollView(
-                                                scrollDirection:
-                                                    Axis.horizontal,
-                                                child: Row(
-                                                  children: [
-                                                    Text(
-                                                      state
-                                                          .data[index]
-                                                          .lettersTypes[i]
-                                                          .subject,
+                                        // for (var i = 0;
+                                        //     i <
+                                        //         state.data[index].lettersTypes
+                                        //             .length;
+                                        //     i++)
+                                        Align(
+                                          alignment: Alignment.topLeft,
+                                          child: ScrollConfiguration(
+                                            behavior:
+                                                ScrollConfiguration.of(context)
+                                                    .copyWith(
+                                              dragDevices: {
+                                                PointerDeviceKind.touch,
+                                                PointerDeviceKind.mouse,
+                                              },
+                                            ),
+                                            child: SingleChildScrollView(
+                                              scrollDirection: Axis.horizontal,
+                                              child: DataTable(
+                                                columns: const [
+                                                  DataColumn(
+                                                    label: Text(
+                                                      'Edit',
+                                                      style: TextStyle(
+                                                          fontSize: 14,
+                                                          fontWeight:
+                                                              FontWeight.bold),
                                                     ),
-                                                    const SizedBox(
-                                                      width: 50,
+                                                  ),
+                                                  DataColumn(
+                                                    label: Text(
+                                                      'Title',
+                                                      style: TextStyle(
+                                                          fontSize: 14,
+                                                          fontWeight:
+                                                              FontWeight.bold),
                                                     ),
-                                                    Text(
-                                                      "Date: ${state.data[index].lettersTypes[i].date.toString().replaceAll('21:00:00.000Z', '')}",
+                                                  ),
+                                                  DataColumn(
+                                                    label: Text(
+                                                      'Date',
+                                                      style: TextStyle(
+                                                          fontSize: 14,
+                                                          fontWeight:
+                                                              FontWeight.bold),
                                                     ),
-                                                    const SizedBox(
-                                                      width: 50,
+                                                  ),
+                                                  DataColumn(
+                                                    label: Text(
+                                                      'Delete',
+                                                      style: TextStyle(
+                                                          fontSize: 14,
+                                                          fontWeight:
+                                                              FontWeight.bold),
                                                     ),
-                                                    const Icon(Icons.delete)
-                                                  ],
-                                                ),
+                                                  ),
+                                                ],
+                                                rows: [
+                                                  for (var i = 0;
+                                                      i <
+                                                          state
+                                                              .data[index]
+                                                              .lettersTypes
+                                                              .length;
+                                                      i++)
+                                                    DataRow(
+                                                      cells: [
+                                                        DataCell(
+                                                          IconButton(
+                                                            icon: const Icon(
+                                                                Icons.edit),
+                                                            tooltip:
+                                                                'Update Letter',
+                                                            onPressed: () {
+                                                              // BlocProvider.of<
+                                                              //             VidicAdminBloc>(
+                                                              //         context)
+                                                              //     .add(
+                                                              //   UpdateOccupancyEvent(
+                                                              //     floorId: state
+                                                              //         .data[i].datumId,
+                                                              //     occupancy: state
+                                                              //         .data[i].occupancy
+                                                              //         .toString(),
+                                                              //     capacity: state
+                                                              //         .data[i].capacity
+                                                              //         .toString(),
+                                                              //   ),
+                                                              // );
+                                                            },
+                                                          ),
+                                                        ),
+                                                        DataCell(
+                                                          Text(
+                                                            state
+                                                                .data[index]
+                                                                .lettersTypes[i]
+                                                                .subject,
+                                                          ),
+                                                        ),
+                                                        DataCell(
+                                                          Text(
+                                                            state
+                                                                .data[index]
+                                                                .lettersTypes[i]
+                                                                .date
+                                                                .toString()
+                                                                .replaceAll(
+                                                                    '21:00:00.000Z',
+                                                                    ''),
+                                                          ),
+                                                        ),
+                                                        DataCell(
+                                                          IconButton(
+                                                            icon: const Icon(Icons
+                                                                .delete_forever),
+                                                            tooltip:
+                                                                'Delete Letter',
+                                                            onPressed: () {
+                                                              // BlocProvider.of<
+                                                              //             VidicAdminBloc>(
+                                                              //         context)
+                                                              //     .add(
+                                                              //   UpdateOccupancyEvent(
+                                                              //     floorId: state
+                                                              //         .data[i].datumId,
+                                                              //     occupancy: state
+                                                              //         .data[i].occupancy
+                                                              //         .toString(),
+                                                              //     capacity: state
+                                                              //         .data[i].capacity
+                                                              //         .toString(),
+                                                              //   ),
+                                                              // );
+                                                            },
+                                                          ),
+                                                        ),
+                                                      ],
+                                                    ),
+                                                ],
                                               ),
                                             ),
                                           ),
+                                        ),
+
+                                        // ListTile(
+                                        //   leading: const Icon(Icons.edit),
+                                        //   title: ScrollConfiguration(
+                                        //     behavior: ScrollConfiguration.of(
+                                        //             context)
+                                        //         .copyWith(
+                                        //       dragDevices: {
+                                        //         PointerDeviceKind.touch,
+                                        //         PointerDeviceKind.mouse,
+                                        //       },
+                                        //     ),
+                                        //     child: SingleChildScrollView(
+                                        //       scrollDirection:
+                                        //           Axis.horizontal,
+                                        //       child: Row(
+                                        //         children: [
+                                        //           Text(
+                                        //             state
+                                        //                 .data[index]
+                                        //                 .lettersTypes[i]
+                                        //                 .subject,
+                                        //           ),
+                                        //           const SizedBox(
+                                        //             width: 50,
+                                        //           ),
+                                        //           Text(
+                                        //             "Date: ${state.data[index].lettersTypes[i].date.toString().replaceAll('21:00:00.000Z', '')}",
+                                        //           ),
+                                        //           const SizedBox(
+                                        //             width: 50,
+                                        //           ),
+                                        //           const Icon(Icons.delete)
+                                        //         ],
+                                        //       ),
+                                        //     ),
+                                        //   ),
+                                        // ),
                                       ],
                                     );
                                   },
@@ -500,7 +609,7 @@ class LettersScreen extends StatelessWidget {
                         .add(LetterGetEvent());
                   },
                   tooltip: 'Go Back',
-                  child: const Icon(Icons.cancel));
+                  child: const Icon(Icons.close));
             }
             if (state is LetterLoading) {
               return FloatingActionButton(
