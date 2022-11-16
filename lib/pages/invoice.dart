@@ -485,54 +485,203 @@ class InvoiceScreen extends StatelessWidget {
                                               const SizedBox(
                                                 width: 50,
                                               ),
-                                              Text(
-                                                  "Ksh ${state.data[index].rent}"),
+                                              // Text(
+                                              //     "Ksh ${state.data[index].rent}"),
                                             ],
                                           ),
                                         ),
-                                        for (var i = 0;
-                                            i <
-                                                state.data[index].invoiceTypes
-                                                    .length;
-                                            i++)
-                                          ListTile(
-                                            leading: const Icon(Icons.edit),
-                                            title: ScrollConfiguration(
-                                              behavior: ScrollConfiguration.of(
-                                                      context)
-                                                  .copyWith(
-                                                dragDevices: {
-                                                  PointerDeviceKind.touch,
-                                                  PointerDeviceKind.mouse,
-                                                },
-                                              ),
-                                              child: SingleChildScrollView(
-                                                scrollDirection:
-                                                    Axis.horizontal,
-                                                child: Row(
-                                                  children: [
-                                                    Text(
-                                                        "Purpose: ${state.data[index].invoiceTypes[i].purpose}"),
-                                                    const SizedBox(
-                                                      width: 20,
+                                        // for (var i = 0;
+                                        //     i <
+                                        //         state.data[index].invoiceTypes
+                                        //             .length;
+                                        //     i++)
+                                        Align(
+                                          alignment: Alignment.topLeft,
+                                          child: ScrollConfiguration(
+                                            behavior:
+                                                ScrollConfiguration.of(context)
+                                                    .copyWith(
+                                              dragDevices: {
+                                                PointerDeviceKind.touch,
+                                                PointerDeviceKind.mouse,
+                                              },
+                                            ),
+                                            child: SingleChildScrollView(
+                                              scrollDirection: Axis.horizontal,
+                                              child: DataTable(
+                                                columns: const [
+                                                  DataColumn(
+                                                    label: Text(
+                                                      'Edit',
+                                                      style: TextStyle(
+                                                          fontSize: 14,
+                                                          fontWeight:
+                                                              FontWeight.bold),
                                                     ),
-                                                    Text(
-                                                        "Month: ${state.data[index].invoiceTypes[i].month}"),
-                                                    const SizedBox(
-                                                      width: 20,
+                                                  ),
+                                                  DataColumn(
+                                                    label: Text(
+                                                      'Purpose',
+                                                      style: TextStyle(
+                                                          fontSize: 14,
+                                                          fontWeight:
+                                                              FontWeight.bold),
                                                     ),
-                                                    Text(
-                                                      "Amount: Ksh ${state.data[index].invoiceTypes[i].amount.toString()}",
+                                                  ),
+                                                  DataColumn(
+                                                    label: Text(
+                                                      'Month',
+                                                      style: TextStyle(
+                                                          fontSize: 14,
+                                                          fontWeight:
+                                                              FontWeight.bold),
                                                     ),
-                                                    const SizedBox(
-                                                      width: 20,
+                                                  ),
+                                                  DataColumn(
+                                                    label: Text(
+                                                      'Amount',
+                                                      style: TextStyle(
+                                                          fontSize: 14,
+                                                          fontWeight:
+                                                              FontWeight.bold),
                                                     ),
-                                                    const Icon(Icons.delete),
-                                                  ],
-                                                ),
+                                                  ),
+                                                  DataColumn(
+                                                    label: Text(
+                                                      'Delete',
+                                                      style: TextStyle(
+                                                          fontSize: 14,
+                                                          fontWeight:
+                                                              FontWeight.bold),
+                                                    ),
+                                                  ),
+                                                ],
+                                                rows: [
+                                                  for (var i = 0;
+                                                      i <
+                                                          state
+                                                              .data[index]
+                                                              .invoiceTypes
+                                                              .length;
+                                                      i++)
+                                                    DataRow(
+                                                      cells: [
+                                                        DataCell(
+                                                          IconButton(
+                                                            icon: const Icon(
+                                                                Icons.edit),
+                                                            tooltip:
+                                                                'Update Invoice',
+                                                            onPressed: () {
+                                                              // BlocProvider.of<
+                                                              //             VidicAdminBloc>(
+                                                              //         context)
+                                                              //     .add(
+                                                              //   UpdateOccupancyEvent(
+                                                              //     floorId: state
+                                                              //         .data[i].datumId,
+                                                              //     occupancy: state
+                                                              //         .data[i].occupancy
+                                                              //         .toString(),
+                                                              //     capacity: state
+                                                              //         .data[i].capacity
+                                                              //         .toString(),
+                                                              //   ),
+                                                              // );
+                                                            },
+                                                          ),
+                                                        ),
+                                                        DataCell(
+                                                          Text(
+                                                            state
+                                                                .data[index]
+                                                                .invoiceTypes[i]
+                                                                .purpose,
+                                                          ),
+                                                        ),
+                                                        DataCell(
+                                                          Text(state
+                                                              .data[index]
+                                                              .invoiceTypes[i]
+                                                              .month),
+                                                        ),
+                                                        DataCell(
+                                                          Text(state
+                                                              .data[index]
+                                                              .invoiceTypes[i]
+                                                              .amount
+                                                              .toString()),
+                                                        ),
+                                                        DataCell(
+                                                          IconButton(
+                                                            icon: const Icon(Icons
+                                                                .delete_forever),
+                                                            tooltip:
+                                                                'Delete Letter',
+                                                            onPressed: () {
+                                                              // BlocProvider.of<
+                                                              //             VidicAdminBloc>(
+                                                              //         context)
+                                                              //     .add(
+                                                              //   UpdateOccupancyEvent(
+                                                              //     floorId: state
+                                                              //         .data[i].datumId,
+                                                              //     occupancy: state
+                                                              //         .data[i].occupancy
+                                                              //         .toString(),
+                                                              //     capacity: state
+                                                              //         .data[i].capacity
+                                                              //         .toString(),
+                                                              //   ),
+                                                              // );
+                                                            },
+                                                          ),
+                                                        ),
+                                                      ],
+                                                    ),
+                                                ],
                                               ),
                                             ),
                                           ),
+                                        ),
+                                        // ListTile(
+                                        //   leading: const Icon(Icons.edit),
+                                        //   title: ScrollConfiguration(
+                                        //     behavior: ScrollConfiguration.of(
+                                        //             context)
+                                        //         .copyWith(
+                                        //       dragDevices: {
+                                        //         PointerDeviceKind.touch,
+                                        //         PointerDeviceKind.mouse,
+                                        //       },
+                                        //     ),
+                                        //     child: SingleChildScrollView(
+                                        //       scrollDirection:
+                                        //           Axis.horizontal,
+                                        //       child: Row(
+                                        //         children: [
+                                        //           Text(
+                                        //               "Purpose: ${state.data[index].invoiceTypes[i].purpose}"),
+                                        //           const SizedBox(
+                                        //             width: 20,
+                                        //           ),
+                                        //           Text(
+                                        //               "Month: ${state.data[index].invoiceTypes[i].month}"),
+                                        //           const SizedBox(
+                                        //             width: 20,
+                                        //           ),
+                                        //           Text(
+                                        //             "Amount: Ksh ${state.data[index].invoiceTypes[i].amount.toString()}",
+                                        //           ),
+                                        //           const SizedBox(
+                                        //             width: 20,
+                                        //           ),
+                                        //           const Icon(Icons.delete),
+                                        //         ],
+                                        //       ),
+                                        //     ),
+                                        //   ),
+                                        // ),
                                       ],
                                     );
                                   },
@@ -562,7 +711,7 @@ class InvoiceScreen extends StatelessWidget {
                         .add(InvoiceGetEvent());
                   },
                   tooltip: 'Go Back',
-                  child: const Icon(Icons.cancel));
+                  child: const Icon(Icons.close));
             }
             if (state is InvoiceLoading) {
               return const FloatingActionButton(
