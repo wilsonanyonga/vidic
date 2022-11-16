@@ -39,6 +39,11 @@ class VidicAdminBloc extends Bloc<VidicAdminEvent, VidicAdminState> {
   String invoiceFileName = '';
   String? tenantInvoiceId;
   String? tenantInvoiceMonth;
+  Uint8List? invoiceFile;
+
+  String letterFileName = '';
+  String? tenantLetterId;
+  Uint8List? letterFile;
 
   List<DropdownMenuItem<String>> get dropdownItems {
     List<DropdownMenuItem<String>> menuItems = [
@@ -472,6 +477,188 @@ class VidicAdminBloc extends Bloc<VidicAdminEvent, VidicAdminState> {
           print("$tenantInvoiceMonth is state");
         }
         emit(CreateInvoiceState(0, invoiceFileName, dropdownItems));
+      },
+    );
+
+    // UploadInvoiceFileEvent
+    on<UploadInvoiceFileEvent>(
+      (event, emit) async {
+        try {
+          FilePickerResult? result = await FilePicker.platform.pickFiles();
+
+          if (result != null) {
+            invoiceFile = result.files.single.bytes!;
+            if (kDebugMode) {
+              print(result.files.single.name);
+              print(invoiceFile!.length);
+              print("upload worked");
+            }
+            invoiceFileName = result.files.single.name;
+            emit(
+                CreateInvoiceState(0, result.files.single.name, dropdownItems));
+          } else {
+            // User canceled the picker
+            if (kDebugMode) {
+              print("upload failed");
+            }
+            emit(CreateInvoiceState(0, invoiceFileName, dropdownItems));
+          }
+        } catch (e) {
+          if (kDebugMode) {
+            print("upload totally failed");
+          }
+          emit(CreateInvoiceState(0, invoiceFileName, dropdownItems));
+        }
+
+        // emit(CreateStatementState(0));
+      },
+    );
+    // this is the upload button event
+    on<UploadTenantInvoiceEvent>(
+      (event, emit) async {
+        emit(CreateInvoiceState(1, invoiceFileName, dropdownItems));
+        try {
+          if (kDebugMode) {
+            print(tenantInvoiceId);
+            print(event.amount);
+            print(event.purpose);
+            print(tenantInvoiceMonth);
+            // print(invoiceFile);
+          }
+          final newInvoice = await _client.createInvoice(
+            tenantInvoiceId: tenantInvoiceId,
+            amount: event.amount,
+            purpose: event.purpose,
+            invoiceMonth: tenantInvoiceMonth,
+            invoiceFile: invoiceFile,
+          );
+          if (kDebugMode) {
+            print("invoice response");
+            print(newInvoice!.data);
+            print(newInvoice.status);
+          }
+
+          if (newInvoice!.status == 2000) {
+            // emit(CreateTenantState(0));
+            emit(CreateInvoiceState(0, invoiceFileName, dropdownItems));
+            emit(InvoiceBackOption());
+          }
+        } catch (e) {
+          if (kDebugMode) {
+            print('invoice submit error');
+            print('invoice submit error is $e');
+          }
+          emit(CreateInvoiceState(0, invoiceFileName, dropdownItems));
+        }
+      },
+    );
+
+    // ----------- END Create New Invoice ----------------------------
+
+    // ----------- Create New Letter ----------------------------
+    on<CreateLetterEvent>(
+      (event, emit) async {
+        if (kDebugMode) {
+          print('create letter');
+          // print(dropdownItems);
+        }
+        try {
+          final tenants = await _client.getTenants();
+          tenantsList = tenants!.data;
+          emit(CreateLetterState(0, letterFileName, dropdownItems));
+        } catch (e) {
+          if (kDebugMode) {
+            print(e);
+          }
+          emit(CreateLetterState(0, letterFileName, dropdownItems));
+        }
+      },
+    );
+
+    on<SetTenantLetterIdEvent>(
+      (event, emit) {
+        tenantLetterId = event.tenantLetterId;
+        if (kDebugMode) {
+          print("$tenantInvoiceId is state");
+          DateTime now = DateTime.now();
+          DateTime date = DateTime(now.year, now.month, now.day);
+          print(date.toString().replaceAll(' 00:00:00.000', ''));
+        }
+        emit(CreateLetterState(0, letterFileName, dropdownItems));
+      },
+    );
+
+    // UploadInvoiceFileEvent
+    on<UploadLetterFileEvent>(
+      (event, emit) async {
+        try {
+          FilePickerResult? result = await FilePicker.platform.pickFiles();
+
+          if (result != null) {
+            letterFile = result.files.single.bytes!;
+            if (kDebugMode) {
+              print(result.files.single.name);
+              print(letterFile!.length);
+              print("upload worked");
+            }
+            letterFileName = result.files.single.name;
+            emit(CreateLetterState(0, letterFileName, dropdownItems));
+          } else {
+            // User canceled the picker
+            if (kDebugMode) {
+              print("upload failed");
+            }
+            emit(CreateLetterState(0, letterFileName, dropdownItems));
+          }
+        } catch (e) {
+          if (kDebugMode) {
+            print("upload totally failed $e");
+          }
+          emit(CreateLetterState(0, letterFileName, dropdownItems));
+        }
+
+        // emit(CreateStatementState(0));
+      },
+    );
+
+    // this is the upload button event
+    on<UploadTenantLetterEvent>(
+      (event, emit) async {
+        emit(CreateLetterState(1, letterFileName, dropdownItems));
+        try {
+          DateTime now = DateTime.now();
+          DateTime date = DateTime(now.year, now.month, now.day);
+          if (kDebugMode) {
+            print(tenantLetterId);
+            print(event.subject);
+            // print(event.purpose);
+            // print(tenantInvoiceMonth);
+            // print(invoiceFile);
+          }
+          final newLetter = await _client.createLetter(
+            tenantLetterId: tenantLetterId,
+            subject: event.subject,
+            date: date.toString().replaceAll(' 00:00:00.000', ''),
+            letterFile: letterFile,
+          );
+          if (kDebugMode) {
+            print("invoice response");
+            print(newLetter!.data);
+            print(newLetter.status);
+          }
+
+          if (newLetter!.status == 2000) {
+            // emit(CreateTenantState(0));
+            emit(CreateLetterState(0, letterFileName, dropdownItems));
+            emit(LetterBackOption());
+          }
+        } catch (e) {
+          if (kDebugMode) {
+            print('invoice submit error');
+            print('invoice submit error is $e');
+          }
+          emit(CreateLetterState(0, letterFileName, dropdownItems));
+        }
       },
     );
   }
