@@ -117,3 +117,35 @@ class SetTenantInvoiceMonthEvent extends VidicAdminEvent {
   String? tenantInvoiceMonth;
   SetTenantInvoiceMonthEvent({required this.tenantInvoiceMonth});
 }
+
+class UploadInvoiceFileEvent extends VidicAdminEvent {}
+
+class UploadTenantInvoiceEvent extends VidicAdminEvent {
+  String? amount;
+  String? purpose;
+
+  UploadTenantInvoiceEvent({
+    required this.amount,
+    required this.purpose,
+  });
+}
+
+// ---------------------------------------------------------------
+// create new letter
+
+class CreateLetterEvent extends VidicAdminEvent {}
+
+class SetTenantLetterIdEvent extends VidicAdminEvent {
+  String? tenantLetterId;
+  SetTenantLetterIdEvent({required this.tenantLetterId});
+}
+
+class UploadLetterFileEvent extends VidicAdminEvent {}
+
+class UploadTenantLetterEvent extends VidicAdminEvent {
+  String? subject;
+
+  UploadTenantLetterEvent({
+    required this.subject,
+  });
+}
