@@ -8,6 +8,7 @@ import 'package:vidic/models/jwt.dart';
 import 'package:vidic/models/landing/post/post_tenant.dart';
 import 'package:vidic/models/landing/tenants.dart';
 import 'package:vidic/models/letter/get_letter.dart';
+import 'package:vidic/models/letter/post/post_letter.dart';
 import 'package:vidic/models/occupancy/get_occupancy.dart';
 import 'package:vidic/models/statement/get_statement.dart';
 import 'package:vidic/models/statement/post/post_statement.dart';
@@ -599,5 +600,61 @@ class DioClient {
     }
 
     return createInvoice;
+  }
+
+  // create new letter
+  Future<PostLetter?> createLetter({
+    String? tenantLetterId,
+    String? subject,
+    String? date,
+    Uint8List? letterFile,
+  }) async {
+    PostLetter? createLetter;
+    // print(imageFile);
+    if (kDebugMode) {
+      // print(us2.toJson());
+      print("object is testing............");
+    }
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    //Return String
+    stringValue = prefs.getString('jwt_token');
+    try {
+      var formData = FormData.fromMap({
+        'file_letter': MultipartFile.fromBytes(letterFile!.toList(),
+            filename: 'upload.pdf'),
+        'tenant_id': tenantLetterId,
+        'subject': subject,
+        'date': date,
+      });
+      if (kDebugMode) {
+        print(formData);
+      }
+
+      if (kDebugMode) {
+        print("object is here");
+      }
+      Response response = await _dio.post(
+        '/postLetter',
+        options: Options(
+          headers: {
+            "authorization": stringValue, // set content-length
+          },
+        ),
+        data: formData,
+      );
+
+      if (kDebugMode) {
+        print('User created: ${response.data}');
+        print("letter is creating............");
+      }
+
+      createLetter = PostLetter.fromJson(response.data);
+    } catch (e) {
+      if (kDebugMode) {
+        print('Error creating user: $e');
+      }
+    }
+
+    return createLetter;
   }
 }
