@@ -10,6 +10,7 @@ import 'package:vidic/models/landing/tenants.dart';
 import 'package:vidic/models/letter/get_letter.dart';
 import 'package:vidic/models/letter/post/post_letter.dart';
 import 'package:vidic/models/occupancy/get_occupancy.dart';
+import 'package:vidic/models/occupancy/update/update_occupancy.dart';
 import 'package:vidic/models/statement/get_statement.dart';
 import 'package:vidic/models/statement/post/post_statement.dart';
 import 'package:vidic/models/tenant_letter/get_tenant_letter.dart';
@@ -656,5 +657,65 @@ class DioClient {
     }
 
     return createLetter;
+  }
+
+  // update occupancy
+  Future<UpdateOccupancy?> updateOccupancy({
+    String? occupancy,
+    String? capacity,
+    int? floorId,
+  }) async {
+    UpdateOccupancy? updateOccupancy;
+    // print(imageFile);
+    if (kDebugMode) {
+      // print(us2.toJson());
+      print("object is testing............");
+    }
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    //Return String
+    stringValue = prefs.getString('jwt_token');
+    try {
+      // var formData = FormData.fromMap({
+      //   'file_letter': MultipartFile.fromBytes(letterFile!.toList(),
+      //       filename: 'upload.pdf'),
+      //   'tenant_id': tenantLetterId,
+      //   'subject': subject,
+      //   'date': date,
+      // });
+      // if (kDebugMode) {
+      //   print(formData);
+      // }
+
+      if (kDebugMode) {
+        print("object is here, $occupancy, $capacity, $floorId");
+      }
+      Response response = await _dio.patch(
+        '/updateOccupancy/$floorId',
+        options: Options(
+          headers: {
+            "authorization": stringValue, // set content-length
+          },
+        ),
+        data: {
+          "capacity": int.parse(capacity!),
+          "occupancy": int.parse(occupancy!),
+          // "capacity": "10",
+          // "occupancy": 12,
+        },
+      );
+
+      if (kDebugMode) {
+        print('User created: ${response.data}');
+        print("letter is creating............");
+      }
+
+      updateOccupancy = UpdateOccupancy.fromJson(response.data);
+    } catch (e) {
+      if (kDebugMode) {
+        print('Error creating user: $e');
+      }
+    }
+
+    return updateOccupancy;
   }
 }
