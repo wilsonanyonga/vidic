@@ -155,3 +155,32 @@ class CreateInvoiceState extends VidicAdminState {
   // TODO: implement props
   List<Object> get props => [loadingButton, invoiceFileName, dropdownItems];
 }
+
+class InvoiceBackOption extends VidicAdminState {}
+
+// ---------------------------------------------------------------------------------------------
+
+// ------ CREATE NEW Letter -----------------------
+
+class CreateLetterState extends VidicAdminState {
+  int loadingButton;
+  List<DropdownMenuItem<String>> dropdownItems;
+  String letterFileName;
+  CreateLetterState(
+    this.loadingButton,
+    this.letterFileName,
+    this.dropdownItems,
+  );
+  @override
+  // TODO: implement props
+  List<Object> get props => [loadingButton, letterFileName, dropdownItems];
+}
+
+class LetterBackOption extends VidicAdminState {}
+
+// ---------------------------------------------------------------------------------------------
+
+// ------ CREATE NEW Occupancy -----------------------
+
+// CreateOccupancyEvent
+class CreateOccupancyState extends VidicAdminState {}
