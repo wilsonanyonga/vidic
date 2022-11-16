@@ -105,6 +105,9 @@ class StatementScreen extends StatelessWidget {
                               fontWeight: FontWeight.bold,
                             ),
                           ),
+                          const SizedBox(
+                            height: 20,
+                          ),
                           SizedBox(
                             width: 400,
                             child: Form(
