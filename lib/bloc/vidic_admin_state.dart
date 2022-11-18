@@ -183,4 +183,85 @@ class LetterBackOption extends VidicAdminState {}
 // ------ CREATE NEW Occupancy -----------------------
 
 // CreateOccupancyEvent
-class CreateOccupancyState extends VidicAdminState {}
+class UpdateOccupancyState extends VidicAdminState {
+  int floorId;
+  String occupancy;
+  String capacity;
+  int loadingButton;
+
+  UpdateOccupancyState(
+    this.floorId,
+    this.occupancy,
+    this.capacity,
+    this.loadingButton,
+  );
+
+  @override
+  // TODO: implement props
+  List<Object> get props => [floorId, occupancy, capacity, loadingButton];
+}
+
+class OccupancyBackOption extends VidicAdminState {}
+
+// ---------------------------------------------------------------------------------------------
+
+// ------ Update Letters -----------------------
+
+// display the update page and pass parametters
+class UpdateLettersPatchState extends VidicAdminState {
+  int? id;
+  String subject;
+  // String date;
+  int loadingButton;
+  String letterUpdateFileName;
+
+  UpdateLettersPatchState(
+    this.id,
+    this.subject,
+    // this.date,
+    this.loadingButton,
+    this.letterUpdateFileName,
+  );
+
+  @override
+  // TODO: implement props
+  List<Object> get props => [id!, subject, loadingButton, letterUpdateFileName];
+}
+
+class UpdateLetterBackOption extends VidicAdminState {}
+
+// ------ Update Invoices -----------------------
+
+// display the invoices update page and pass parametters
+class UpdateInvoicesState extends VidicAdminState {
+  int? id;
+  String? amount;
+  String? purpose;
+  String? invoiceMonth;
+  String letterUpdateFileName;
+  int loadingButton;
+
+  UpdateInvoicesState(
+    this.id,
+    this.amount,
+    this.purpose,
+    this.invoiceMonth,
+    this.letterUpdateFileName,
+    this.loadingButton,
+  );
+
+  @override
+  // TODO: implement props
+  List<Object> get props => [
+        id!,
+        amount!,
+        purpose!,
+        invoiceMonth!,
+        letterUpdateFileName,
+        loadingButton,
+      ];
+}
+
+class UpdateInvoiceBackOption extends VidicAdminState {}
+
+// ------ Update Statement -----------------------
