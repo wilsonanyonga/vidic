@@ -53,6 +53,44 @@ class LettersScreen extends StatelessWidget {
             BlocConsumer<VidicAdminBloc, VidicAdminState>(
               listener: (context, state) {
                 // TODO: implement listener
+                if (state is UpdateLetterBackOption) {
+                  AwesomeDialog(
+                    context: context,
+                    width: 600,
+                    animType: AnimType.leftSlide,
+                    headerAnimationLoop: false,
+                    dismissOnBackKeyPress: false,
+                    dialogType: DialogType.success,
+                    showCloseIcon: true,
+                    title: 'Letter Updated Successfully',
+                    // desc:
+                    //     'You can choose to either go back home or add a new Invoice',
+                    // btnCancelText: "Back Home",
+                    btnOkText: "OK",
+                    btnOkOnPress: () {
+                      // debugPrint('OnClcik');
+                      BlocProvider.of<VidicAdminBloc>(context)
+                          .add(LetterGetEvent());
+                      _controllerSubject.text = '';
+                      // _controllerAmount.text = '';
+                      // _controllerPurpose.text = '';
+                      // selectedValue = null;
+                      selectedTenant = null;
+                    },
+                    btnOkIcon: Icons.check_circle,
+                    // btnCancelOnPress: () {
+                    //   BlocProvider.of<VidicAdminBloc>(context)
+                    //       .add(InvoiceGetEvent());
+                    //   // _controllerAmount.text = '';
+                    //   // _controllerPurpose.text = '';
+                    //   // selectedValue = null;
+                    //   // selectedTenant = null;
+                    // },
+                    onDismissCallback: (type) {
+                      debugPrint('Dialog Dissmiss from callback $type');
+                    },
+                  ).show();
+                }
                 if (state is LetterBackOption) {
                   AwesomeDialog(
                     context: context,
@@ -62,17 +100,18 @@ class LettersScreen extends StatelessWidget {
                     dismissOnBackKeyPress: false,
                     dialogType: DialogType.success,
                     showCloseIcon: true,
-                    title: 'Data Successfully Stored',
+                    title: 'Letters Updated Successfully',
                     desc:
-                        'You can choose to either go back home or add a new tenant',
+                        'You can choose to either go back home or add a new Invoice',
                     btnCancelText: "Back Home",
-                    btnOkText: "Add Another Letter",
+                    btnOkText: "OK",
                     btnOkOnPress: () {
                       // debugPrint('OnClcik');
                       BlocProvider.of<VidicAdminBloc>(context)
                           .add(CreateLetterEvent());
                       _controllerSubject.text = '';
-
+                      // _controllerPurpose.text = '';
+                      // selectedValue = null;
                       selectedTenant = null;
                     },
                     btnOkIcon: Icons.check_circle,
@@ -80,6 +119,8 @@ class LettersScreen extends StatelessWidget {
                       BlocProvider.of<VidicAdminBloc>(context)
                           .add(LetterGetEvent());
                       _controllerSubject.text = '';
+                      // _controllerPurpose.text = '';
+                      // selectedValue = null;
                       selectedTenant = null;
                     },
                     onDismissCallback: (type) {
@@ -89,6 +130,151 @@ class LettersScreen extends StatelessWidget {
                 }
               },
               builder: (context, state) {
+                if (state is UpdateLettersPatchState) {
+                  _controllerSubject.text = state.subject;
+                  return Expanded(
+                    child: SingleChildScrollView(
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          const SizedBox(
+                            height: 30,
+                          ),
+                          const Text(
+                            'Update Letter',
+                            style: TextStyle(
+                              fontSize: 20,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                          const SizedBox(
+                            height: 20,
+                          ),
+                          SizedBox(
+                            width: 400,
+                            child: Form(
+                              key: _formKey,
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  // DropdownButtonFormField(
+                                  //   decoration: const InputDecoration(
+                                  //     border: UnderlineInputBorder(),
+                                  //     labelText: 'Choose Tenant',
+                                  //   ),
+                                  //   items: state.dropdownItems,
+                                  //   value: selectedTenant,
+                                  //   validator: (String? value) {
+                                  //     if (value == null || value.isEmpty) {
+                                  //       return 'Please enter the Tenant';
+                                  //     }
+                                  //     return null;
+                                  //   },
+                                  //   onChanged: ((String? newValue) {
+                                  //     selectedTenant = newValue!;
+                                  //     BlocProvider.of<VidicAdminBloc>(context)
+                                  //         .add(SetTenantLetterIdEvent(
+                                  //       tenantLetterId: selectedTenant,
+                                  //     ));
+                                  //     if (kDebugMode) {
+                                  //       print("$selectedTenant is select");
+                                  //     }
+                                  //   }),
+                                  // ),
+                                  TextFormField(
+                                    controller: _controllerSubject,
+                                    keyboardType: TextInputType.text,
+                                    decoration: const InputDecoration(
+                                      hintText: 'Enter Subject Of Letter',
+                                      border: UnderlineInputBorder(),
+                                      labelText: 'Enter Subject Of Letter',
+                                    ),
+                                    validator: (String? value) {
+                                      if (value == null || value.isEmpty) {
+                                        return 'Please enter the Enter Subject Of Letter';
+                                      }
+                                      return null;
+                                    },
+                                  ),
+                                  const SizedBox(
+                                    height: 10,
+                                  ),
+                                  Text(
+                                    state.letterUpdateFileName,
+                                    style: const TextStyle(
+                                      fontSize: 17,
+                                    ),
+                                  ),
+                                  // (state.fileName != null)?
+                                  // Text(state.fileName!):const Text(''),
+                                  const SizedBox(
+                                    height: 10,
+                                  ),
+                                  ElevatedButton(
+                                    onPressed: () {
+                                      BlocProvider.of<VidicAdminBloc>(context)
+                                          .add(UploadLetterUpdateFileEvent());
+                                    },
+                                    child: const Text('Upload Letter'),
+                                  ),
+                                  const SizedBox(
+                                    height: 15,
+                                  ),
+                                  (state.loadingButton == 0)
+                                      ? ElevatedButton(
+                                          onPressed: () {
+                                            if (_formKey.currentState!
+                                                .validate()) {
+                                              // Process data. millicent.odhiambo@vidic.co.ke
+                                              // signInWithEmailAndPassword();
+                                              if (kDebugMode) {
+                                                print('sending');
+                                              }
+                                              BlocProvider.of<VidicAdminBloc>(
+                                                      context)
+                                                  .add(
+                                                UpdateLettersPatchSendEvent(
+                                                    subject: _controllerSubject
+                                                        .text),
+                                              );
+                                            }
+                                          },
+                                          child: Row(
+                                            children: const [
+                                              Text('Update Letter'),
+                                              SizedBox(
+                                                width: 10,
+                                              ),
+                                              // SizedBox(
+                                              //   width: 15,
+                                              //   height: 15,
+                                              //   child: CircularProgressIndicator(
+                                              //     color: Colors.white,
+                                              //     strokeWidth: 2,
+                                              //   ),
+                                              // )
+                                            ],
+                                          ),
+                                        )
+                                      : ElevatedButton.icon(
+                                          icon: const CircularProgressIndicator(
+                                            // color: Colors.white,
+                                            strokeWidth: 2,
+                                          ),
+                                          onPressed: null,
+                                          label:
+                                              const Text('Creating New Letter'),
+                                        ),
+                                ],
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  );
+                }
                 if (state is CreateLetterState) {
                   return Expanded(
                     child: SingleChildScrollView(
@@ -174,7 +360,7 @@ class LettersScreen extends StatelessWidget {
                                       BlocProvider.of<VidicAdminBloc>(context)
                                           .add(UploadLetterFileEvent());
                                     },
-                                    child: const Text('Upload Statement'),
+                                    child: const Text('Upload Letter'),
                                   ),
                                   const SizedBox(
                                     height: 15,
@@ -472,21 +658,35 @@ class LettersScreen extends StatelessWidget {
                                                             tooltip:
                                                                 'Update Letter',
                                                             onPressed: () {
-                                                              // BlocProvider.of<
-                                                              //             VidicAdminBloc>(
-                                                              //         context)
-                                                              //     .add(
-                                                              //   UpdateOccupancyEvent(
-                                                              //     floorId: state
-                                                              //         .data[i].datumId,
-                                                              //     occupancy: state
-                                                              //         .data[i].occupancy
-                                                              //         .toString(),
-                                                              //     capacity: state
-                                                              //         .data[i].capacity
-                                                              //         .toString(),
-                                                              //   ),
-                                                              // );
+                                                              BlocProvider.of<
+                                                                          VidicAdminBloc>(
+                                                                      context)
+                                                                  .add(
+                                                                UpdateLettersPatchEvent(
+                                                                  id: state
+                                                                      .data[
+                                                                          index]
+                                                                      .lettersTypes[
+                                                                          i]
+                                                                      .lettersTypeId,
+                                                                  // date: state
+                                                                  //     .data[
+                                                                  //         index]
+                                                                  //     .lettersTypes[
+                                                                  //         i]
+                                                                  //     .date
+                                                                  //     .toString()
+                                                                  //     .replaceAll(
+                                                                  //         '21:00:00.000Z',
+                                                                  //         ''),
+                                                                  subject: state
+                                                                      .data[
+                                                                          index]
+                                                                      .lettersTypes[
+                                                                          i]
+                                                                      .subject,
+                                                                ),
+                                                              );
                                                             },
                                                           ),
                                                         ),
@@ -603,6 +803,15 @@ class LettersScreen extends StatelessWidget {
           },
           builder: (context, state) {
             if (state is CreateLetterState) {
+              return FloatingActionButton(
+                  onPressed: () {
+                    BlocProvider.of<VidicAdminBloc>(context)
+                        .add(LetterGetEvent());
+                  },
+                  tooltip: 'Go Back',
+                  child: const Icon(Icons.close));
+            }
+            if (state is UpdateLettersPatchState) {
               return FloatingActionButton(
                   onPressed: () {
                     BlocProvider.of<VidicAdminBloc>(context)
