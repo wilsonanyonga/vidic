@@ -149,3 +149,106 @@ class UploadTenantLetterEvent extends VidicAdminEvent {
     required this.subject,
   });
 }
+
+// ---------------------------------------------------------------
+// create new occupancy
+
+class UpdateOccupancyEvent extends VidicAdminEvent {
+  int floorId;
+  String occupancy;
+  String capacity;
+
+  UpdateOccupancyEvent({
+    required this.floorId,
+    required this.occupancy,
+    required this.capacity,
+  });
+}
+
+class UpdateOccupancyPatchEvent extends VidicAdminEvent {
+  int floorId;
+  String occupancy;
+  String capacity;
+
+  UpdateOccupancyPatchEvent({
+    required this.floorId,
+    required this.occupancy,
+    required this.capacity,
+  });
+}
+
+// ---------------------------------------------------------------
+// update letters
+
+class UpdateLettersPatchEvent extends VidicAdminEvent {
+  int id;
+  String subject;
+  // String date;
+
+  UpdateLettersPatchEvent({
+    required this.id,
+    required this.subject,
+    // required this.date,
+  });
+}
+
+class UploadLetterUpdateFileEvent extends VidicAdminEvent {}
+
+class UpdateLettersPatchSendEvent extends VidicAdminEvent {
+  String subject;
+  // String date;
+
+  UpdateLettersPatchSendEvent({
+    required this.subject,
+  });
+}
+
+// ---------------------------------------------------------------
+// ---------------------------------------------------------------
+// update invoices
+// ---------------------------------------------------------------
+class UpdateInvoicesEvent extends VidicAdminEvent {
+  int id;
+  String amount;
+  String purpose;
+  String invoiceMonth;
+  // String date;
+
+  UpdateInvoicesEvent({
+    required this.id,
+    required this.amount,
+    required this.purpose,
+    required this.invoiceMonth,
+  });
+}
+
+class UpdateInvoiceMonthEvent extends VidicAdminEvent {
+  String? tenantInvoiceMonth;
+  String? purpose;
+  String? amount;
+  String uploadName;
+  UpdateInvoiceMonthEvent({
+    required this.tenantInvoiceMonth,
+    required this.purpose,
+    required this.amount,
+    required this.uploadName,
+  });
+}
+
+class UploadInvoiceUpdateFileEvent extends VidicAdminEvent {
+  String? purpose;
+  String? amount;
+  UploadInvoiceUpdateFileEvent({
+    required this.purpose,
+    required this.amount,
+  });
+}
+
+class UpdateInvoicePatchSendEvent extends VidicAdminEvent {
+  String? purpose;
+  String? amount;
+  UpdateInvoicePatchSendEvent({
+    required this.purpose,
+    required this.amount,
+  });
+}
