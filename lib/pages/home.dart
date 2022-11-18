@@ -707,120 +707,325 @@ class MyHomePage extends StatelessWidget {
                                           child: CircularProgressIndicator());
                                     }
                                     if (state is TenantLoaded) {
-                                      return ScrollConfiguration(
-                                        behavior:
-                                            ScrollConfiguration.of(context)
-                                                .copyWith(
-                                          dragDevices: {
-                                            PointerDeviceKind.touch,
-                                            PointerDeviceKind.mouse,
-                                          },
-                                        ),
-                                        child: ListView.builder(
-                                          shrinkWrap: true,
-                                          // physics:
-                                          //     const NeverScrollableScrollPhysics(),
-                                          itemCount: state.data.length,
-                                          itemBuilder: (BuildContext context,
-                                              int index) {
-                                            return ListTile(
-                                                leading:
-                                                    const Icon(Icons.person),
-                                                // trailing: const Text(
-                                                //   "GFG",
-                                                //   style: TextStyle(
-                                                //       color: Colors.green, fontSize: 15),
-                                                // ),
-                                                title: SingleChildScrollView(
-                                                  // physics:
-                                                  //     const NeverScrollableScrollPhysics(),
-                                                  scrollDirection:
-                                                      Axis.horizontal,
-                                                  child: Row(
-                                                    children: [
-                                                      Text(state
-                                                          .data[index].name),
-                                                      const SizedBox(
-                                                        width: 50,
+                                      return Align(
+                                        alignment: Alignment.topLeft,
+                                        child: ScrollConfiguration(
+                                          behavior:
+                                              ScrollConfiguration.of(context)
+                                                  .copyWith(
+                                            dragDevices: {
+                                              PointerDeviceKind.touch,
+                                              PointerDeviceKind.mouse,
+                                            },
+                                          ),
+                                          child: SingleChildScrollView(
+                                            scrollDirection: Axis.horizontal,
+                                            child: DataTable(
+                                              columns: const [
+                                                DataColumn(
+                                                  label: Text(
+                                                    'Edit',
+                                                    style: TextStyle(
+                                                        fontSize: 14,
+                                                        fontWeight:
+                                                            FontWeight.bold),
+                                                  ),
+                                                ),
+                                                DataColumn(
+                                                  label: Text(
+                                                    'Company Name',
+                                                    style: TextStyle(
+                                                        fontSize: 14,
+                                                        fontWeight:
+                                                            FontWeight.bold),
+                                                  ),
+                                                ),
+                                                DataColumn(
+                                                  label: Text(
+                                                    'Email',
+                                                    style: TextStyle(
+                                                        fontSize: 14,
+                                                        fontWeight:
+                                                            FontWeight.bold),
+                                                  ),
+                                                ),
+                                                DataColumn(
+                                                  label: Text(
+                                                    'Floor',
+                                                    style: TextStyle(
+                                                        fontSize: 14,
+                                                        fontWeight:
+                                                            FontWeight.bold),
+                                                  ),
+                                                ),
+                                                DataColumn(
+                                                  label: Text(
+                                                    'Size (sq ft)',
+                                                    style: TextStyle(
+                                                        fontSize: 14,
+                                                        fontWeight:
+                                                            FontWeight.bold),
+                                                  ),
+                                                ),
+                                                DataColumn(
+                                                  label: Text(
+                                                    'Amount',
+                                                    style: TextStyle(
+                                                        fontSize: 14,
+                                                        fontWeight:
+                                                            FontWeight.bold),
+                                                  ),
+                                                ),
+                                                DataColumn(
+                                                  label: Text(
+                                                    'Delete',
+                                                    style: TextStyle(
+                                                        fontSize: 14,
+                                                        fontWeight:
+                                                            FontWeight.bold),
+                                                  ),
+                                                ),
+                                              ],
+                                              rows: [
+                                                for (var i = 0;
+                                                    i < state.data.length;
+                                                    i++)
+                                                  DataRow(
+                                                    cells: [
+                                                      DataCell(
+                                                        IconButton(
+                                                          icon: const Icon(
+                                                              Icons.edit),
+                                                          tooltip:
+                                                              'Update Tenant',
+                                                          onPressed: () {
+                                                            // BlocProvider.of<
+                                                            //             VidicAdminBloc>(
+                                                            //         context)
+                                                            //     .add(
+                                                            //   UpdateOccupancyEvent(
+                                                            //     floorId: state
+                                                            //         .data[i].datumId,
+                                                            //     occupancy: state
+                                                            //         .data[i].occupancy
+                                                            //         .toString(),
+                                                            //     capacity: state
+                                                            //         .data[i].capacity
+                                                            //         .toString(),
+                                                            //   ),
+                                                            // );
+                                                          },
+                                                        ),
                                                       ),
-                                                      Text(state.data[index]
-                                                          .officialEmail),
-                                                      const SizedBox(
-                                                        width: 50,
+                                                      DataCell(
+                                                        Text(
+                                                          state.data[i].name,
+                                                        ),
                                                       ),
-                                                      Chip(
-                                                        label: (state
-                                                                    .data[index]
-                                                                    .floor ==
-                                                                "0")
-                                                            ? const Text(
-                                                                'Ground Floor',
-                                                                style: TextStyle(
-                                                                    color: Colors
-                                                                        .white),
-                                                              )
-                                                            : (state.data[index]
-                                                                        .floor ==
-                                                                    "1")
-                                                                ? const Text(
-                                                                    '1st Floor',
-                                                                    style: TextStyle(
-                                                                        color: Colors
-                                                                            .white),
-                                                                  )
-                                                                : (state.data[index].floor ==
-                                                                        "2")
-                                                                    ? const Text(
-                                                                        '2nd Floor',
-                                                                        style: TextStyle(
-                                                                            color:
-                                                                                Colors.white),
-                                                                      )
-                                                                    : (state.data[index].floor ==
-                                                                            "3")
-                                                                        ? const Text(
-                                                                            '3rd Floor',
-                                                                            style:
-                                                                                TextStyle(color: Colors.white),
-                                                                          )
-                                                                        : const Text(
-                                                                            '4th Floor',
-                                                                            style:
-                                                                                TextStyle(color: Colors.white),
-                                                                          ),
-                                                        backgroundColor:
-                                                            Colors.pink[300],
+                                                      DataCell(
+                                                        Text(
+                                                          state.data[i]
+                                                              .officialEmail,
+                                                        ),
                                                       ),
-                                                      // Chip(
-                                                      //   label: const Text(
-                                                      //     '1st Floor',
-                                                      //     style: TextStyle(
-                                                      //         color: Colors.white),
-                                                      //   ),
-                                                      //   backgroundColor: Colors.pink[300],
-                                                      // ),
-                                                      const SizedBox(
-                                                        width: 50,
+                                                      DataCell(
+                                                        Chip(
+                                                          label: (state.data[i]
+                                                                      .floor ==
+                                                                  "0")
+                                                              ? const Text(
+                                                                  'Ground Floor',
+                                                                  style: TextStyle(
+                                                                      color: Colors
+                                                                          .white),
+                                                                )
+                                                              : (state.data[i]
+                                                                          .floor ==
+                                                                      "1")
+                                                                  ? const Text(
+                                                                      '1st Floor',
+                                                                      style: TextStyle(
+                                                                          color:
+                                                                              Colors.white),
+                                                                    )
+                                                                  : (state.data[i].floor ==
+                                                                          "2")
+                                                                      ? const Text(
+                                                                          '2nd Floor',
+                                                                          style:
+                                                                              TextStyle(color: Colors.white),
+                                                                        )
+                                                                      : (state.data[i].floor ==
+                                                                              "3")
+                                                                          ? const Text(
+                                                                              '3rd Floor',
+                                                                              style: TextStyle(color: Colors.white),
+                                                                            )
+                                                                          : const Text(
+                                                                              '4th Floor',
+                                                                              style: TextStyle(color: Colors.white),
+                                                                            ),
+                                                          backgroundColor:
+                                                              Colors.pink[300],
+                                                        ),
                                                       ),
-                                                      Text(
-                                                        "${state.data[index].size} sq ft",
+                                                      DataCell(
+                                                        Text(
+                                                          state.data[i].size,
+                                                        ),
                                                       ),
-                                                      const SizedBox(
-                                                        width: 50,
+                                                      DataCell(
+                                                        Text(
+                                                          state.data[i].rent,
+                                                        ),
                                                       ),
-                                                      Text(
-                                                        "Ksh ${state.data[index].rent}",
+                                                      DataCell(
+                                                        IconButton(
+                                                          icon: const Icon(Icons
+                                                              .delete_forever),
+                                                          tooltip:
+                                                              'Delete Letter',
+                                                          onPressed: () {
+                                                            // BlocProvider.of<
+                                                            //             VidicAdminBloc>(
+                                                            //         context)
+                                                            //     .add(
+                                                            //   UpdateOccupancyEvent(
+                                                            //     floorId: state
+                                                            //         .data[i].datumId,
+                                                            //     occupancy: state
+                                                            //         .data[i].occupancy
+                                                            //         .toString(),
+                                                            //     capacity: state
+                                                            //         .data[i].capacity
+                                                            //         .toString(),
+                                                            //   ),
+                                                            // );
+                                                          },
+                                                        ),
                                                       ),
-                                                      const SizedBox(
-                                                        width: 20,
-                                                      ),
-                                                      const Icon(Icons.delete),
                                                     ],
                                                   ),
-                                                ));
-                                          },
+                                              ],
+                                            ),
+                                          ),
                                         ),
                                       );
+                                      // return ScrollConfiguration(
+                                      //   behavior:
+                                      //       ScrollConfiguration.of(context)
+                                      //           .copyWith(
+                                      //     dragDevices: {
+                                      //       PointerDeviceKind.touch,
+                                      //       PointerDeviceKind.mouse,
+                                      //     },
+                                      //   ),
+
+                                      //   child: ListView.builder(
+                                      //     shrinkWrap: true,
+                                      //     // physics:
+                                      //     //     const NeverScrollableScrollPhysics(),
+                                      //     itemCount: state.data.length,
+                                      //     itemBuilder: (BuildContext context,
+                                      //         int index) {
+                                      //       return ListTile(
+                                      //           leading:
+                                      //               const Icon(Icons.person),
+                                      //           // trailing: const Text(
+                                      //           //   "GFG",
+                                      //           //   style: TextStyle(
+                                      //           //       color: Colors.green, fontSize: 15),
+                                      //           // ),
+                                      //           title: SingleChildScrollView(
+                                      //             // physics:
+                                      //             //     const NeverScrollableScrollPhysics(),
+                                      //             scrollDirection:
+                                      //                 Axis.horizontal,
+                                      //             child: Row(
+                                      //               children: [
+                                      //                 Text(state
+                                      //                     .data[index].name),
+                                      //                 const SizedBox(
+                                      //                   width: 50,
+                                      //                 ),
+                                      //                 Text(state.data[index]
+                                      //                     .officialEmail),
+                                      //                 const SizedBox(
+                                      //                   width: 50,
+                                      //                 ),
+                                      //                 Chip(
+                                      //                   label: (state
+                                      //                               .data[index]
+                                      //                               .floor ==
+                                      //                           "0")
+                                      //                       ? const Text(
+                                      //                           'Ground Floor',
+                                      //                           style: TextStyle(
+                                      //                               color: Colors
+                                      //                                   .white),
+                                      //                         )
+                                      //                       : (state.data[index]
+                                      //                                   .floor ==
+                                      //                               "1")
+                                      //                           ? const Text(
+                                      //                               '1st Floor',
+                                      //                               style: TextStyle(
+                                      //                                   color: Colors
+                                      //                                       .white),
+                                      //                             )
+                                      //                           : (state.data[index].floor ==
+                                      //                                   "2")
+                                      //                               ? const Text(
+                                      //                                   '2nd Floor',
+                                      //                                   style: TextStyle(
+                                      //                                       color:
+                                      //                                           Colors.white),
+                                      //                                 )
+                                      //                               : (state.data[index].floor ==
+                                      //                                       "3")
+                                      //                                   ? const Text(
+                                      //                                       '3rd Floor',
+                                      //                                       style:
+                                      //                                           TextStyle(color: Colors.white),
+                                      //                                     )
+                                      //                                   : const Text(
+                                      //                                       '4th Floor',
+                                      //                                       style:
+                                      //                                           TextStyle(color: Colors.white),
+                                      //                                     ),
+                                      //                   backgroundColor:
+                                      //                       Colors.pink[300],
+                                      //                 ),
+                                      //                 // Chip(
+                                      //                 //   label: const Text(
+                                      //                 //     '1st Floor',
+                                      //                 //     style: TextStyle(
+                                      //                 //         color: Colors.white),
+                                      //                 //   ),
+                                      //                 //   backgroundColor: Colors.pink[300],
+                                      //                 // ),
+                                      //                 const SizedBox(
+                                      //                   width: 50,
+                                      //                 ),
+                                      //                 Text(
+                                      //                   "${state.data[index].size} sq ft",
+                                      //                 ),
+                                      //                 const SizedBox(
+                                      //                   width: 50,
+                                      //                 ),
+                                      //                 Text(
+                                      //                   "Ksh ${state.data[index].rent}",
+                                      //                 ),
+                                      //                 const SizedBox(
+                                      //                   width: 20,
+                                      //                 ),
+                                      //                 const Icon(Icons.delete),
+                                      //               ],
+                                      //             ),
+                                      //           ));
+                                      //     },
+                                      //   ),
+                                      // );
                                     }
                                     return const Text('Error Occured');
                                   },
@@ -883,7 +1088,7 @@ class MyHomePage extends StatelessWidget {
                 },
 
                 tooltip: 'Back',
-                child: const Icon(Icons.cancel),
+                child: const Icon(Icons.close),
               );
             }
             return FloatingActionButton(
