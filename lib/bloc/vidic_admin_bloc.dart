@@ -45,6 +45,20 @@ class VidicAdminBloc extends Bloc<VidicAdminEvent, VidicAdminState> {
   String? tenantLetterId;
   Uint8List? letterFile;
 
+  // updating the letter
+  String letterUpdateFileName = '';
+  String letterUpdateSubject = '';
+  int? letterUpdateId;
+  Uint8List? letterUpdateFile;
+
+  // updating the invoice
+  int? invoiceUpdateId;
+  Uint8List? invoiceUpdateFile;
+  String? tenantInvoiceUpdateMonth;
+  String invoiceUpdateFileName = '';
+  String? tenantInvoiceUpdatePurpose;
+  String? tenantInvoiceUpdateAmount;
+
   List<DropdownMenuItem<String>> get dropdownItems {
     List<DropdownMenuItem<String>> menuItems = [
       for (var i = 0; i < tenantsList!.length; i++)
@@ -127,15 +141,33 @@ class VidicAdminBloc extends Bloc<VidicAdminEvent, VidicAdminState> {
       if (kDebugMode) {
         print("hehe start");
       }
-      // delay for token to be stored well in shared preferences
-      await Future.delayed(const Duration(seconds: 1));
+      SharedPreferences prefs = await SharedPreferences.getInstance();
+      //Return String
+      String? stringValue = prefs.getString('jwt_token');
+      if (stringValue == null) {
+        await Future.delayed(const Duration(seconds: 2));
+
+        final statements = await _client.getTenants();
+
+        final occupancy = await _client.getOccupancy();
+        // delay for token to be stored well in shared preferences
+
+        // tenantsList = statements!.data;
+        if (kDebugMode) {
+          print("get home awaiting");
+          print(statements!.data);
+        }
+        emit(TenantLoaded(statements!.data, occupancy!.data));
+      }
 
       final statements = await _client.getTenants();
 
       final occupancy = await _client.getOccupancy();
+      // delay for token to be stored well in shared preferences
+
       // tenantsList = statements!.data;
       if (kDebugMode) {
-        print("hehe");
+        print("get home direct");
         print(statements!.data);
       }
       emit(TenantLoaded(statements!.data, occupancy!.data));
@@ -216,7 +248,7 @@ class VidicAdminBloc extends Bloc<VidicAdminEvent, VidicAdminState> {
 
     // ----------- Letter Complaint END--------------------------------
 
-    // ----------- Letter Complaint --------------------------------
+    // ----------- Occupancy  --------------------------------
 
     on<OccupancyGetEvent>((event, emit) async {
       // TODO: implement event handler
@@ -230,7 +262,7 @@ class VidicAdminBloc extends Bloc<VidicAdminEvent, VidicAdminState> {
       emit(OccupancyLoaded(occupancy!.data));
     });
 
-    // ----------- Letter Complaint END--------------------------------
+    // ----------- Occupancy END--------------------------------
 
     // --------------------------------------------------------------------------
 
@@ -588,7 +620,7 @@ class VidicAdminBloc extends Bloc<VidicAdminEvent, VidicAdminState> {
       },
     );
 
-    // UploadInvoiceFileEvent
+    // UploadLetterFileEvent
     on<UploadLetterFileEvent>(
       (event, emit) async {
         try {
@@ -661,5 +693,458 @@ class VidicAdminBloc extends Bloc<VidicAdminEvent, VidicAdminState> {
         }
       },
     );
+
+    // ----------- END Create New Letter ----------------------------
+
+    // ----------- Create New Occupancy ----------------------------
+    on<UpdateOccupancyEvent>(
+      (event, emit) async {
+        if (kDebugMode) {
+          print('create letter');
+          // print(dropdownItems);
+        }
+        //     this.floorId,
+        // this.occupancy,
+        // this.capacity,
+        // this.loadingButton,
+        emit(
+          UpdateOccupancyState(
+            event.floorId,
+            event.occupancy,
+            event.capacity,
+            0,
+          ),
+        );
+        // try {
+        //   final tenants = await _client.getTenants();
+        //   tenantsList = tenants!.data;
+        //   emit(CreateLetterState(0, letterFileName, dropdownItems));
+        // } catch (e) {
+        //   if (kDebugMode) {
+        //     print(e);
+        //   }
+        //   emit(CreateLetterState(0, letterFileName, dropdownItems));
+        // }
+      },
+    );
+
+    on<UpdateOccupancyPatchEvent>(
+      (event, emit) async {
+        if (kDebugMode) {
+          print('update occupancy');
+          // print(dropdownItems);
+        }
+
+        emit(
+          UpdateOccupancyState(
+            event.floorId,
+            event.occupancy,
+            event.capacity,
+            1,
+          ),
+        );
+        try {
+          if (kDebugMode) {
+            print(event.floorId);
+            print(event.occupancy);
+            print(event.capacity);
+            // print(tenantInvoiceMonth);
+            // print(invoiceFile);
+          }
+          final updatedOccupancy = await _client.updateOccupancy(
+            occupancy: event.occupancy,
+            capacity: event.capacity,
+            floorId: event.floorId,
+          );
+          if (kDebugMode) {
+            print("invoice response");
+            print(updatedOccupancy!.data);
+            print(updatedOccupancy.status);
+          }
+
+          if (updatedOccupancy!.status == 2000) {
+            // emit(CreateTenantState(0));
+            emit(
+              UpdateOccupancyState(
+                event.floorId,
+                event.occupancy,
+                event.capacity,
+                0,
+              ),
+            );
+            // emit(CreateLetterState(0, letterFileName, dropdownItems));
+            emit(OccupancyBackOption());
+          }
+        } catch (e) {
+          if (kDebugMode) {
+            print('invoice submit error');
+            print('invoice submit error is $e');
+          }
+          emit(
+            UpdateOccupancyState(
+              event.floorId,
+              event.occupancy,
+              event.capacity,
+              0,
+            ),
+          );
+        }
+      },
+
+      // },
+    );
+
+    // ----------- END Update Occupancy ----------------------------
+
+    // ----------- Update Letters ----------------------------
+    on<UpdateLettersPatchEvent>(
+      (event, emit) async {
+        if (kDebugMode) {
+          print('update letter');
+          // print(dropdownItems);
+        }
+        //     this.floorId,
+        // this.occupancy,
+        // this.capacity,
+        // this.loadingButton,
+        letterUpdateSubject = event.subject;
+        letterUpdateId = event.id;
+        emit(
+          UpdateLettersPatchState(
+            event.id,
+            event.subject,
+            // event.date,
+            0,
+            letterUpdateFileName,
+          ),
+        );
+        // try {
+        //   final tenants = await _client.getTenants();
+        //   tenantsList = tenants!.data;
+        //   emit(CreateLetterState(0, letterFileName, dropdownItems));
+        // } catch (e) {
+        //   if (kDebugMode) {
+        //     print(e);
+        //   }
+        //   emit(CreateLetterState(0, letterFileName, dropdownItems));
+        // }
+      },
+    );
+
+    // UploadLetterFileEvent
+    on<UploadLetterUpdateFileEvent>(
+      (event, emit) async {
+        try {
+          FilePickerResult? result = await FilePicker.platform.pickFiles();
+
+          if (result != null) {
+            letterUpdateFile = result.files.single.bytes!;
+            if (kDebugMode) {
+              print(result.files.single.name);
+              print(letterUpdateFile!.length);
+              print("upload worked");
+            }
+            letterUpdateFileName = result.files.single.name;
+            emit(
+              UpdateLettersPatchState(
+                letterUpdateId,
+                letterUpdateSubject,
+                // event.date,
+                0,
+                letterUpdateFileName,
+              ),
+            );
+            // emit(CreateLetterState(0, letterFileName, dropdownItems));
+          } else {
+            // User canceled the picker
+            if (kDebugMode) {
+              print("upload failed");
+            }
+            emit(
+              UpdateLettersPatchState(
+                letterUpdateId,
+                letterUpdateSubject,
+                // event.date,
+                0,
+                letterUpdateFileName,
+              ),
+            );
+            // emit(CreateLetterState(0, letterFileName, dropdownItems));
+          }
+        } catch (e) {
+          if (kDebugMode) {
+            print("upload totally failed $e");
+          }
+          emit(
+            UpdateLettersPatchState(
+              letterUpdateId,
+              letterUpdateSubject,
+              // event.date,
+              0,
+              letterUpdateFileName,
+            ),
+          );
+          // emit(CreateLetterState(0, letterFileName, dropdownItems));
+        }
+
+        // emit(CreateStatementState(0));
+      },
+    );
+
+    // this is the update upload button event
+    on<UpdateLettersPatchSendEvent>(
+      (event, emit) async {
+        // emit(CreateLetterState(1, letterFileName, dropdownItems));
+        emit(
+          UpdateLettersPatchState(
+            letterUpdateId,
+            event.subject,
+            // event.date,
+            1,
+            letterUpdateFileName,
+          ),
+        );
+        try {
+          DateTime now = DateTime.now();
+          DateTime date = DateTime(now.year, now.month, now.day);
+          if (kDebugMode) {
+            print(letterUpdateId);
+            // print(event.subject);
+            // print(event.purpose);
+            // print(tenantInvoiceMonth);
+            // print(invoiceFile);
+          }
+          final updateLetter = await _client.updateLetter(
+            id: letterUpdateId,
+            subject: event.subject,
+            date: date.toString().replaceAll(' 00:00:00.000', ''),
+            letterFile: letterUpdateFile,
+          );
+          if (kDebugMode) {
+            print("invoice response");
+            print(updateLetter!.data);
+            print(updateLetter.status);
+          }
+
+          if (updateLetter!.status == 2000) {
+            // emit(CreateTenantState(0));
+            emit(
+              UpdateLettersPatchState(
+                letterUpdateId,
+                letterUpdateSubject,
+                // event.date,
+                0,
+                letterUpdateFileName,
+              ),
+            );
+            letterUpdateFileName = '';
+            letterFile = null;
+            // emit(CreateLetterState(0, letterFileName, dropdownItems));
+            emit(UpdateLetterBackOption());
+          }
+        } catch (e) {
+          if (kDebugMode) {
+            print('invoice submit error');
+            print('invoice submit error is $e');
+          }
+          emit(
+            UpdateLettersPatchState(
+              letterUpdateId,
+              letterUpdateSubject,
+              // event.date,
+              0,
+              letterUpdateFileName,
+            ),
+          );
+          // emit(CreateLetterState(0, letterFileName, dropdownItems));
+        }
+      },
+    );
+
+    // ----------- END Update Letter ----------------------------
+
+    // ----------- Update Invoice ----------------------------
+    on<UpdateInvoicesEvent>(
+      (event, emit) async {
+        if (kDebugMode) {
+          print('update invoice');
+        }
+
+        tenantInvoiceUpdateMonth = event.invoiceMonth;
+        invoiceUpdateId = event.id;
+        tenantInvoiceUpdatePurpose = event.purpose;
+        tenantInvoiceUpdateAmount = event.amount;
+
+        emit(
+          UpdateInvoicesState(
+            invoiceUpdateId,
+            tenantInvoiceUpdateAmount,
+            tenantInvoiceUpdatePurpose,
+            tenantInvoiceUpdateMonth,
+            letterUpdateFileName,
+            0,
+          ),
+        );
+      },
+    );
+
+    on<UpdateInvoiceMonthEvent>(
+      (event, emit) {
+        tenantInvoiceUpdateMonth = event.tenantInvoiceMonth;
+        tenantInvoiceUpdateAmount = event.amount;
+        tenantInvoiceUpdatePurpose = event.purpose;
+        letterUpdateFileName = event.uploadName;
+
+        if (kDebugMode) {
+          print("$tenantInvoiceUpdateMonth is state");
+        }
+        emit(
+          UpdateInvoicesState(
+            invoiceUpdateId,
+            tenantInvoiceUpdateAmount,
+            tenantInvoiceUpdatePurpose,
+            tenantInvoiceUpdateMonth,
+            letterUpdateFileName,
+            0,
+          ),
+        );
+        // emit(CreateInvoiceState(0, invoiceFileName, dropdownItems));
+      },
+    );
+
+    // UploadInvoiceFileEvent
+    on<UploadInvoiceUpdateFileEvent>(
+      (event, emit) async {
+        try {
+          tenantInvoiceUpdateAmount = event.amount;
+          tenantInvoiceUpdatePurpose = event.purpose;
+          FilePickerResult? result = await FilePicker.platform.pickFiles();
+
+          if (result != null) {
+            invoiceUpdateFile = result.files.single.bytes!;
+            if (kDebugMode) {
+              print(result.files.single.name);
+              print(invoiceUpdateFile!.length);
+              print("upload worked");
+            }
+            invoiceUpdateFileName = result.files.single.name;
+            emit(
+              UpdateInvoicesState(
+                invoiceUpdateId,
+                tenantInvoiceUpdateAmount,
+                tenantInvoiceUpdatePurpose,
+                tenantInvoiceUpdateMonth,
+                invoiceUpdateFileName,
+                0,
+              ),
+            );
+            // emit(
+            //     CreateInvoiceState(0, result.files.single.name, dropdownItems));
+          } else {
+            // User canceled the picker
+            if (kDebugMode) {
+              print("upload failed");
+            }
+            emit(
+              UpdateInvoicesState(
+                invoiceUpdateId,
+                tenantInvoiceUpdateAmount,
+                tenantInvoiceUpdatePurpose,
+                tenantInvoiceUpdateMonth,
+                letterUpdateFileName,
+                0,
+              ),
+            );
+            // emit(CreateInvoiceState(0, invoiceFileName, dropdownItems));
+          }
+        } catch (e) {
+          if (kDebugMode) {
+            print("upload totally failed");
+          }
+          emit(
+            UpdateInvoicesState(
+              invoiceUpdateId,
+              tenantInvoiceUpdateAmount,
+              tenantInvoiceUpdatePurpose,
+              tenantInvoiceUpdateMonth,
+              letterUpdateFileName,
+              0,
+            ),
+          );
+          // emit(CreateInvoiceState(0, invoiceFileName, dropdownItems));
+        }
+
+        // emit(CreateStatementState(0));
+      },
+    );
+
+    // this is the update upload button event
+    on<UpdateInvoicePatchSendEvent>(
+      (event, emit) async {
+        tenantInvoiceUpdateAmount = event.amount;
+        tenantInvoiceUpdatePurpose = event.purpose;
+        emit(
+          UpdateInvoicesState(
+            invoiceUpdateId,
+            tenantInvoiceUpdateAmount,
+            tenantInvoiceUpdatePurpose,
+            tenantInvoiceUpdateMonth,
+            letterUpdateFileName,
+            1,
+          ),
+        );
+        try {
+          if (kDebugMode) {
+            print(letterUpdateId);
+          }
+          final updateInvoice = await _client.updateInvoice(
+            id: invoiceUpdateId,
+            amount: tenantInvoiceUpdateAmount,
+            purpose: tenantInvoiceUpdatePurpose,
+            invoiceMonth: tenantInvoiceUpdateMonth,
+            invoiceFile: invoiceUpdateFile,
+          );
+          if (kDebugMode) {
+            print("invoice response");
+            print(updateInvoice!.data);
+            print(updateInvoice.status);
+          }
+
+          if (updateInvoice!.status == 2000) {
+            emit(
+              UpdateInvoicesState(
+                invoiceUpdateId,
+                tenantInvoiceUpdateAmount,
+                tenantInvoiceUpdatePurpose,
+                tenantInvoiceUpdateMonth,
+                letterUpdateFileName,
+                0,
+              ),
+            );
+            letterUpdateFileName = '';
+            invoiceUpdateFile = null;
+            // emit(CreateLetterState(0, letterFileName, dropdownItems));
+            emit(UpdateInvoiceBackOption());
+          }
+        } catch (e) {
+          if (kDebugMode) {
+            print('invoice submit error');
+            print('invoice submit error is $e');
+          }
+          emit(
+            UpdateInvoicesState(
+              invoiceUpdateId,
+              tenantInvoiceUpdateAmount,
+              tenantInvoiceUpdatePurpose,
+              tenantInvoiceUpdateMonth,
+              letterUpdateFileName,
+              0,
+            ),
+          );
+        }
+      },
+    );
+
+    // ----------- END Update Invoice ----------------------------
   }
 }
