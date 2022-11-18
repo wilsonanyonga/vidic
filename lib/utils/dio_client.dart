@@ -718,4 +718,123 @@ class DioClient {
 
     return updateOccupancy;
   }
+
+  // update letter
+  Future<PostLetter?> updateLetter({
+    int? id,
+    // String? tenantLetterId,
+    String? subject,
+    String? date,
+    Uint8List? letterFile,
+  }) async {
+    PostLetter? updateLetter;
+    // print(imageFile);
+    if (kDebugMode) {
+      // print(us2.toJson());
+      print("object is testing............");
+    }
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    //Return String
+    stringValue = prefs.getString('jwt_token');
+    try {
+      var formData = FormData.fromMap({
+        'file_letter': letterFile != null
+            ? MultipartFile.fromBytes(letterFile.toList(),
+                filename: 'upload.pdf')
+            : null,
+        // 'tenant_id': tenantLetterId,
+        'subject': subject,
+        'date': date,
+      });
+      if (kDebugMode) {
+        print(formData);
+      }
+
+      Response response = await _dio.patch(
+        '/updateLetter/$id',
+        options: Options(
+          headers: {
+            "authorization": stringValue, // set content-length
+          },
+        ),
+        data: formData,
+      );
+
+      if (kDebugMode) {
+        print('User created: ${response.data}');
+        print("letter is creating............");
+      }
+
+      updateLetter = PostLetter.fromJson(response.data);
+    } catch (e) {
+      if (kDebugMode) {
+        print('Error creating user: $e');
+      }
+    }
+
+    return updateLetter;
+  }
+
+  // update invoice
+  Future<PostInvoice?> updateInvoice({
+    // String? tenantInvoiceId,
+    int? id,
+    String? amount,
+    String? purpose,
+    String? invoiceMonth,
+    Uint8List? invoiceFile,
+    // String? floor,
+  }) async {
+    PostInvoice? createInvoice;
+    // print(imageFile);
+    if (kDebugMode) {
+      // print(us2.toJson());
+      print("object is testing............");
+    }
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    //Return String
+    stringValue = prefs.getString('jwt_token');
+    try {
+      var formData = FormData.fromMap({
+        'file_invoice': invoiceFile != null
+            ? MultipartFile.fromBytes(invoiceFile.toList(),
+                filename: 'upload.pdf')
+            : null,
+        // 'file_statement': statementFile,
+        'month': invoiceMonth,
+        'amount': amount,
+        'purpose': purpose,
+        // 'tenant_id': tenantInvoiceId
+      });
+      if (kDebugMode) {
+        print(formData);
+      }
+
+      if (kDebugMode) {
+        print("object is here");
+      }
+      Response response = await _dio.patch(
+        '/updateInvoice/$id',
+        options: Options(
+          headers: {
+            "authorization": stringValue, // set content-length
+          },
+        ),
+        data: formData,
+      );
+
+      if (kDebugMode) {
+        print('User created: ${response.data}');
+        print("statement is creating............");
+      }
+
+      createInvoice = PostInvoice.fromJson(response.data);
+    } catch (e) {
+      if (kDebugMode) {
+        print('Error creating user: $e');
+      }
+    }
+
+    return createInvoice;
+  }
 }
