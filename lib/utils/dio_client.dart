@@ -837,4 +837,64 @@ class DioClient {
 
     return createInvoice;
   }
+
+  // update statement
+  Future<PostStatement?> updateStatement({
+    String? tenantStatementName,
+    String? amount,
+    String? statementStartDate,
+    String? statementEndDate,
+    Uint8List? statementFile,
+    // String? floor,
+  }) async {
+    PostStatement? createStatement;
+    // print(imageFile);
+    if (kDebugMode) {
+      // print(us2.toJson());
+      print("object is testing............");
+    }
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    //Return String
+    stringValue = prefs.getString('jwt_token');
+    try {
+      var formData = FormData.fromMap({
+        'file_statement': MultipartFile.fromBytes(statementFile!.toList(),
+            filename: 'upload.pdf'),
+        // 'file_statement': statementFile,
+        'start_date': statementStartDate,
+        'end_date': statementEndDate,
+        'amount': amount,
+        'tenant_id': tenantStatementName
+      });
+      if (kDebugMode) {
+        print(formData);
+      }
+
+      if (kDebugMode) {
+        print("object is here");
+      }
+      Response response = await _dio.patch(
+        '/updateStatement',
+        options: Options(
+          headers: {
+            "authorization": stringValue, // set content-length
+          },
+        ),
+        data: formData,
+      );
+
+      if (kDebugMode) {
+        print('User created: ${response.data}');
+        print("statement is creating............");
+      }
+
+      createStatement = PostStatement.fromJson(response.data);
+    } catch (e) {
+      if (kDebugMode) {
+        print('Error creating user: $e');
+      }
+    }
+
+    return createStatement;
+  }
 }
