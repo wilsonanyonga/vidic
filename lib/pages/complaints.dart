@@ -1,3 +1,4 @@
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:vidic/bloc/vidic_admin_bloc.dart';
@@ -52,7 +53,7 @@ class ComplaintsScreen extends StatelessWidget {
                   const Padding(
                     padding: EdgeInsets.fromLTRB(20, 0, 0, 0),
                     child: Text(
-                      'Invoice',
+                      'Letters From Tenant',
                       style: TextStyle(
                         fontWeight: FontWeight.bold,
                         fontSize: 15,
@@ -198,32 +199,158 @@ class ComplaintsScreen extends StatelessWidget {
                                     ],
                                   ),
                                 ),
-                                for (var i = 0;
-                                    i <
-                                        state.data[index].lettersTenantTypes
-                                            .length;
-                                    i++)
-                                  ListTile(
-                                    title: Row(
-                                      children: [
-                                        Text(
-                                          state.data[index]
-                                              .lettersTenantTypes[i].subject
-                                              .toString(),
-                                        ),
-                                        const SizedBox(
-                                          width: 50,
-                                        ),
-                                        Text(
-                                          "Date: ${state.data[index].lettersTenantTypes[i].date.toString().replaceAll('21:00:00.000Z', '')}",
-                                        ),
-                                        const SizedBox(
-                                          width: 50,
-                                        ),
-                                        const Icon(Icons.delete)
-                                      ],
+
+                                Align(
+                                  alignment: Alignment.topLeft,
+                                  child: ScrollConfiguration(
+                                    behavior: ScrollConfiguration.of(context)
+                                        .copyWith(
+                                      dragDevices: {
+                                        PointerDeviceKind.touch,
+                                        PointerDeviceKind.mouse,
+                                      },
+                                    ),
+                                    child: SingleChildScrollView(
+                                      scrollDirection: Axis.horizontal,
+                                      child: DataTable(
+                                        columns: const [
+                                          DataColumn(
+                                            label: Text(
+                                              'Subject',
+                                              style: TextStyle(
+                                                  fontSize: 14,
+                                                  fontWeight: FontWeight.bold),
+                                            ),
+                                          ),
+                                          DataColumn(
+                                            label: Text(
+                                              'Date',
+                                              style: TextStyle(
+                                                  fontSize: 14,
+                                                  fontWeight: FontWeight.bold),
+                                            ),
+                                          ),
+                                          DataColumn(
+                                            label: Text(
+                                              'Download',
+                                              style: TextStyle(
+                                                  fontSize: 14,
+                                                  fontWeight: FontWeight.bold),
+                                            ),
+                                          ),
+                                          DataColumn(
+                                            label: Text(
+                                              'Delete',
+                                              style: TextStyle(
+                                                  fontSize: 14,
+                                                  fontWeight: FontWeight.bold),
+                                            ),
+                                          ),
+                                        ],
+                                        rows: [
+                                          for (var i = 0;
+                                              i <
+                                                  state
+                                                      .data[index]
+                                                      .lettersTenantTypes
+                                                      .length;
+                                              i++)
+                                            DataRow(
+                                              cells: [
+                                                DataCell(
+                                                  Text(
+                                                    state
+                                                        .data[index]
+                                                        .lettersTenantTypes[i]
+                                                        .subject
+                                                        .toString(),
+                                                  ),
+                                                ),
+                                                DataCell(
+                                                  Text(state
+                                                      .data[index]
+                                                      .lettersTenantTypes[i]
+                                                      .date
+                                                      .toString()
+                                                      .replaceAll(
+                                                          '21:00:00.000Z', '')),
+                                                ),
+                                                DataCell(
+                                                  IconButton(
+                                                    icon: const Icon(
+                                                        Icons.download),
+                                                    tooltip: 'Download Letter',
+                                                    onPressed: () {
+                                                      // BlocProvider.of<
+                                                      //             VidicAdminBloc>(
+                                                      //         context)
+                                                      //     .add(
+                                                      //   UpdateOccupancyEvent(
+                                                      //     floorId: state
+                                                      //         .data[i].datumId,
+                                                      //     occupancy: state
+                                                      //         .data[i].occupancy
+                                                      //         .toString(),
+                                                      //     capacity: state
+                                                      //         .data[i].capacity
+                                                      //         .toString(),
+                                                      //   ),
+                                                      // );
+                                                    },
+                                                  ),
+                                                ),
+                                                DataCell(
+                                                  IconButton(
+                                                    icon: const Icon(
+                                                        Icons.delete_forever),
+                                                    tooltip: 'Delete Letter',
+                                                    onPressed: () {
+                                                      // BlocProvider.of<
+                                                      //             VidicAdminBloc>(
+                                                      //         context)
+                                                      //     .add(
+                                                      //   UpdateOccupancyEvent(
+                                                      //     floorId: state
+                                                      //         .data[i].datumId,
+                                                      //     occupancy: state
+                                                      //         .data[i].occupancy
+                                                      //         .toString(),
+                                                      //     capacity: state
+                                                      //         .data[i].capacity
+                                                      //         .toString(),
+                                                      //   ),
+                                                      // );
+                                                    },
+                                                  ),
+                                                ),
+                                              ],
+                                            ),
+                                        ],
+                                      ),
                                     ),
                                   ),
+                                ),
+                                // ListTile(
+                                //   title: Row(
+                                //     children: [
+                                //       Text(
+                                //         state.data[index]
+                                //             .lettersTenantTypes[i].subject
+                                //             .toString(),
+                                //       ),
+                                //       const SizedBox(
+                                //         width: 50,
+                                //       ),
+                                //       Text(
+                                //         "Date: ${state.data[index].lettersTenantTypes[i].date.toString().replaceAll('21:00:00.000Z', '')}",
+                                //       ),
+                                //       const SizedBox(
+                                //         width: 50,
+                                //       ),
+                                //       const Icon(Icons.delete)
+                                //     ],
+                                //   ),
+                                // ),
                               ],
                             );
                           },
