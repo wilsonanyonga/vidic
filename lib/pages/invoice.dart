@@ -71,6 +71,42 @@ class InvoiceScreen extends StatelessWidget {
             BlocConsumer<VidicAdminBloc, VidicAdminState>(
               listener: (context, state) {
                 // TODO: implement listener
+                if (state is UpdateInvoiceBackOption) {
+                  AwesomeDialog(
+                    context: context,
+                    width: 600,
+                    animType: AnimType.leftSlide,
+                    headerAnimationLoop: false,
+                    dismissOnBackKeyPress: false,
+                    dialogType: DialogType.success,
+                    showCloseIcon: true,
+                    title: 'Letter Updated Successfully',
+                    // desc:
+                    //     'You can choose to either go back home or add a new Invoice',
+                    // btnCancelText: "Back Home",
+                    btnOkText: "OK",
+                    btnOkOnPress: () {
+                      // debugPrint('OnClcik');
+                      BlocProvider.of<VidicAdminBloc>(context)
+                          .add(InvoiceGetEvent());
+                      _controllerAmount.text = '';
+                      _controllerPurpose.text = '';
+                      selectedTenant = null;
+                    },
+                    btnOkIcon: Icons.check_circle,
+                    // btnCancelOnPress: () {
+                    //   BlocProvider.of<VidicAdminBloc>(context)
+                    //       .add(InvoiceGetEvent());
+                    //   // _controllerAmount.text = '';
+                    //   // _controllerPurpose.text = '';
+                    //   // selectedValue = null;
+                    //   // selectedTenant = null;
+                    // },
+                    onDismissCallback: (type) {
+                      debugPrint('Dialog Dissmiss from callback $type');
+                    },
+                  ).show();
+                }
                 if (state is InvoiceBackOption) {
                   AwesomeDialog(
                     context: context,
@@ -110,6 +146,182 @@ class InvoiceScreen extends StatelessWidget {
                 }
               },
               builder: (context, state) {
+                if (state is UpdateInvoicesState) {
+                  _controllerAmount.text = state.amount!;
+                  _controllerPurpose.text = state.purpose!;
+                  selectedValue = state.invoiceMonth;
+                  return Expanded(
+                    child: SingleChildScrollView(
+                        child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        const SizedBox(
+                          height: 30,
+                        ),
+                        const Text(
+                          'Update Invoice',
+                          style: TextStyle(
+                            fontSize: 20,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                        SizedBox(
+                          width: 400,
+                          child: Form(
+                              key: _formKey,
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  TextFormField(
+                                    controller: _controllerAmount,
+                                    keyboardType: TextInputType.number,
+                                    decoration: const InputDecoration(
+                                      hintText: 'Enter Amount on Invoice (Ksh)',
+                                      border: UnderlineInputBorder(),
+                                      labelText:
+                                          'Enter Amount on Invoice (Ksh)',
+                                    ),
+                                    validator: (String? value) {
+                                      if (value == null || value.isEmpty) {
+                                        return 'Please enter the Amount on Invoice (Ksh)';
+                                      }
+                                      return null;
+                                    },
+                                  ),
+                                  const SizedBox(
+                                    height: 10,
+                                  ),
+                                  TextFormField(
+                                    controller: _controllerPurpose,
+                                    keyboardType: TextInputType.number,
+                                    decoration: const InputDecoration(
+                                      hintText: 'Enter Purpose of Invoice',
+                                      border: UnderlineInputBorder(),
+                                      labelText: 'Enter Purpose of Invoice',
+                                    ),
+                                    validator: (String? value) {
+                                      if (value == null || value.isEmpty) {
+                                        return 'Please enter the Purpose of Invoice';
+                                      }
+                                      return null;
+                                    },
+                                  ),
+                                  const SizedBox(
+                                    height: 10,
+                                  ),
+                                  DropdownButtonFormField(
+                                    decoration: const InputDecoration(
+                                      border: UnderlineInputBorder(),
+                                      labelText: 'Choose Month',
+                                    ),
+                                    items: dropdownItems,
+                                    value: selectedValue,
+                                    validator: (String? value) {
+                                      if (value == null || value.isEmpty) {
+                                        return 'Please enter the Month';
+                                      }
+                                      return null;
+                                    },
+                                    onChanged: ((String? newValue) {
+                                      selectedValue = newValue!;
+                                      BlocProvider.of<VidicAdminBloc>(context)
+                                          .add(UpdateInvoiceMonthEvent(
+                                        tenantInvoiceMonth: selectedValue,
+                                        amount: _controllerAmount.text,
+                                        purpose: _controllerPurpose.text,
+                                        uploadName: state.letterUpdateFileName,
+                                      ));
+                                      if (kDebugMode) {
+                                        print("$selectedValue is select");
+                                      }
+                                    }),
+                                  ),
+                                  const SizedBox(
+                                    height: 10,
+                                  ),
+                                  Text(
+                                    state.letterUpdateFileName,
+                                    style: const TextStyle(
+                                      fontSize: 17,
+                                    ),
+                                  ),
+                                  // (state.fileName != null)?
+                                  // Text(state.fileName!):const Text(''),
+                                  const SizedBox(
+                                    height: 10,
+                                  ),
+                                  ElevatedButton(
+                                    onPressed: () {
+                                      BlocProvider.of<VidicAdminBloc>(context)
+                                          .add(UploadInvoiceUpdateFileEvent(
+                                        amount: _controllerAmount.text,
+                                        purpose: _controllerPurpose.text,
+                                      ));
+                                    },
+                                    child: const Text('Upload Invoice'),
+                                  ),
+                                  const SizedBox(
+                                    height: 10,
+                                  ),
+                                  (state.loadingButton == 0)
+                                      ? ElevatedButton(
+                                          onPressed: () {
+                                            if (_formKey.currentState!
+                                                .validate()) {
+                                              // Process data. millicent.odhiambo@vidic.co.ke
+                                              // signInWithEmailAndPassword();
+                                              if (kDebugMode) {
+                                                print('sending');
+                                              }
+                                              BlocProvider.of<VidicAdminBloc>(
+                                                      context)
+                                                  .add(
+                                                UpdateInvoicePatchSendEvent(
+                                                  amount:
+                                                      _controllerAmount.text,
+                                                  purpose:
+                                                      _controllerPurpose.text,
+                                                ),
+                                              );
+                                            }
+                                          },
+                                          child: Row(
+                                            children: const [
+                                              Text('Update Invoice'),
+                                              SizedBox(
+                                                width: 10,
+                                              ),
+                                              // SizedBox(
+                                              //   width: 15,
+                                              //   height: 15,
+                                              //   child: CircularProgressIndicator(
+                                              //     color: Colors.white,
+                                              //     strokeWidth: 2,
+                                              //   ),
+                                              // )
+                                            ],
+                                          ),
+                                        )
+                                      : ElevatedButton.icon(
+                                          icon: const CircularProgressIndicator(
+                                            // color: Colors.white,
+                                            strokeWidth: 2,
+                                          ),
+                                          onPressed: null,
+                                          label: const Text(
+                                              'Creating New Invoice'),
+                                        ),
+                                  const SizedBox(
+                                    height: 20,
+                                  ),
+                                ],
+                              )),
+                        ),
+                      ],
+                    )),
+                  );
+                }
                 if (state is CreateInvoiceState) {
                   return Expanded(
                     child: SingleChildScrollView(
@@ -238,7 +450,7 @@ class InvoiceScreen extends StatelessWidget {
                                       BlocProvider.of<VidicAdminBloc>(context)
                                           .add(UploadInvoiceFileEvent());
                                     },
-                                    child: const Text('Upload Statement'),
+                                    child: const Text('Upload Invoice'),
                                   ),
                                   const SizedBox(
                                     height: 10,
@@ -267,7 +479,7 @@ class InvoiceScreen extends StatelessWidget {
                                           },
                                           child: Row(
                                             children: const [
-                                              Text('Create New Statement'),
+                                              Text('Create New Invoice'),
                                               SizedBox(
                                                 width: 10,
                                               ),
@@ -289,7 +501,7 @@ class InvoiceScreen extends StatelessWidget {
                                           ),
                                           onPressed: null,
                                           label: const Text(
-                                              'Creating New Statement'),
+                                              'Creating New Invoice'),
                                           // child: Row(
                                           //   children: const [
                                           //     Text('Creating New Statement'),
@@ -573,21 +785,38 @@ class InvoiceScreen extends StatelessWidget {
                                                             tooltip:
                                                                 'Update Invoice',
                                                             onPressed: () {
-                                                              // BlocProvider.of<
-                                                              //             VidicAdminBloc>(
-                                                              //         context)
-                                                              //     .add(
-                                                              //   UpdateOccupancyEvent(
-                                                              //     floorId: state
-                                                              //         .data[i].datumId,
-                                                              //     occupancy: state
-                                                              //         .data[i].occupancy
-                                                              //         .toString(),
-                                                              //     capacity: state
-                                                              //         .data[i].capacity
-                                                              //         .toString(),
-                                                              //   ),
-                                                              // );
+                                                              BlocProvider.of<
+                                                                          VidicAdminBloc>(
+                                                                      context)
+                                                                  .add(
+                                                                UpdateInvoicesEvent(
+                                                                  amount: state
+                                                                      .data[
+                                                                          index]
+                                                                      .invoiceTypes[
+                                                                          i]
+                                                                      .amount
+                                                                      .toString(),
+                                                                  id: state
+                                                                      .data[
+                                                                          index]
+                                                                      .invoiceTypes[
+                                                                          i]
+                                                                      .invoiceTypeId,
+                                                                  invoiceMonth: state
+                                                                      .data[
+                                                                          index]
+                                                                      .invoiceTypes[
+                                                                          i]
+                                                                      .month,
+                                                                  purpose: state
+                                                                      .data[
+                                                                          index]
+                                                                      .invoiceTypes[
+                                                                          i]
+                                                                      .purpose,
+                                                                ),
+                                                              );
                                                             },
                                                           ),
                                                         ),
@@ -704,6 +933,15 @@ class InvoiceScreen extends StatelessWidget {
             // TODO: implement listener
           },
           builder: (context, state) {
+            if (state is UpdateInvoicesState) {
+              return FloatingActionButton(
+                  onPressed: () {
+                    BlocProvider.of<VidicAdminBloc>(context)
+                        .add(InvoiceGetEvent());
+                  },
+                  tooltip: 'Go Back',
+                  child: const Icon(Icons.close));
+            }
             if (state is CreateInvoiceState) {
               return FloatingActionButton(
                   onPressed: () {
