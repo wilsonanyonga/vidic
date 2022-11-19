@@ -265,3 +265,33 @@ class UpdateInvoicesState extends VidicAdminState {
 class UpdateInvoiceBackOption extends VidicAdminState {}
 
 // ------ Update Statement -----------------------
+
+// display the invoices update page and pass parametters
+class UpdateStatementsState extends VidicAdminState {
+  // int? id;
+  String? amount;
+  DateTime? startDate;
+  DateTime? endDate;
+  String? statementUpdateFileName;
+  int loadingButton;
+
+  UpdateStatementsState(
+    // this.id,
+    this.amount,
+    this.startDate,
+    this.endDate,
+    this.statementUpdateFileName,
+    this.loadingButton,
+  );
+
+  @override
+  // TODO: implement props
+  List<Object> get props => [
+        // id!,
+        amount!,
+        startDate!,
+        endDate!,
+        statementUpdateFileName!,
+        loadingButton,
+      ];
+}
