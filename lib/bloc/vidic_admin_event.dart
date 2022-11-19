@@ -252,3 +252,22 @@ class UpdateInvoicePatchSendEvent extends VidicAdminEvent {
     required this.amount,
   });
 }
+
+// ---------------------------------------------------------------
+// ---------------------------------------------------------------
+// update statement
+// ---------------------------------------------------------------
+class UpdateStatementsEvent extends VidicAdminEvent {
+  int id;
+  String amount;
+  DateTime statementStartDate;
+  DateTime statementEndDate;
+  // String date;
+
+  UpdateStatementsEvent({
+    required this.id,
+    required this.amount,
+    required this.statementStartDate,
+    required this.statementEndDate,
+  });
+}
