@@ -840,7 +840,7 @@ class DioClient {
 
   // update statement
   Future<PostStatement?> updateStatement({
-    String? tenantStatementName,
+    int? id,
     String? amount,
     String? statementStartDate,
     String? statementEndDate,
@@ -858,13 +858,15 @@ class DioClient {
     stringValue = prefs.getString('jwt_token');
     try {
       var formData = FormData.fromMap({
-        'file_statement': MultipartFile.fromBytes(statementFile!.toList(),
-            filename: 'upload.pdf'),
+        'file_statement': statementFile != null
+            ? MultipartFile.fromBytes(statementFile.toList(),
+                filename: 'upload.pdf')
+            : null,
         // 'file_statement': statementFile,
         'start_date': statementStartDate,
         'end_date': statementEndDate,
         'amount': amount,
-        'tenant_id': tenantStatementName
+        // 'tenant_id': tenantStatementName
       });
       if (kDebugMode) {
         print(formData);
@@ -885,7 +887,7 @@ class DioClient {
 
       if (kDebugMode) {
         print('User created: ${response.data}');
-        print("statement is creating............");
+        print("statement is updating............");
       }
 
       createStatement = PostStatement.fromJson(response.data);
