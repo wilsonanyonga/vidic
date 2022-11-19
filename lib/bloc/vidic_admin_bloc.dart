@@ -59,6 +59,14 @@ class VidicAdminBloc extends Bloc<VidicAdminEvent, VidicAdminState> {
   String? tenantInvoiceUpdatePurpose;
   String? tenantInvoiceUpdateAmount;
 
+  // Updating the statements
+  int? statementUpdateId;
+  String? statementUpdateFileName;
+  Uint8List? statementUpdateFile;
+  DateTime? statementUpdateStartDate;
+  DateTime? statementUpdateEndDate;
+  String? statementUpdateAmount;
+
   List<DropdownMenuItem<String>> get dropdownItems {
     List<DropdownMenuItem<String>> menuItems = [
       for (var i = 0; i < tenantsList!.length; i++)
@@ -1146,5 +1154,30 @@ class VidicAdminBloc extends Bloc<VidicAdminEvent, VidicAdminState> {
     );
 
     // ----------- END Update Invoice ----------------------------
+
+    // ----------- Update State ----------------------------
+    on<UpdateStatementsEvent>(
+      (event, emit) async {
+        if (kDebugMode) {
+          print('update invoice');
+        }
+        statementUpdateId = event.id;
+        // Uint8List? statementUpdateFile;
+        statementUpdateStartDate = event.statementStartDate;
+        statementUpdateEndDate = event.statementEndDate;
+        statementUpdateAmount = event.amount;
+
+        emit(
+          UpdateStatementsState(
+            // invoiceUpdateId,
+            statementUpdateAmount,
+            statementUpdateStartDate,
+            statementUpdateEndDate,
+            statementUpdateFileName,
+            0,
+          ),
+        );
+      },
+    );
   }
 }
