@@ -88,6 +88,208 @@ class StatementScreen extends StatelessWidget {
                 }
               },
               builder: (context, state) {
+                if (state is UpdateStatementsState) {
+                  _controllerAmount.text = state.amount!;
+                  return Expanded(
+                    child: SingleChildScrollView(
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          const SizedBox(
+                            height: 30,
+                          ),
+                          const Text(
+                            'Update Statement',
+                            style: TextStyle(
+                              fontSize: 20,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                          const SizedBox(
+                            height: 20,
+                          ),
+                          SizedBox(
+                            width: 400,
+                            child: Form(
+                              key: _formKey,
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  // DropdownButtonFormField(
+                                  //   decoration: const InputDecoration(
+                                  //     border: UnderlineInputBorder(),
+                                  //     labelText: 'Choose Tenant',
+                                  //   ),
+                                  //   items: state.dropdownItems,
+                                  //   value: selectedValue,
+                                  //   validator: (String? value) {
+                                  //     if (value == null || value.isEmpty) {
+                                  //       return 'Please enter the Tenant';
+                                  //     }
+                                  //     return null;
+                                  //   },
+                                  //   onChanged: ((String? newValue) {
+                                  //     selectedValue = newValue!;
+                                  //     BlocProvider.of<VidicAdminBloc>(context)
+                                  //         .add(CreateTenantStatementEvent(
+                                  //       tenantStatementName: selectedValue,
+                                  //     ));
+                                  //     if (kDebugMode) {
+                                  //       print("$selectedValue is select");
+                                  //     }
+                                  //   }),
+                                  // ),
+                                  TextFormField(
+                                    controller: _controllerAmount,
+                                    keyboardType: TextInputType.number,
+                                    decoration: const InputDecoration(
+                                      hintText: 'Enter Amount on Statement',
+                                      border: UnderlineInputBorder(),
+                                      labelText: 'Enter Amount on Statement',
+                                    ),
+                                    validator: (String? value) {
+                                      if (value == null || value.isEmpty) {
+                                        return 'Please enter the Amount on Statement';
+                                      }
+                                      return null;
+                                    },
+                                  ),
+                                  const SizedBox(
+                                    height: 10,
+                                  ),
+                                  Text(
+                                    state.statementUpdateFileName!,
+                                    style: const TextStyle(
+                                      fontSize: 17,
+                                    ),
+                                  ),
+                                  // (state.fileName != null)?
+                                  // Text(state.fileName!):const Text(''),
+                                  const SizedBox(
+                                    height: 10,
+                                  ),
+                                  ElevatedButton(
+                                    onPressed: () {
+                                      BlocProvider.of<VidicAdminBloc>(context)
+                                          .add(UploadStatementFileEvent());
+                                    },
+                                    child: const Text('Upload Statement'),
+                                  ),
+                                  const SizedBox(
+                                    height: 15,
+                                  ),
+                                  const Text(
+                                    'Statement Start Date',
+                                    style: TextStyle(fontSize: 17),
+                                  ),
+                                  SfDateRangePicker(
+                                    onSelectionChanged:
+                                        (DateRangePickerSelectionChangedArgs
+                                            args) {
+                                      BlocProvider.of<VidicAdminBloc>(context)
+                                          .add(CreateStatementStartDateEvent(
+                                              statementStartDate: args.value
+                                                  .toString()
+                                                  .replaceAll(
+                                                      ' 00:00:00.000', '')));
+                                    },
+                                    selectionMode:
+                                        DateRangePickerSelectionMode.single,
+                                  ),
+                                  const SizedBox(
+                                    height: 15,
+                                  ),
+                                  const Text(
+                                    'Statement End Date',
+                                    style: TextStyle(fontSize: 17),
+                                  ),
+                                  SfDateRangePicker(
+                                    onSelectionChanged:
+                                        (DateRangePickerSelectionChangedArgs
+                                            args) {
+                                      BlocProvider.of<VidicAdminBloc>(context)
+                                          .add(CreateStatementEndDateEvent(
+                                              statementEndDate: args.value
+                                                  .toString()
+                                                  .replaceAll(
+                                                      ' 00:00:00.000', '')));
+                                    },
+                                    selectionMode:
+                                        DateRangePickerSelectionMode.single,
+                                  ),
+                                  const SizedBox(
+                                    height: 15,
+                                  ),
+                                  (state.loadingButton == 0)
+                                      ? ElevatedButton(
+                                          onPressed: () {
+                                            if (_formKey.currentState!
+                                                .validate()) {
+                                              // Process data. millicent.odhiambo@vidic.co.ke
+                                              // signInWithEmailAndPassword();
+                                              if (kDebugMode) {
+                                                print('sending');
+                                              }
+                                              BlocProvider.of<VidicAdminBloc>(
+                                                      context)
+                                                  .add(
+                                                UploadTenantStatementEvent(
+                                                  amount:
+                                                      _controllerAmount.text,
+                                                ),
+                                              );
+                                            }
+                                          },
+                                          child: Row(
+                                            children: const [
+                                              Text('Create New Statement'),
+                                              SizedBox(
+                                                width: 10,
+                                              ),
+                                              // SizedBox(
+                                              //   width: 15,
+                                              //   height: 15,
+                                              //   child: CircularProgressIndicator(
+                                              //     color: Colors.white,
+                                              //     strokeWidth: 2,
+                                              //   ),
+                                              // )
+                                            ],
+                                          ),
+                                        )
+                                      : ElevatedButton(
+                                          onPressed: null,
+                                          child: Row(
+                                            children: const [
+                                              Text('Creating New Statement'),
+                                              SizedBox(
+                                                width: 10,
+                                              ),
+                                              SizedBox(
+                                                width: 15,
+                                                height: 15,
+                                                child:
+                                                    CircularProgressIndicator(
+                                                  color: Colors.white,
+                                                  strokeWidth: 2,
+                                                ),
+                                              )
+                                            ],
+                                          ),
+                                        ),
+                                  const SizedBox(
+                                    height: 20,
+                                  ),
+                                ],
+                              ),
+                            ),
+                          )
+                        ],
+                      ),
+                    ),
+                  );
+                }
                 if (state is CreateStatementState) {
                   return Expanded(
                     child: SingleChildScrollView(
@@ -561,21 +763,38 @@ class StatementScreen extends StatelessWidget {
                                                             tooltip:
                                                                 'Update Invoice',
                                                             onPressed: () {
-                                                              // BlocProvider.of<
-                                                              //             VidicAdminBloc>(
-                                                              //         context)
-                                                              //     .add(
-                                                              //   UpdateOccupancyEvent(
-                                                              //     floorId: state
-                                                              //         .data[i].datumId,
-                                                              //     occupancy: state
-                                                              //         .data[i].occupancy
-                                                              //         .toString(),
-                                                              //     capacity: state
-                                                              //         .data[i].capacity
-                                                              //         .toString(),
-                                                              //   ),
-                                                              // );
+                                                              BlocProvider.of<
+                                                                          VidicAdminBloc>(
+                                                                      context)
+                                                                  .add(
+                                                                UpdateStatementsEvent(
+                                                                  id: state
+                                                                      .data[
+                                                                          index]
+                                                                      .statementTypes[
+                                                                          i]
+                                                                      .statementTypeId,
+                                                                  amount: state
+                                                                      .data[
+                                                                          index]
+                                                                      .statementTypes[
+                                                                          i]
+                                                                      .amount
+                                                                      .toString(),
+                                                                  statementStartDate: state
+                                                                      .data[
+                                                                          index]
+                                                                      .statementTypes[
+                                                                          i]
+                                                                      .startDate,
+                                                                  statementEndDate: state
+                                                                      .data[
+                                                                          index]
+                                                                      .statementTypes[
+                                                                          i]
+                                                                      .endDate,
+                                                                ),
+                                                              );
                                                             },
                                                           ),
                                                         ),
