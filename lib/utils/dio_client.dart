@@ -876,7 +876,7 @@ class DioClient {
         print("object is here");
       }
       Response response = await _dio.patch(
-        '/updateStatement',
+        '/updateStatement/$id',
         options: Options(
           headers: {
             "authorization": stringValue, // set content-length
