@@ -61,7 +61,7 @@ class VidicAdminBloc extends Bloc<VidicAdminEvent, VidicAdminState> {
 
   // Updating the statements
   int? statementUpdateId;
-  String? statementUpdateFileName;
+  String statementUpdateFileName = '';
   Uint8List? statementUpdateFile;
   DateTime? statementUpdateStartDate;
   DateTime? statementUpdateEndDate;
@@ -1155,7 +1155,7 @@ class VidicAdminBloc extends Bloc<VidicAdminEvent, VidicAdminState> {
 
     // ----------- END Update Invoice ----------------------------
 
-    // ----------- Update State ----------------------------
+    // ----------- Update Statements ----------------------------
     on<UpdateStatementsEvent>(
       (event, emit) async {
         if (kDebugMode) {
@@ -1166,7 +1166,13 @@ class VidicAdminBloc extends Bloc<VidicAdminEvent, VidicAdminState> {
         statementUpdateStartDate = event.statementStartDate;
         statementUpdateEndDate = event.statementEndDate;
         statementUpdateAmount = event.amount;
-
+        if (kDebugMode) {
+          print('details are');
+          print(statementUpdateId);
+          print(statementUpdateStartDate);
+          print(statementUpdateEndDate);
+          print(statementUpdateAmount);
+        }
         emit(
           UpdateStatementsState(
             // invoiceUpdateId,
@@ -1177,6 +1183,205 @@ class VidicAdminBloc extends Bloc<VidicAdminEvent, VidicAdminState> {
             0,
           ),
         );
+      },
+    );
+    //
+
+    // CreateStatementUpdateStartDateEvent
+    on<CreateStatementUpdateStartDateEvent>(
+      (event, emit) async {
+        if (kDebugMode) {
+          print('update invoice');
+        }
+        // statementUpdateId = event.id;
+        // Uint8List? statementUpdateFile;
+        statementUpdateStartDate = event.statementStartDate;
+        statementUpdateAmount = event.amount;
+        // statementUpdateEndDate = event.statementEndDate;
+        // statementUpdateAmount = event.amount;
+        if (kDebugMode) {
+          print('details are');
+          print(statementUpdateId);
+          print(statementUpdateStartDate);
+          print(statementUpdateEndDate);
+          print(statementUpdateAmount);
+        }
+        emit(
+          UpdateStatementsState(
+            // invoiceUpdateId,
+            statementUpdateAmount,
+            statementUpdateStartDate,
+            statementUpdateEndDate,
+            statementUpdateFileName,
+            0,
+          ),
+        );
+      },
+    );
+
+    // CreateStatementUpdateEndDateEvent
+    on<CreateStatementUpdateEndDateEvent>(
+      (event, emit) async {
+        if (kDebugMode) {
+          print('update invoice');
+        }
+        // statementUpdateId = event.id;
+        // Uint8List? statementUpdateFile;
+        statementUpdateEndDate = event.statementEndDate;
+        statementUpdateAmount = event.amount;
+        // statementUpdateEndDate = event.statementEndDate;
+        // statementUpdateAmount = event.amount;
+        if (kDebugMode) {
+          print('details are');
+          print(statementUpdateId);
+          print(statementUpdateStartDate);
+          print(statementUpdateEndDate);
+          print(statementUpdateAmount);
+        }
+        emit(
+          UpdateStatementsState(
+            // invoiceUpdateId,
+            statementUpdateAmount,
+            statementUpdateStartDate,
+            statementUpdateEndDate,
+            statementUpdateFileName,
+            0,
+          ),
+        );
+      },
+    );
+
+    //  UploadInvoiceFileEvent
+    on<UploadStatementUpdateFileEvent>(
+      (event, emit) async {
+        try {
+          statementUpdateAmount = event.amount;
+          // tenantInvoiceUpdatePurpose = event.purpose;
+          FilePickerResult? result = await FilePicker.platform.pickFiles();
+
+          if (result != null) {
+            statementUpdateFile = result.files.single.bytes!;
+            if (kDebugMode) {
+              print(result.files.single.name);
+              print(statementUpdateFile!.length);
+              print("upload worked");
+            }
+            statementUpdateFileName = result.files.single.name;
+            emit(
+              UpdateStatementsState(
+                // invoiceUpdateId,
+                statementUpdateAmount,
+                statementUpdateStartDate,
+                statementUpdateEndDate,
+                statementUpdateFileName,
+                0,
+              ),
+            );
+            // emit(
+            //     CreateInvoiceState(0, result.files.single.name, dropdownItems));
+          } else {
+            // User canceled the picker
+            if (kDebugMode) {
+              print("upload failed");
+            }
+            emit(
+              UpdateStatementsState(
+                // invoiceUpdateId,
+                statementUpdateAmount,
+                statementUpdateStartDate,
+                statementUpdateEndDate,
+                statementUpdateFileName,
+                0,
+              ),
+            );
+            // emit(CreateInvoiceState(0, invoiceFileName, dropdownItems));
+          }
+        } catch (e) {
+          if (kDebugMode) {
+            print("upload totally failed");
+          }
+          emit(
+            UpdateStatementsState(
+              // invoiceUpdateId,
+              statementUpdateAmount,
+              statementUpdateStartDate,
+              statementUpdateEndDate,
+              statementUpdateFileName,
+              0,
+            ),
+          );
+          // emit(CreateInvoiceState(0, invoiceFileName, dropdownItems));
+        }
+
+        // emit(CreateStatementState(0));
+      },
+    );
+
+    // this is the update upload button event
+    on<UpdateStatementPatchSendEvent>(
+      (event, emit) async {
+        tenantInvoiceUpdateAmount = event.amount;
+        emit(
+          UpdateStatementsState(
+            statementUpdateAmount,
+            statementUpdateStartDate,
+            statementUpdateEndDate,
+            statementUpdateFileName,
+            1,
+          ),
+        );
+        try {
+          if (kDebugMode) {
+            // print(letterUpdateId);
+          }
+          final updateStatement = await _client.updateStatement(
+            id: statementUpdateId,
+            amount: statementUpdateAmount,
+            statementStartDate: statementUpdateStartDate
+                .toString()
+                .replaceAll(' 00:00:00.000', ''),
+            statementEndDate: statementUpdateEndDate
+                .toString()
+                .replaceAll(' 00:00:00.000', ''),
+            statementFile: statementUpdateFile,
+          );
+          if (kDebugMode) {
+            print("invoice response");
+            print(updateStatement!.data);
+            print(updateStatement.status);
+          }
+
+          if (updateStatement!.status == 2000) {
+            emit(
+              UpdateStatementsState(
+                statementUpdateAmount,
+                statementUpdateStartDate,
+                statementUpdateEndDate,
+                statementUpdateFileName,
+                0,
+              ),
+            );
+            statementUpdateFileName = '';
+            statementUpdateFile = null;
+            statementUpdateAmount = '';
+            // emit(CreateLetterState(0, letterFileName, dropdownItems));
+            emit(UpdateStatementBackOption());
+          }
+        } catch (e) {
+          if (kDebugMode) {
+            print('invoice submit error');
+            print('invoice submit error is $e');
+          }
+          emit(
+            UpdateStatementsState(
+              statementUpdateAmount,
+              statementUpdateStartDate,
+              statementUpdateEndDate,
+              statementUpdateFileName,
+              0,
+            ),
+          );
+        }
       },
     );
   }
