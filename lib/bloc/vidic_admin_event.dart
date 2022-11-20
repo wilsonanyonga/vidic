@@ -258,16 +258,48 @@ class UpdateInvoicePatchSendEvent extends VidicAdminEvent {
 // update statement
 // ---------------------------------------------------------------
 class UpdateStatementsEvent extends VidicAdminEvent {
-  int id;
-  String amount;
-  DateTime statementStartDate;
-  DateTime statementEndDate;
+  final int id;
+  final String amount;
+  final DateTime statementStartDate;
+  final DateTime statementEndDate;
   // String date;
 
-  UpdateStatementsEvent({
+  const UpdateStatementsEvent({
     required this.id,
     required this.amount,
     required this.statementStartDate,
     required this.statementEndDate,
+  });
+}
+
+class UploadStatementUpdateFileEvent extends VidicAdminEvent {
+  final String amount;
+  const UploadStatementUpdateFileEvent({
+    required this.amount,
+  });
+}
+
+class CreateStatementUpdateStartDateEvent extends VidicAdminEvent {
+  final DateTime statementStartDate;
+  final String amount;
+  const CreateStatementUpdateStartDateEvent({
+    required this.statementStartDate,
+    required this.amount,
+  });
+}
+
+class CreateStatementUpdateEndDateEvent extends VidicAdminEvent {
+  final DateTime statementEndDate;
+  final String amount;
+  const CreateStatementUpdateEndDateEvent({
+    required this.statementEndDate,
+    required this.amount,
+  });
+}
+
+class UpdateStatementPatchSendEvent extends VidicAdminEvent {
+  final String? amount;
+  const UpdateStatementPatchSendEvent({
+    required this.amount,
   });
 }
