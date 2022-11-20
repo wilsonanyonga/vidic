@@ -52,6 +52,42 @@ class StatementScreen extends StatelessWidget {
             BlocConsumer<VidicAdminBloc, VidicAdminState>(
               listener: (context, state) {
                 // TODO: implement listener
+                if (state is UpdateStatementBackOption) {
+                  AwesomeDialog(
+                    context: context,
+                    width: 600,
+                    animType: AnimType.leftSlide,
+                    headerAnimationLoop: false,
+                    dismissOnBackKeyPress: false,
+                    dialogType: DialogType.success,
+                    showCloseIcon: true,
+                    title: 'Letter Updated Successfully',
+                    // desc:
+                    //     'You can choose to either go back home or add a new Invoice',
+                    // btnCancelText: "Back Home",
+                    btnOkText: "OK",
+                    btnOkOnPress: () {
+                      // debugPrint('OnClcik');
+                      BlocProvider.of<VidicAdminBloc>(context)
+                          .add(StatementGetEvent());
+                      _controllerAmount.text = '';
+                      // _controllerPurpose.text = '';
+                      // selectedTenant = null;
+                    },
+                    btnOkIcon: Icons.check_circle,
+                    // btnCancelOnPress: () {
+                    //   BlocProvider.of<VidicAdminBloc>(context)
+                    //       .add(InvoiceGetEvent());
+                    //   // _controllerAmount.text = '';
+                    //   // _controllerPurpose.text = '';
+                    //   // selectedValue = null;
+                    //   // selectedTenant = null;
+                    // },
+                    onDismissCallback: (type) {
+                      debugPrint('Dialog Dissmiss from callback $type');
+                    },
+                  ).show();
+                }
                 if (state is StatementBackOption) {
                   AwesomeDialog(
                     context: context,
@@ -159,7 +195,7 @@ class StatementScreen extends StatelessWidget {
                                     height: 10,
                                   ),
                                   Text(
-                                    state.statementUpdateFileName!,
+                                    state.statementUpdateFileName,
                                     style: const TextStyle(
                                       fontSize: 17,
                                     ),
@@ -172,7 +208,11 @@ class StatementScreen extends StatelessWidget {
                                   ElevatedButton(
                                     onPressed: () {
                                       BlocProvider.of<VidicAdminBloc>(context)
-                                          .add(UploadStatementFileEvent());
+                                          .add(
+                                        UploadStatementUpdateFileEvent(
+                                          amount: _controllerAmount.text,
+                                        ),
+                                      );
                                     },
                                     child: const Text('Upload Statement'),
                                   ),
@@ -184,15 +224,18 @@ class StatementScreen extends StatelessWidget {
                                     style: TextStyle(fontSize: 17),
                                   ),
                                   SfDateRangePicker(
+                                    initialDisplayDate: state.startDate,
+                                    showNavigationArrow: true,
+                                    initialSelectedDate: state.startDate,
                                     onSelectionChanged:
                                         (DateRangePickerSelectionChangedArgs
                                             args) {
                                       BlocProvider.of<VidicAdminBloc>(context)
-                                          .add(CreateStatementStartDateEvent(
-                                              statementStartDate: args.value
-                                                  .toString()
-                                                  .replaceAll(
-                                                      ' 00:00:00.000', '')));
+                                          .add(
+                                              CreateStatementUpdateStartDateEvent(
+                                        statementStartDate: args.value,
+                                        amount: _controllerAmount.text,
+                                      ));
                                     },
                                     selectionMode:
                                         DateRangePickerSelectionMode.single,
@@ -205,15 +248,19 @@ class StatementScreen extends StatelessWidget {
                                     style: TextStyle(fontSize: 17),
                                   ),
                                   SfDateRangePicker(
-                                    onSelectionChanged:
-                                        (DateRangePickerSelectionChangedArgs
-                                            args) {
+                                    initialDisplayDate: state.endDate,
+                                    showNavigationArrow: true,
+                                    initialSelectedDate: state.endDate,
+                                    onSelectionChanged: (
+                                      DateRangePickerSelectionChangedArgs args,
+                                    ) {
                                       BlocProvider.of<VidicAdminBloc>(context)
-                                          .add(CreateStatementEndDateEvent(
-                                              statementEndDate: args.value
-                                                  .toString()
-                                                  .replaceAll(
-                                                      ' 00:00:00.000', '')));
+                                          .add(
+                                        CreateStatementUpdateEndDateEvent(
+                                          statementEndDate: args.value,
+                                          amount: _controllerAmount.text,
+                                        ),
+                                      );
                                     },
                                     selectionMode:
                                         DateRangePickerSelectionMode.single,
@@ -234,7 +281,7 @@ class StatementScreen extends StatelessWidget {
                                               BlocProvider.of<VidicAdminBloc>(
                                                       context)
                                                   .add(
-                                                UploadTenantStatementEvent(
+                                                UpdateStatementPatchSendEvent(
                                                   amount:
                                                       _controllerAmount.text,
                                                 ),
@@ -243,7 +290,7 @@ class StatementScreen extends StatelessWidget {
                                           },
                                           child: Row(
                                             children: const [
-                                              Text('Create New Statement'),
+                                              Text('Update Statement'),
                                               SizedBox(
                                                 width: 10,
                                               ),
@@ -657,28 +704,6 @@ class StatementScreen extends StatelessWidget {
                                                     backgroundColor:
                                                         Colors.pink[300],
                                                   ),
-                                                  // Chip(
-                                                  //   label: Text(
-                                                  //     '${state.data[index].floor} Floor',
-                                                  //     style: const TextStyle(
-                                                  //         color: Colors.white),
-                                                  //   ),
-                                                  //   backgroundColor: Colors.pink[300],
-                                                  // ),
-                                                  // const SizedBox(
-                                                  //   width: 50,
-                                                  // ),
-                                                  // Text(
-                                                  //     "${state.data[index].size} sq ft"),
-                                                  // const SizedBox(
-                                                  //   width: 50,
-                                                  // ),
-
-                                                  // const SizedBox(
-                                                  //   width: 50,
-                                                  // ),
-                                                  // Text(
-                                                  //     "Ksh ${state.data[index].rent}"),
                                                 ],
                                               ),
                                             ),
@@ -945,11 +970,20 @@ class StatementScreen extends StatelessWidget {
                   tooltip: 'Go Back',
                   child: const Icon(Icons.close));
             }
-            if (state is StatementLoading) {
+            if (state is UpdateStatementsState) {
               return FloatingActionButton(
-                onPressed: () {},
+                  onPressed: () {
+                    BlocProvider.of<VidicAdminBloc>(context)
+                        .add(StatementGetEvent());
+                  },
+                  tooltip: 'Go Back',
+                  child: const Icon(Icons.close));
+            }
+            if (state is StatementLoading) {
+              return const FloatingActionButton(
+                onPressed: null,
                 tooltip: 'Loading',
-                child: const CircularProgressIndicator(
+                child: CircularProgressIndicator(
                   color: Colors.white,
                 ),
               );
