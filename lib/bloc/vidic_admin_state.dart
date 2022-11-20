@@ -272,7 +272,7 @@ class UpdateStatementsState extends VidicAdminState {
   String? amount;
   DateTime? startDate;
   DateTime? endDate;
-  String? statementUpdateFileName;
+  String statementUpdateFileName;
   int loadingButton;
 
   UpdateStatementsState(
@@ -291,7 +291,11 @@ class UpdateStatementsState extends VidicAdminState {
         amount!,
         startDate!,
         endDate!,
-        statementUpdateFileName!,
+        statementUpdateFileName,
         loadingButton,
       ];
 }
+
+class UpdateStatementBackOption extends VidicAdminState {}
+
+// CreateStatementUpdateStartDateEvent
