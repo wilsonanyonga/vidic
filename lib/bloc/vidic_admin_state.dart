@@ -299,3 +299,13 @@ class UpdateStatementsState extends VidicAdminState {
 class UpdateStatementBackOption extends VidicAdminState {}
 
 // CreateStatementUpdateStartDateEvent
+
+// ---------------------------------------------------
+//-------------- delete letter------------------------
+// ---------------------------------------------------
+// DeleteLetterEvent
+class DeleteLetterRequestState extends VidicAdminState {}
+
+class DeleteLetterSuccessState extends VidicAdminState {}
+
+class DeleteLetterSuccessLoadingState extends VidicAdminState {}
