@@ -67,6 +67,9 @@ class VidicAdminBloc extends Bloc<VidicAdminEvent, VidicAdminState> {
   DateTime? statementUpdateEndDate;
   String? statementUpdateAmount;
 
+  // deleting letter
+  int? letterDeleteId;
+
   List<DropdownMenuItem<String>> get dropdownItems {
     List<DropdownMenuItem<String>> menuItems = [
       for (var i = 0; i < tenantsList!.length; i++)
@@ -1381,6 +1384,53 @@ class VidicAdminBloc extends Bloc<VidicAdminEvent, VidicAdminState> {
               0,
             ),
           );
+        }
+      },
+    );
+    // ----------------------------------------------------------
+    // ----------- Delete Letters----------------------------
+    // ----------------------------------------------------------
+
+    on<DeleteLetterRequestEvent>(
+      (event, emit) async {
+        if (kDebugMode) {
+          print('update invoice');
+        }
+        letterDeleteId = event.id;
+
+        if (kDebugMode) {
+          print('details are');
+          print(letterDeleteId);
+        }
+        emit(DeleteLetterRequestState());
+      },
+    );
+    //
+
+    on<DeleteLetterEvent>(
+      (event, emit) async {
+        if (kDebugMode) {
+          print('update invoice');
+        }
+        // letterDeleteId = event.id;
+        // DeleteLetterSuccessLoadingState
+        emit(DeleteLetterSuccessLoadingState());
+        // emit(DeleteLetterSuccessState(1));
+        if (kDebugMode) {
+          print('details are');
+          print(letterDeleteId);
+        }
+        // emit(DeleteLetterRequestState());
+        try {
+          final deleteLetter = await _client.deleteLetter(id: letterDeleteId);
+          if (deleteLetter!.status == 200) {
+            emit(DeleteLetterSuccessState());
+          }
+        } catch (e) {
+          if (kDebugMode) {
+            print("error is $e");
+            emit(DeleteLetterRequestState());
+          }
         }
       },
     );
