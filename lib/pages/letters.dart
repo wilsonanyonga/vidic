@@ -53,6 +53,61 @@ class LettersScreen extends StatelessWidget {
             BlocConsumer<VidicAdminBloc, VidicAdminState>(
               listener: (context, state) {
                 // TODO: implement listener
+                if (state is DeleteLetterSuccessState) {
+                  AwesomeDialog(
+                    context: context,
+                    width: 600,
+                    animType: AnimType.leftSlide,
+                    headerAnimationLoop: false,
+                    dismissOnBackKeyPress: false,
+                    dialogType: DialogType.success,
+                    showCloseIcon: true,
+                    title: 'Letter Deleted Successfully',
+                    btnOkText: "OK",
+                    btnOkOnPress: () {
+                      BlocProvider.of<VidicAdminBloc>(context)
+                          .add(LetterGetEvent());
+                    },
+                    btnOkIcon: Icons.check_circle,
+                    onDismissCallback: (type) {
+                      debugPrint('Dialog Dissmiss from callback $type');
+                    },
+                  ).show();
+                }
+                // if (state is DeleteLetterSuccessLoadingState) {
+                //   AwesomeDialog(
+                //     width: 600,
+                //     context: context,
+                //     autoHide: const Duration(milliseconds: 1),
+                //     // dismissOnBackKeyPress: false,
+                //     // dialogType: DialogType.noHeader,
+                //     animType: AnimType.rightSlide,
+                //     customHeader: const CircularProgressIndicator(),
+                //     title: 'Letter Being Deleted',
+                //     desc: 'Kindly Wait.',
+                //     btnCancelOnPress: null,
+                //     btnOkOnPress: null,
+                //   ).show();
+                // }
+                if (state is DeleteLetterRequestState) {
+                  AwesomeDialog(
+                    width: 600,
+                    context: context,
+                    dismissOnBackKeyPress: false,
+                    dialogType: DialogType.question,
+                    animType: AnimType.rightSlide,
+                    title: 'Delete Letter',
+                    desc: 'Are you sure you want to delete the letter',
+                    btnCancelOnPress: () {
+                      BlocProvider.of<VidicAdminBloc>(context)
+                          .add(LetterGetEvent());
+                    },
+                    btnOkOnPress: () {
+                      BlocProvider.of<VidicAdminBloc>(context)
+                          .add(DeleteLetterEvent());
+                    },
+                  ).show();
+                }
                 if (state is UpdateLetterBackOption) {
                   AwesomeDialog(
                     context: context,
@@ -130,6 +185,38 @@ class LettersScreen extends StatelessWidget {
                 }
               },
               builder: (context, state) {
+                if (state is DeleteLetterSuccessLoadingState) {
+                  return Expanded(
+                    child: SingleChildScrollView(
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: const [
+                          SizedBox(
+                            height: 30,
+                          ),
+                          Text(
+                            'Deleting Letter',
+                            style: TextStyle(
+                              fontSize: 20,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                          SizedBox(
+                            height: 30,
+                          ),
+                          Text(
+                            'Kindly Wait',
+                            style: TextStyle(
+                              fontSize: 14,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  );
+                }
                 if (state is UpdateLettersPatchState) {
                   _controllerSubject.text = state.subject;
                   return Expanded(
@@ -717,21 +804,19 @@ class LettersScreen extends StatelessWidget {
                                                             tooltip:
                                                                 'Delete Letter',
                                                             onPressed: () {
-                                                              // BlocProvider.of<
-                                                              //             VidicAdminBloc>(
-                                                              //         context)
-                                                              //     .add(
-                                                              //   UpdateOccupancyEvent(
-                                                              //     floorId: state
-                                                              //         .data[i].datumId,
-                                                              //     occupancy: state
-                                                              //         .data[i].occupancy
-                                                              //         .toString(),
-                                                              //     capacity: state
-                                                              //         .data[i].capacity
-                                                              //         .toString(),
-                                                              //   ),
-                                                              // );
+                                                              BlocProvider.of<
+                                                                          VidicAdminBloc>(
+                                                                      context)
+                                                                  .add(
+                                                                DeleteLetterRequestEvent(
+                                                                  id: state
+                                                                      .data[
+                                                                          index]
+                                                                      .lettersTypes[
+                                                                          i]
+                                                                      .lettersTypeId,
+                                                                ),
+                                                              );
                                                             },
                                                           ),
                                                         ),
