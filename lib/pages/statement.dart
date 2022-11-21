@@ -276,7 +276,8 @@ class StatementScreen extends StatelessWidget {
                                               // Process data. millicent.odhiambo@vidic.co.ke
                                               // signInWithEmailAndPassword();
                                               if (kDebugMode) {
-                                                print('sending');
+                                                print(
+                                                    'sending, ${_controllerAmount.text}');
                                               }
                                               BlocProvider.of<VidicAdminBloc>(
                                                       context)
