@@ -143,7 +143,7 @@ class Login extends StatelessWidget {
                           builder: (context, state) {
                             if (state is LoginLoading) {
                               return ElevatedButton(
-                                onPressed: () {},
+                                onPressed: null,
                                 child: Row(
                                   children: const [
                                     Text('Login'),
