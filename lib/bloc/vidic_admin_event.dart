@@ -303,3 +303,17 @@ class UpdateStatementPatchSendEvent extends VidicAdminEvent {
     required this.amount,
   });
 }
+
+// ---------------------------------------------------------------
+// ---------------------------------------------------------------
+// delete letters
+// ---------------------------------------------------------------
+
+class DeleteLetterRequestEvent extends VidicAdminEvent {
+  final int? id;
+  const DeleteLetterRequestEvent({
+    required this.id,
+  });
+}
+
+class DeleteLetterEvent extends VidicAdminEvent {}
