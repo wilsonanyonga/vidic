@@ -7,6 +7,7 @@ import 'package:vidic/models/invoice/post/post_invoice.dart';
 import 'package:vidic/models/jwt.dart';
 import 'package:vidic/models/landing/post/post_tenant.dart';
 import 'package:vidic/models/landing/tenants.dart';
+import 'package:vidic/models/letter/delete/delete_letter.dart';
 import 'package:vidic/models/letter/get_letter.dart';
 import 'package:vidic/models/letter/post/post_letter.dart';
 import 'package:vidic/models/occupancy/get_occupancy.dart';
@@ -898,5 +899,35 @@ class DioClient {
     }
 
     return createStatement;
+  }
+
+  Future<DeleteLetter?> deleteLetter({
+    int? id,
+  }) async {
+    DeleteLetter? deleteLetter;
+
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    //Return String
+    stringValue = prefs.getString('jwt_token');
+
+    try {
+      Response response = await _dio.delete(
+        '/deleteLetter/$id',
+        options: Options(
+          headers: {
+            "authorization": stringValue, // set content-length
+          },
+        ),
+      );
+      if (kDebugMode) {
+        print('User deleted!');
+      }
+      deleteLetter = DeleteLetter.fromJson(response.data);
+    } catch (e) {
+      if (kDebugMode) {
+        print('Error deleting user: $e');
+      }
+    }
+    return deleteLetter;
   }
 }
