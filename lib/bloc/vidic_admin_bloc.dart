@@ -1323,7 +1323,11 @@ class VidicAdminBloc extends Bloc<VidicAdminEvent, VidicAdminState> {
     // this is the update upload button event
     on<UpdateStatementPatchSendEvent>(
       (event, emit) async {
-        tenantInvoiceUpdateAmount = event.amount;
+        statementUpdateAmount = event.amount;
+        if (kDebugMode) {
+          // print('sending, ${event.amount}');
+          // print('sending 2, ${tenantInvoiceUpdateAmount!}');
+        }
         emit(
           UpdateStatementsState(
             statementUpdateAmount,
