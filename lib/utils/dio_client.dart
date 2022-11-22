@@ -901,36 +901,6 @@ class DioClient {
     return createStatement;
   }
 
-  Future<DeleteLetter?> deleteLetter({
-    int? id,
-  }) async {
-    DeleteLetter? deleteLetter;
-
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    //Return String
-    stringValue = prefs.getString('jwt_token');
-
-    try {
-      Response response = await _dio.delete(
-        '/deleteLetter/$id',
-        options: Options(
-          headers: {
-            "authorization": stringValue, // set content-length
-          },
-        ),
-      );
-      if (kDebugMode) {
-        print('User deleted!');
-      }
-      deleteLetter = DeleteLetter.fromJson(response.data);
-    } catch (e) {
-      if (kDebugMode) {
-        print('Error deleting user: $e');
-      }
-    }
-    return deleteLetter;
-  }
-
   // update tenant
   Future<PostTenant?> updateTenant({
     int? id,
@@ -968,32 +938,10 @@ class DioClient {
     //Return String
     stringValue = prefs.getString('jwt_token');
     try {
-      // var formData = FormData.fromMap({
-      //   'name': us2.name,
-      //   'number': us2.number,
-      //   'email': us2.email,
-      //   'role': us2.role,
-      //   'age': us2.age,
-      //   'about': us2.about,
-      //   'location': us2.location,
-      //   // 'password': us2.password,
-      //   'paid': us2.paid,
-      //   'active': us2.active,
-      //   'file': await MultipartFile.fromFile('${us2.picture}',
-      //       filename: 'upload.png'),
-      //   'file2': await MultipartFile.fromFile('${us2.picture2}',
-      //       filename: 'upload2.png'),
-      //   'file3': await MultipartFile.fromFile('${us2.picture3}',
-      //       filename: 'upload3.png'),
-      //   'file4': await MultipartFile.fromFile('${us2.picture4}',
-      //       filename: 'upload4.png'),
-      // });
-      // print(formData);
-
       if (kDebugMode) {
         print("object is here");
       }
-      Response response = await _dio.post(
+      Response response = await _dio.patch(
         '/updateTenant/$id',
         options: Options(
           headers: {
@@ -1030,5 +978,36 @@ class DioClient {
     }
 
     return createTenant;
+  }
+
+  // delete letter
+  Future<DeleteLetter?> deleteLetter({
+    int? id,
+  }) async {
+    DeleteLetter? deleteLetter;
+
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    //Return String
+    stringValue = prefs.getString('jwt_token');
+
+    try {
+      Response response = await _dio.delete(
+        '/deleteLetter/$id',
+        options: Options(
+          headers: {
+            "authorization": stringValue, // set content-length
+          },
+        ),
+      );
+      if (kDebugMode) {
+        print('User deleted!');
+      }
+      deleteLetter = DeleteLetter.fromJson(response.data);
+    } catch (e) {
+      if (kDebugMode) {
+        print('Error deleting user: $e');
+      }
+    }
+    return deleteLetter;
   }
 }
