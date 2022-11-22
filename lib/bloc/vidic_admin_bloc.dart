@@ -1158,7 +1158,10 @@ class VidicAdminBloc extends Bloc<VidicAdminEvent, VidicAdminState> {
 
     // ----------- END Update Invoice ----------------------------
 
+    // ----------------------------------------------------------
     // ----------- Update Statements ----------------------------
+    // ----------------------------------------------------------
+
     on<UpdateStatementsEvent>(
       (event, emit) async {
         if (kDebugMode) {
