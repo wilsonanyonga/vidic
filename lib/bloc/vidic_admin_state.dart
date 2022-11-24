@@ -264,7 +264,9 @@ class UpdateInvoicesState extends VidicAdminState {
 
 class UpdateInvoiceBackOption extends VidicAdminState {}
 
-// ------ Update Statement -----------------------
+// ---------------------------------------------------
+// ------ Update Statement ---------------------------
+// ---------------------------------------------------
 
 // display the invoices update page and pass parametters
 class UpdateStatementsState extends VidicAdminState {
@@ -299,6 +301,72 @@ class UpdateStatementsState extends VidicAdminState {
 class UpdateStatementBackOption extends VidicAdminState {}
 
 // CreateStatementUpdateStartDateEvent
+
+// ---------------------------------------------------
+//-------------- update tenant ------------------------
+// ---------------------------------------------------
+
+// UpdateTenantEvent
+class UpdateTenantState extends VidicAdminState {
+  // int? id;
+  // String? amount;
+  // DateTime? startDate;
+  // DateTime? endDate;
+  // String statementUpdateFileName;
+
+  //  int id;
+  final String? name;
+  final String? number;
+  final String? officialEmail;
+  final String? about;
+  final String? floor;
+  final String? size;
+  final String? rent;
+  final String? escalation;
+  final String? pobox;
+  final DateTime? leaseStartDate;
+  final DateTime? leaseEndDate;
+  final String? active;
+  final int loadingButton;
+
+  const UpdateTenantState(
+    // this.id,
+    this.name,
+    this.number,
+    this.officialEmail,
+    this.about,
+    this.floor,
+    this.size,
+    this.rent,
+    this.escalation,
+    this.pobox,
+    this.leaseStartDate,
+    this.leaseEndDate,
+    this.active,
+    this.loadingButton,
+  );
+
+  @override
+  // TODO: implement props
+  List<Object> get props => [
+        // id!,
+        name!,
+        number!,
+        officialEmail!,
+        about!,
+        floor!,
+        size!,
+        rent!,
+        escalation!,
+        pobox!,
+        leaseStartDate!,
+        leaseEndDate!,
+        active!,
+        loadingButton,
+      ];
+}
+
+class UpdateTenantBackOption extends VidicAdminState {}
 
 // ---------------------------------------------------
 //-------------- delete letter------------------------
