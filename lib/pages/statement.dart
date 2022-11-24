@@ -829,20 +829,20 @@ class StatementScreen extends StatelessWidget {
                                                               .data[index]
                                                               .statementTypes[i]
                                                               .startDate
+                                                              .toLocal()
                                                               .toString()
-                                                              .replaceAll(
-                                                                  '21:00:00.000Z',
-                                                                  '')),
+                                                              .substring(
+                                                                  0, 10)),
                                                         ),
                                                         DataCell(
                                                           Text(state
                                                               .data[index]
                                                               .statementTypes[i]
                                                               .endDate
+                                                              .toLocal()
                                                               .toString()
-                                                              .replaceAll(
-                                                                  '21:00:00.000Z',
-                                                                  '')),
+                                                              .substring(
+                                                                  0, 10)),
                                                         ),
                                                         DataCell(
                                                           Text(
