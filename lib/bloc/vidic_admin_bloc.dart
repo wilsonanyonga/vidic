@@ -70,6 +70,21 @@ class VidicAdminBloc extends Bloc<VidicAdminEvent, VidicAdminState> {
   // deleting letter
   int? letterDeleteId;
 
+  // updating tenant
+  int? idTenantUpdate;
+  String? nameTenantUpdate;
+  String? numberTenantUpdate;
+  String? officialEmailTenantUpdate;
+  String? aboutTenantUpdate;
+  String? floorTenantUpdate;
+  String? sizeTenantUpdate;
+  String? rentTenantUpdate;
+  String? escalationTenantUpdate;
+  String? poboxTenantUpdate;
+  DateTime? leaseStartDateTenantUpdate;
+  DateTime? leaseEndDateTenantUpdate;
+  String? activeTenantUpdate;
+
   List<DropdownMenuItem<String>> get dropdownItems {
     List<DropdownMenuItem<String>> menuItems = [
       for (var i = 0; i < tenantsList!.length; i++)
@@ -1169,8 +1184,8 @@ class VidicAdminBloc extends Bloc<VidicAdminEvent, VidicAdminState> {
         }
         statementUpdateId = event.id;
         // Uint8List? statementUpdateFile;
-        statementUpdateStartDate = event.statementStartDate;
-        statementUpdateEndDate = event.statementEndDate;
+        statementUpdateStartDate = event.statementStartDate.toLocal();
+        statementUpdateEndDate = event.statementEndDate.toLocal();
         statementUpdateAmount = event.amount;
         if (kDebugMode) {
           print('details are');
@@ -1394,6 +1409,320 @@ class VidicAdminBloc extends Bloc<VidicAdminEvent, VidicAdminState> {
         }
       },
     );
+
+    // ----------------------------------------------------------
+    // ----------- Update Tenants ------------------------------
+    // ----------------------------------------------------------
+    // UpdateTenantEvent
+
+    on<UpdateTenantEvent>(
+      (event, emit) async {
+        if (kDebugMode) {
+          print('update invoice');
+        }
+        // statementUpdateId = event.id;
+        // // Uint8List? statementUpdateFile;
+        // statementUpdateStartDate = event.statementStartDate;
+        // statementUpdateEndDate = event.statementEndDate;
+        // statementUpdateAmount = event.amount;
+
+        // String start = event.leaseStartDate
+        //     .toString()
+        //     .replaceAll('21:00:00.000', '12:00:00.000');
+        // 00:00:00+03:00
+        // .toString().replaceAll(' 00:00:00.000', '')
+        if (kDebugMode) {
+          print(event.leaseStartDate.toLocal());
+
+          // print(start);
+        }
+        idTenantUpdate = event.id;
+        nameTenantUpdate = event.name;
+        numberTenantUpdate = event.number;
+        officialEmailTenantUpdate = event.officialEmail;
+        aboutTenantUpdate = event.about;
+        floorTenantUpdate = event.floor;
+        sizeTenantUpdate = event.size;
+        rentTenantUpdate = event.rent;
+        escalationTenantUpdate = event.escalation;
+        poboxTenantUpdate = event.pobox;
+        leaseStartDateTenantUpdate = event.leaseStartDate.toLocal();
+        // leaseStartDateTenantUpdate = DateTime.parse(start);
+
+        leaseEndDateTenantUpdate = event.leaseEndDate.toLocal();
+        activeTenantUpdate = event.active;
+        if (kDebugMode) {
+          print('details are');
+          print(idTenantUpdate);
+          print(nameTenantUpdate);
+          print(numberTenantUpdate);
+          print(officialEmailTenantUpdate);
+        }
+        emit(
+          UpdateTenantState(
+            nameTenantUpdate,
+            numberTenantUpdate,
+            officialEmailTenantUpdate,
+            aboutTenantUpdate,
+            floorTenantUpdate,
+            sizeTenantUpdate,
+            rentTenantUpdate,
+            escalationTenantUpdate,
+            poboxTenantUpdate,
+            leaseStartDateTenantUpdate,
+            leaseEndDateTenantUpdate,
+            activeTenantUpdate,
+            0,
+          ),
+        );
+      },
+    );
+
+    // UpdateTenantFloorEvent
+    on<UpdateTenantFloorEvent>(
+      (event, emit) async {
+        if (kDebugMode) {
+          print('update floor');
+        }
+
+        floorTenantUpdate = event.floor;
+
+        nameTenantUpdate = event.name;
+        numberTenantUpdate = event.number;
+        officialEmailTenantUpdate = event.officialEmail;
+        aboutTenantUpdate = event.about;
+        // floorTenantUpdate = event.floor;
+        sizeTenantUpdate = event.size;
+        rentTenantUpdate = event.rent;
+        escalationTenantUpdate = event.escalation;
+        poboxTenantUpdate = event.pobox;
+
+        if (kDebugMode) {
+          print('details are');
+          print(floorTenantUpdate);
+          print(nameTenantUpdate);
+          print(numberTenantUpdate);
+          print(officialEmailTenantUpdate);
+        }
+        emit(
+          UpdateTenantState(
+            nameTenantUpdate,
+            numberTenantUpdate,
+            officialEmailTenantUpdate,
+            aboutTenantUpdate,
+            floorTenantUpdate,
+            sizeTenantUpdate,
+            rentTenantUpdate,
+            escalationTenantUpdate,
+            poboxTenantUpdate,
+            leaseStartDateTenantUpdate,
+            leaseEndDateTenantUpdate,
+            activeTenantUpdate,
+            0,
+          ),
+        );
+      },
+    );
+
+    // UpdateTenantLeaseStartEvent
+    on<UpdateTenantLeaseStartEvent>(
+      (event, emit) async {
+        if (kDebugMode) {
+          print('update lease staer');
+        }
+        // .toString().replaceAll(' 00:00:00.000', '')
+        leaseStartDateTenantUpdate = event.leaseStart;
+
+        nameTenantUpdate = event.name;
+        numberTenantUpdate = event.number;
+        officialEmailTenantUpdate = event.officialEmail;
+        aboutTenantUpdate = event.about;
+        sizeTenantUpdate = event.size;
+        rentTenantUpdate = event.rent;
+        escalationTenantUpdate = event.escalation;
+        poboxTenantUpdate = event.pobox;
+
+        if (kDebugMode) {
+          print('details are');
+          print(floorTenantUpdate);
+          print(leaseStartDateTenantUpdate);
+          print(numberTenantUpdate);
+          print(officialEmailTenantUpdate);
+        }
+        emit(
+          UpdateTenantState(
+            nameTenantUpdate,
+            numberTenantUpdate,
+            officialEmailTenantUpdate,
+            aboutTenantUpdate,
+            floorTenantUpdate,
+            sizeTenantUpdate,
+            rentTenantUpdate,
+            escalationTenantUpdate,
+            poboxTenantUpdate,
+            leaseStartDateTenantUpdate,
+            leaseEndDateTenantUpdate,
+            activeTenantUpdate,
+            0,
+          ),
+        );
+      },
+    );
+
+    on<UpdateTenantLeaseEndEvent>(
+      (event, emit) async {
+        if (kDebugMode) {
+          print('update lease end');
+        }
+
+        leaseEndDateTenantUpdate = event.leaseEnd;
+
+        nameTenantUpdate = event.name;
+        numberTenantUpdate = event.number;
+        officialEmailTenantUpdate = event.officialEmail;
+        aboutTenantUpdate = event.about;
+        sizeTenantUpdate = event.size;
+        rentTenantUpdate = event.rent;
+        escalationTenantUpdate = event.escalation;
+        poboxTenantUpdate = event.pobox;
+
+        if (kDebugMode) {
+          print('details are');
+          print(floorTenantUpdate);
+          print(leaseEndDateTenantUpdate);
+          print(numberTenantUpdate);
+          print(officialEmailTenantUpdate);
+        }
+        emit(
+          UpdateTenantState(
+            nameTenantUpdate,
+            numberTenantUpdate,
+            officialEmailTenantUpdate,
+            aboutTenantUpdate,
+            floorTenantUpdate,
+            sizeTenantUpdate,
+            rentTenantUpdate,
+            escalationTenantUpdate,
+            poboxTenantUpdate,
+            leaseStartDateTenantUpdate,
+            leaseEndDateTenantUpdate,
+            activeTenantUpdate,
+            0,
+          ),
+        );
+      },
+    );
+
+    // UpdateTenantDetailsEvent
+    // this is the update upload button event
+    on<UpdateTenantDetailsEvent>(
+      (event, emit) async {
+        // statementUpdateAmount = event.amount;
+        nameTenantUpdate = event.name;
+        numberTenantUpdate = event.number;
+        officialEmailTenantUpdate = event.officialEmail;
+        aboutTenantUpdate = event.about;
+        sizeTenantUpdate = event.size;
+        rentTenantUpdate = event.rent;
+        escalationTenantUpdate = event.escalation;
+        poboxTenantUpdate = event.pobox;
+        if (kDebugMode) {
+          // print('sending, ${event.amount}');
+          print(
+              'sending 2, ${leaseStartDateTenantUpdate.toString().substring(0, 10)}');
+        }
+        emit(
+          UpdateTenantState(
+            nameTenantUpdate,
+            numberTenantUpdate,
+            officialEmailTenantUpdate,
+            aboutTenantUpdate,
+            floorTenantUpdate,
+            sizeTenantUpdate,
+            rentTenantUpdate,
+            escalationTenantUpdate,
+            poboxTenantUpdate,
+            leaseStartDateTenantUpdate,
+            leaseEndDateTenantUpdate,
+            activeTenantUpdate,
+            1,
+          ),
+        );
+        try {
+          if (kDebugMode) {
+            // print(letterUpdateId);
+          }
+          final updateStatement = await _client.updateTenant(
+            id: idTenantUpdate,
+            name: nameTenantUpdate!,
+            number: numberTenantUpdate!,
+            leaseStartDate:
+                leaseStartDateTenantUpdate.toString().substring(0, 10),
+            leaseEndDate: leaseEndDateTenantUpdate.toString().substring(0, 10),
+            about: aboutTenantUpdate!,
+            active: '1',
+            escalation: escalationTenantUpdate!,
+            officialEmail: officialEmailTenantUpdate!,
+            pobox: poboxTenantUpdate!,
+            rent: rentTenantUpdate!,
+            size: sizeTenantUpdate!,
+          );
+          if (kDebugMode) {
+            print("invoice response");
+            print(updateStatement!.data);
+            print(updateStatement.status);
+          }
+
+          if (updateStatement!.status == 2000) {
+            emit(
+              UpdateTenantState(
+                nameTenantUpdate,
+                numberTenantUpdate,
+                officialEmailTenantUpdate,
+                aboutTenantUpdate,
+                floorTenantUpdate,
+                sizeTenantUpdate,
+                rentTenantUpdate,
+                escalationTenantUpdate,
+                poboxTenantUpdate,
+                leaseStartDateTenantUpdate,
+                leaseEndDateTenantUpdate,
+                activeTenantUpdate,
+                0,
+              ),
+            );
+            // statementUpdateFileName = '';
+            // statementUpdateFile = null;
+            // statementUpdateAmount = '';
+            // emit(CreateLetterState(0, letterFileName, dropdownItems));
+            emit(UpdateTenantBackOption());
+          }
+        } catch (e) {
+          if (kDebugMode) {
+            print('invoice submit error');
+            print('invoice submit error is $e');
+          }
+          emit(
+            UpdateTenantState(
+              nameTenantUpdate,
+              numberTenantUpdate,
+              officialEmailTenantUpdate,
+              aboutTenantUpdate,
+              floorTenantUpdate,
+              sizeTenantUpdate,
+              rentTenantUpdate,
+              escalationTenantUpdate,
+              poboxTenantUpdate,
+              leaseStartDateTenantUpdate,
+              leaseEndDateTenantUpdate,
+              activeTenantUpdate,
+              0,
+            ),
+          );
+        }
+      },
+    );
+
     // ----------------------------------------------------------
     // ----------- Delete Letters----------------------------
     // ----------------------------------------------------------
