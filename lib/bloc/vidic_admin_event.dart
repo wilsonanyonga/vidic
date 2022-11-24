@@ -309,6 +309,132 @@ class UpdateStatementPatchSendEvent extends VidicAdminEvent {
 // update tenant
 // ---------------------------------------------------------------
 
+class UpdateTenantEvent extends VidicAdminEvent {
+  // final int id;
+  // final String amount;
+  // final DateTime statementStartDate;
+  // final DateTime statementEndDate;
+  final int id;
+  final String name;
+  final String number;
+  final String officialEmail;
+  final String about;
+  final String floor;
+  final String size;
+  final String rent;
+  final String escalation;
+  final String pobox;
+  final DateTime leaseStartDate;
+  final DateTime leaseEndDate;
+  final String active;
+  // String date;
+
+  const UpdateTenantEvent({
+    required this.id,
+    required this.name,
+    required this.number,
+    required this.officialEmail,
+    required this.about,
+    required this.floor,
+    required this.size,
+    required this.rent,
+    required this.escalation,
+    required this.pobox,
+    required this.leaseStartDate,
+    required this.leaseEndDate,
+    required this.active,
+  });
+}
+
+class UpdateTenantFloorEvent extends VidicAdminEvent {
+  final String? floor;
+  final String name;
+  final String number;
+  final String officialEmail;
+  final String about;
+  final String size;
+  final String rent;
+  final String escalation;
+  final String pobox;
+  const UpdateTenantFloorEvent({
+    required this.floor,
+    required this.name,
+    required this.number,
+    required this.officialEmail,
+    required this.about,
+    required this.size,
+    required this.rent,
+    required this.escalation,
+    required this.pobox,
+  });
+}
+
+class UpdateTenantLeaseStartEvent extends VidicAdminEvent {
+  final DateTime leaseStart;
+  final String name;
+  final String number;
+  final String officialEmail;
+  final String about;
+  final String size;
+  final String rent;
+  final String escalation;
+  final String pobox;
+  const UpdateTenantLeaseStartEvent({
+    required this.leaseStart,
+    required this.name,
+    required this.number,
+    required this.officialEmail,
+    required this.about,
+    required this.size,
+    required this.rent,
+    required this.escalation,
+    required this.pobox,
+  });
+}
+
+class UpdateTenantLeaseEndEvent extends VidicAdminEvent {
+  final DateTime? leaseEnd;
+  final String name;
+  final String number;
+  final String officialEmail;
+  final String about;
+  final String size;
+  final String rent;
+  final String escalation;
+  final String pobox;
+  const UpdateTenantLeaseEndEvent({
+    required this.leaseEnd,
+    required this.name,
+    required this.number,
+    required this.officialEmail,
+    required this.about,
+    required this.size,
+    required this.rent,
+    required this.escalation,
+    required this.pobox,
+  });
+}
+
+class UpdateTenantDetailsEvent extends VidicAdminEvent {
+  final String name;
+  final String number;
+  final String officialEmail;
+  final String about;
+  final String size;
+  final String rent;
+  final String escalation;
+  final String pobox;
+  const UpdateTenantDetailsEvent({
+    required this.name,
+    required this.number,
+    required this.officialEmail,
+    required this.about,
+    required this.size,
+    required this.rent,
+    required this.escalation,
+    required this.pobox,
+  });
+}
 // ---------------------------------------------------------------
 // ---------------------------------------------------------------
 // delete letters
