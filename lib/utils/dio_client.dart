@@ -928,7 +928,7 @@ class DioClient {
     // String? picture3,
     // String? picture4,
   }) async {
-    PostTenant? createTenant;
+    PostTenant? updateTenant;
     // print(imageFile);
     if (kDebugMode) {
       // print(us2.toJson());
@@ -966,18 +966,18 @@ class DioClient {
       );
 
       if (kDebugMode) {
-        print('User created: ${response.data['data']}');
+        print('User created: ${response.data}');
         print("object is creating............");
       }
 
-      createTenant = PostTenant.fromJson(response.data);
+      updateTenant = PostTenant.fromJson(response.data);
     } catch (e) {
       if (kDebugMode) {
         print('Error creating user: $e');
       }
     }
 
-    return createTenant;
+    return updateTenant;
   }
 
   // delete letter
