@@ -145,6 +145,53 @@ class MyHomePage extends StatelessWidget {
             BlocConsumer<VidicAdminBloc, VidicAdminState>(
               listener: (context, state) {
                 // TODO: implement listener
+                if (state is UpdateTenantBackOption) {
+                  AwesomeDialog(
+                    context: context,
+                    width: 600,
+                    animType: AnimType.leftSlide,
+                    headerAnimationLoop: false,
+                    dismissOnBackKeyPress: false,
+                    dialogType: DialogType.success,
+                    showCloseIcon: true,
+                    title: 'Tenant Updated Successfully',
+                    // desc:
+                    //     'You can choose to either go back home or add a new Invoice',
+                    // btnCancelText: "Back Home",
+                    btnOkText: "OK",
+                    btnOkOnPress: () {
+                      // debugPrint('OnClcik');
+                      BlocProvider.of<VidicAdminBloc>(context)
+                          .add(TenantGetEvent());
+                      _controllerName.text = '';
+                      _controllerNumber.text = '';
+                      _controllerEmail.text = '';
+                      _controllerAbout.text = '';
+                      selectedValue = null;
+                      _controllerSize.text = '';
+                      _controllerRent.text = '';
+                      _controllerEscalation.text = '';
+                      _controllerPoBox.text = '';
+                      _controllerLeaseStart.text = '';
+                      _controllerLeaseEnd.text = '';
+                      // _controllerAmount.text = '';
+                      // _controllerPurpose.text = '';
+                      // selectedTenant = null;
+                    },
+                    btnOkIcon: Icons.check_circle,
+                    // btnCancelOnPress: () {
+                    //   BlocProvider.of<VidicAdminBloc>(context)
+                    //       .add(InvoiceGetEvent());
+                    //   // _controllerAmount.text = '';
+                    //   // _controllerPurpose.text = '';
+                    //   // selectedValue = null;
+                    //   // selectedTenant = null;
+                    // },
+                    onDismissCallback: (type) {
+                      debugPrint('Dialog Dissmiss from callback $type');
+                    },
+                  ).show();
+                }
                 if (state is TenantBackOption) {
                   AwesomeDialog(
                     context: context,
@@ -198,6 +245,412 @@ class MyHomePage extends StatelessWidget {
                 }
               },
               builder: (context, state) {
+                if (state is UpdateTenantState) {
+                  _controllerName.text = state.name!;
+                  _controllerNumber.text = state.number!;
+                  _controllerEmail.text = state.officialEmail!;
+                  _controllerAbout.text = state.about!;
+                  selectedValue = state.floor;
+                  _controllerSize.text = state.size!;
+                  _controllerRent.text = state.rent!;
+                  _controllerEscalation.text = state.escalation!;
+                  _controllerPoBox.text = state.pobox!;
+                  _controllerLeaseStart.text = state.leaseStartDate.toString();
+                  _controllerLeaseEnd.text = state.leaseEndDate.toString();
+                  return Expanded(
+                    child: SingleChildScrollView(
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          const SizedBox(
+                            height: 30,
+                          ),
+                          const Text(
+                            'Update Tenant Details',
+                            style: TextStyle(
+                              fontSize: 20,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+
+                          SizedBox(
+                            width: 400,
+                            child: Form(
+                              key: _formKey,
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  TextFormField(
+                                    controller: _controllerName,
+                                    keyboardType: TextInputType.name,
+                                    decoration: const InputDecoration(
+                                      hintText: 'Enter Company Name',
+                                      border: UnderlineInputBorder(),
+                                      labelText: 'Enter Company Name',
+                                    ),
+                                    validator: (String? value) {
+                                      if (value == null || value.isEmpty) {
+                                        return 'Please enter the Company Name';
+                                      }
+                                      return null;
+                                    },
+                                  ),
+                                  TextFormField(
+                                    controller: _controllerNumber,
+                                    keyboardType: TextInputType.phone,
+                                    decoration: const InputDecoration(
+                                      // hintText: 'Enter Company Phone Number',
+                                      border: UnderlineInputBorder(),
+                                      labelText: 'Enter Company Phone Number',
+                                    ),
+                                    validator: (String? value) {
+                                      if (value == null || value.isEmpty) {
+                                        return 'Please enter the Company Phone Number';
+                                      }
+                                      return null;
+                                    },
+                                  ),
+                                  TextFormField(
+                                    controller: _controllerEmail,
+                                    keyboardType: TextInputType.emailAddress,
+                                    decoration: const InputDecoration(
+                                      border: UnderlineInputBorder(),
+                                      labelText: 'Enter your email',
+                                    ),
+                                    validator: (String? value) {
+                                      if (value == null || value.isEmpty) {
+                                        return 'Please enter some text';
+                                      } else if (value.contains('@') == false) {
+                                        return 'Please enter a valid email';
+                                      }
+                                      return null;
+                                    },
+                                  ),
+                                  TextFormField(
+                                    controller: _controllerAbout,
+                                    keyboardType: TextInputType.multiline,
+                                    // expands: true,
+                                    maxLines: null,
+                                    decoration: const InputDecoration(
+                                      // hintText: 'Enter Company Description',
+                                      border: UnderlineInputBorder(),
+                                      labelText: 'Enter Company Description',
+                                    ),
+                                    validator: (String? value) {
+                                      if (value == null || value.isEmpty) {
+                                        return 'Please enter the Company Description';
+                                      }
+                                      return null;
+                                    },
+                                  ),
+                                  DropdownButtonFormField(
+                                    decoration: const InputDecoration(
+                                      border: UnderlineInputBorder(),
+                                      labelText: 'Choose Floor',
+                                    ),
+                                    items: dropdownItems,
+                                    value: selectedValue,
+                                    validator: (String? value) {
+                                      if (value == null || value.isEmpty) {
+                                        return 'Please enter the Floor';
+                                      }
+                                      return null;
+                                    },
+                                    onChanged: ((String? newValue) {
+                                      selectedValue = newValue!;
+                                      BlocProvider.of<VidicAdminBloc>(context)
+                                          .add(UpdateTenantFloorEvent(
+                                        floor: selectedValue,
+                                        about: _controllerAbout.text,
+                                        escalation: _controllerEscalation.text,
+                                        name: _controllerName.text,
+                                        number: _controllerNumber.text,
+                                        officialEmail: _controllerEmail.text,
+                                        pobox: _controllerPoBox.text,
+                                        rent: _controllerRent.text,
+                                        size: _controllerSize.text,
+                                      ));
+                                      if (kDebugMode) {
+                                        print("$selectedValue is select");
+                                      }
+                                    }),
+                                  ),
+                                  // TextFormField(
+                                  //   controller: _controllerFloor,
+                                  //   keyboardType: TextInputType.number,
+                                  //   decoration: const InputDecoration(
+                                  //     border: UnderlineInputBorder(),
+                                  //     labelText: 'Enter Floor',
+                                  //   ),
+                                  //   validator: (String? value) {
+                                  //     if (value == null || value.isEmpty) {
+                                  //       return 'Please enter the Floor';
+                                  //     }
+                                  //     return null;
+                                  //   },
+                                  // ),
+                                  TextFormField(
+                                    controller: _controllerSize,
+                                    keyboardType: TextInputType.number,
+                                    decoration: const InputDecoration(
+                                      border: UnderlineInputBorder(),
+                                      labelText: 'Enter Floor Size(sq ft)',
+                                    ),
+                                    validator: (String? value) {
+                                      if (value == null || value.isEmpty) {
+                                        return 'Please enter the Floor Size';
+                                      }
+                                      return null;
+                                    },
+                                  ),
+                                  TextFormField(
+                                    controller: _controllerRent,
+                                    keyboardType: TextInputType.number,
+                                    decoration: const InputDecoration(
+                                      border: UnderlineInputBorder(),
+                                      labelText: 'Enter Rent Amount (Ksh)',
+                                    ),
+                                    validator: (String? value) {
+                                      if (value == null || value.isEmpty) {
+                                        return 'Please enter the Rent Amount';
+                                      }
+                                      return null;
+                                    },
+                                  ),
+                                  TextFormField(
+                                    controller: _controllerEscalation,
+                                    keyboardType: TextInputType.number,
+                                    decoration: const InputDecoration(
+                                      border: UnderlineInputBorder(),
+                                      labelText: 'Enter Rent Escalation (%)',
+                                    ),
+                                    validator: (String? value) {
+                                      if (value == null || value.isEmpty) {
+                                        return 'Please enter the Rent Escalation';
+                                      }
+                                      return null;
+                                    },
+                                  ),
+                                  TextFormField(
+                                    controller: _controllerPoBox,
+                                    keyboardType: TextInputType.text,
+                                    decoration: const InputDecoration(
+                                      border: UnderlineInputBorder(),
+                                      labelText: 'Enter P.O.Box',
+                                    ),
+                                    validator: (String? value) {
+                                      if (value == null || value.isEmpty) {
+                                        return 'Please enter the P.O.Box';
+                                      }
+                                      return null;
+                                    },
+                                  ),
+                                  const SizedBox(
+                                    height: 15,
+                                  ),
+                                  Text(
+                                    'Lease Start Date${state.leaseStartDate}',
+                                    style: const TextStyle(fontSize: 17),
+                                  ),
+                                  SfDateRangePicker(
+                                    initialDisplayDate: state.leaseStartDate,
+                                    showNavigationArrow: true,
+                                    initialSelectedDate: state.leaseStartDate,
+                                    onSelectionChanged:
+                                        (DateRangePickerSelectionChangedArgs
+                                            args) {
+                                      BlocProvider.of<VidicAdminBloc>(context)
+                                          .add(
+                                        UpdateTenantLeaseStartEvent(
+                                          leaseStart: args.value,
+                                          about: _controllerAbout.text,
+                                          escalation:
+                                              _controllerEscalation.text,
+                                          name: _controllerName.text,
+                                          number: _controllerNumber.text,
+                                          officialEmail: _controllerEmail.text,
+                                          pobox: _controllerPoBox.text,
+                                          rent: _controllerRent.text,
+                                          size: _controllerSize.text,
+                                        ),
+                                      );
+                                    },
+                                    selectionMode:
+                                        DateRangePickerSelectionMode.single,
+                                  ),
+                                  const SizedBox(
+                                    height: 15,
+                                  ),
+                                  const Text(
+                                    'Lease End Date',
+                                    style: TextStyle(fontSize: 17),
+                                  ),
+                                  SfDateRangePicker(
+                                    initialDisplayDate: state.leaseEndDate,
+                                    showNavigationArrow: true,
+                                    initialSelectedDate: state.leaseEndDate,
+                                    onSelectionChanged:
+                                        (DateRangePickerSelectionChangedArgs
+                                            args) {
+                                      BlocProvider.of<VidicAdminBloc>(context)
+                                          .add(
+                                        UpdateTenantLeaseEndEvent(
+                                          leaseEnd: args.value,
+                                          about: _controllerAbout.text,
+                                          escalation:
+                                              _controllerEscalation.text,
+                                          name: _controllerName.text,
+                                          number: _controllerNumber.text,
+                                          officialEmail: _controllerEmail.text,
+                                          pobox: _controllerPoBox.text,
+                                          rent: _controllerRent.text,
+                                          size: _controllerSize.text,
+                                        ),
+                                      );
+                                    },
+                                    selectionMode:
+                                        DateRangePickerSelectionMode.single,
+                                  ),
+                                  // TextFormField(
+                                  //   controller: _controllerLeaseStart,
+                                  //   keyboardType: TextInputType.datetime,
+                                  //   decoration: const InputDecoration(
+                                  //     border: UnderlineInputBorder(),
+                                  //     labelText:
+                                  //         'Enter Lease Start Date (year-month-date) (2020-01-08)',
+                                  //   ),
+                                  //   validator: (String? value) {
+                                  //     if (value == null || value.isEmpty) {
+                                  //       return 'Please enter the Lease Start Date';
+                                  //     }
+                                  //     return null;
+                                  //   },
+                                  // ),
+                                  // TextFormField(
+                                  //   controller: _controllerLeaseEnd,
+                                  //   keyboardType: TextInputType.datetime,
+                                  //   decoration: const InputDecoration(
+                                  //     border: UnderlineInputBorder(),
+                                  //     labelText:
+                                  //         'Enter Lease End Date (year-month-date) (2020-01-08)',
+                                  //   ),
+                                  //   validator: (String? value) {
+                                  //     if (value == null || value.isEmpty) {
+                                  //       return 'Please enter the Lease End Date';
+                                  //     }
+                                  //     return null;
+                                  //   },
+                                  // ),
+                                  const SizedBox(
+                                    height: 10,
+                                  ),
+                                  (state.loadingButton == 0)
+                                      ? ElevatedButton(
+                                          onPressed: () {
+                                            if (_formKey.currentState!
+                                                .validate()) {
+                                              // Process data. millicent.odhiambo@vidic.co.ke
+                                              // signInWithEmailAndPassword();
+                                              if (kDebugMode) {
+                                                print('sending');
+                                              }
+                                              BlocProvider.of<VidicAdminBloc>(
+                                                      context)
+                                                  .add(
+                                                UpdateTenantDetailsEvent(
+                                                  name: _controllerName.text,
+                                                  number: _controllerNumber.text
+                                                      .toString(),
+                                                  officialEmail:
+                                                      _controllerEmail.text,
+                                                  about: _controllerAbout.text,
+                                                  // floor: selectedValue,
+                                                  size: _controllerSize.text
+                                                      .toString(),
+                                                  rent: _controllerRent.text
+                                                      .toString(),
+                                                  escalation:
+                                                      _controllerEscalation.text
+                                                          .toString(),
+                                                  pobox: _controllerPoBox.text,
+                                                  // leaseStartDate:
+                                                  //     _controllerLeaseStart
+                                                  //         .text,
+                                                  // leaseEndDate:
+                                                  //     _controllerLeaseEnd.text,
+                                                  // active: '1',
+                                                ),
+                                              );
+                                              // _controllerName.text = '';
+                                              // _controllerNumber.text = '';
+                                              // _controllerEmail.text = '';
+                                              // _controllerAbout.text = '';
+                                              // selectedValue = null;
+                                              // _controllerSize.text = '';
+                                              // _controllerRent.text = '';
+                                              // _controllerEscalation.text = '';
+                                              // _controllerPoBox.text = '';
+                                              // _controllerLeaseStart.text = '';
+                                              // _controllerLeaseEnd.text = '';
+                                            }
+                                          },
+                                          child: Row(
+                                            children: const [
+                                              Text('Update Tenant'),
+                                              SizedBox(
+                                                width: 10,
+                                              ),
+                                              // SizedBox(
+                                              //   width: 15,
+                                              //   height: 15,
+                                              //   child: CircularProgressIndicator(
+                                              //     color: Colors.white,
+                                              //     strokeWidth: 2,
+                                              //   ),
+                                              // )
+                                            ],
+                                          ),
+                                        )
+                                      : ElevatedButton(
+                                          onPressed: null,
+                                          child: Row(
+                                            children: const [
+                                              Text('Updating Tenant'),
+                                              SizedBox(
+                                                width: 10,
+                                              ),
+                                              SizedBox(
+                                                width: 15,
+                                                height: 15,
+                                                child:
+                                                    CircularProgressIndicator(
+                                                  color: Colors.white,
+                                                  strokeWidth: 2,
+                                                ),
+                                              )
+                                            ],
+                                          ),
+                                        ),
+                                  const SizedBox(
+                                    height: 30,
+                                  ),
+                                ],
+                              ),
+                            ),
+                          )
+                          // ElevatedButton(
+                          //   onPressed: () {
+                          //     BlocProvider.of<VidicAdminBloc>(context)
+                          //         .add(TenantGetEvent());
+                          //   },
+                          //   child: const Text('back'),
+                          // )
+                        ],
+                      ),
+                    ),
+                  );
+                }
                 if (state is CreateTenantState) {
                   return Expanded(
                     child: SingleChildScrollView(
@@ -799,21 +1252,53 @@ class MyHomePage extends StatelessWidget {
                                                           tooltip:
                                                               'Update Tenant',
                                                           onPressed: () {
-                                                            // BlocProvider.of<
-                                                            //             VidicAdminBloc>(
-                                                            //         context)
-                                                            //     .add(
-                                                            //   UpdateOccupancyEvent(
-                                                            //     floorId: state
-                                                            //         .data[i].datumId,
-                                                            //     occupancy: state
-                                                            //         .data[i].occupancy
-                                                            //         .toString(),
-                                                            //     capacity: state
-                                                            //         .data[i].capacity
-                                                            //         .toString(),
-                                                            //   ),
-                                                            // );
+                                                            BlocProvider.of<
+                                                                        VidicAdminBloc>(
+                                                                    context)
+                                                                .add(
+                                                              UpdateTenantEvent(
+                                                                name: state
+                                                                    .data[i]
+                                                                    .name,
+                                                                number: state
+                                                                    .data[i]
+                                                                    .number,
+                                                                officialEmail: state
+                                                                    .data[i]
+                                                                    .officialEmail,
+                                                                about: state
+                                                                    .data[i]
+                                                                    .about,
+                                                                floor: state
+                                                                    .data[i]
+                                                                    .floor,
+                                                                size: state
+                                                                    .data[i]
+                                                                    .size,
+                                                                rent: state
+                                                                    .data[i]
+                                                                    .rent,
+                                                                escalation: state
+                                                                    .data[i]
+                                                                    .escalation,
+                                                                pobox: state
+                                                                    .data[i]
+                                                                    .pobox,
+                                                                leaseStartDate:
+                                                                    state
+                                                                        .data[i]
+                                                                        .leaseStartDate,
+                                                                leaseEndDate: state
+                                                                    .data[i]
+                                                                    .leaseEndDate,
+                                                                active: state
+                                                                    .data[i]
+                                                                    .active,
+                                                                id: state
+                                                                    .data[i]
+                                                                    .datumId,
+                                                              ),
+                                                            );
                                                           },
                                                         ),
                                                       ),
@@ -1091,16 +1576,26 @@ class MyHomePage extends StatelessWidget {
                 child: const Icon(Icons.close),
               );
             }
-            return FloatingActionButton(
+            if (state is UpdateTenantState) {
+              return FloatingActionButton(
+                // onPressed: _incrementCounter,
+                // BlocProvider.of<PlansBloc>(context).add(GetPicsLoaded())
+                onPressed: () {
+                  BlocProvider.of<VidicAdminBloc>(context)
+                      .add(TenantGetEvent());
+                },
+
+                tooltip: 'Back',
+                child: const Icon(Icons.close),
+              );
+            }
+            return const FloatingActionButton(
               // onPressed: _incrementCounter,
               // BlocProvider.of<PlansBloc>(context).add(GetPicsLoaded())
-              onPressed: () {
-                // BlocProvider.of<VidicAdminBloc>(context)
-                //     .add(CreateTenantEvent());
-              },
+              onPressed: null,
 
               tooltip: 'Waiting',
-              child: const Icon(Icons.add),
+              child: Icon(Icons.add),
             );
           },
         ), // This trailing comma makes auto-formatting nicer for build methods.
