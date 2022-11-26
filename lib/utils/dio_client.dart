@@ -980,7 +980,14 @@ class DioClient {
     return updateTenant;
   }
 
-  // delete letter
+  // -----------------------------------------------------
+  // ------------------- DELETE FILES --------------------
+  // -----------------------------------------------------
+
+  // -----------------------------------------------------
+  // ------------------- delete letter--------------------
+  // -----------------------------------------------------
+
   Future<DeleteLetter?> deleteLetter({
     int? id,
   }) async {
@@ -1009,5 +1016,107 @@ class DioClient {
       }
     }
     return deleteLetter;
+  }
+
+  // -----------------------------------------------------
+  // ------------------- delete invoice--------------------
+  // -----------------------------------------------------
+
+  Future<DeleteLetter?> deleteInvoice({
+    int? id,
+  }) async {
+    DeleteLetter? deleteLetter;
+
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    //Return String
+    stringValue = prefs.getString('jwt_token');
+
+    try {
+      Response response = await _dio.delete(
+        '/deleteInvoice/$id',
+        options: Options(
+          headers: {
+            "authorization": stringValue, // set content-length
+          },
+        ),
+      );
+      if (kDebugMode) {
+        print('User deleted!');
+      }
+      deleteLetter = DeleteLetter.fromJson(response.data);
+    } catch (e) {
+      if (kDebugMode) {
+        print('Error deleting user: $e');
+      }
+    }
+    return deleteLetter;
+  }
+
+  // -----------------------------------------------------
+  // ------------------- delete Statement--------------------
+  // -----------------------------------------------------
+
+  Future<DeleteLetter?> deleteStatement({
+    int? id,
+  }) async {
+    DeleteLetter? deleteStatement;
+
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    //Return String
+    stringValue = prefs.getString('jwt_token');
+
+    try {
+      Response response = await _dio.delete(
+        '/deleteStatement/$id',
+        options: Options(
+          headers: {
+            "authorization": stringValue, // set content-length
+          },
+        ),
+      );
+      if (kDebugMode) {
+        print('User deleted!');
+      }
+      deleteStatement = DeleteLetter.fromJson(response.data);
+    } catch (e) {
+      if (kDebugMode) {
+        print('Error deleting user: $e');
+      }
+    }
+    return deleteStatement;
+  }
+
+  // -----------------------------------------------------
+  // ------------------- delete Tenant--------------------
+  // -----------------------------------------------------
+
+  Future<DeleteLetter?> deleteTenant({
+    int? id,
+  }) async {
+    DeleteLetter? deleteTenant;
+
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    //Return String
+    stringValue = prefs.getString('jwt_token');
+
+    try {
+      Response response = await _dio.delete(
+        '/deleteTenant/$id',
+        options: Options(
+          headers: {
+            "authorization": stringValue, // set content-length
+          },
+        ),
+      );
+      if (kDebugMode) {
+        print('User deleted!');
+      }
+      deleteTenant = DeleteLetter.fromJson(response.data);
+    } catch (e) {
+      if (kDebugMode) {
+        print('Error deleting user: $e');
+      }
+    }
+    return deleteTenant;
   }
 }
