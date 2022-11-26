@@ -52,6 +52,46 @@ class StatementScreen extends StatelessWidget {
             BlocConsumer<VidicAdminBloc, VidicAdminState>(
               listener: (context, state) {
                 // TODO: implement listener
+                if (state is DeleteStatementSuccessState) {
+                  AwesomeDialog(
+                    context: context,
+                    width: 600,
+                    animType: AnimType.leftSlide,
+                    headerAnimationLoop: false,
+                    dismissOnBackKeyPress: false,
+                    dialogType: DialogType.success,
+                    showCloseIcon: true,
+                    title: 'Statement Deleted Successfully',
+                    btnOkText: "OK",
+                    btnOkOnPress: () {
+                      BlocProvider.of<VidicAdminBloc>(context)
+                          .add(StatementGetEvent());
+                    },
+                    btnOkIcon: Icons.check_circle,
+                    onDismissCallback: (type) {
+                      debugPrint('Dialog Dissmiss from callback $type');
+                    },
+                  ).show();
+                }
+                if (state is DeleteStatementRequestState) {
+                  AwesomeDialog(
+                    width: 600,
+                    context: context,
+                    dismissOnBackKeyPress: false,
+                    dialogType: DialogType.question,
+                    animType: AnimType.rightSlide,
+                    title: 'Delete Statement',
+                    desc: 'Are you sure you want to delete the letter',
+                    btnCancelOnPress: () {
+                      BlocProvider.of<VidicAdminBloc>(context)
+                          .add(StatementGetEvent());
+                    },
+                    btnOkOnPress: () {
+                      BlocProvider.of<VidicAdminBloc>(context)
+                          .add(DeleteStatementEvent());
+                    },
+                  ).show();
+                }
                 if (state is UpdateStatementBackOption) {
                   AwesomeDialog(
                     context: context,
@@ -124,6 +164,38 @@ class StatementScreen extends StatelessWidget {
                 }
               },
               builder: (context, state) {
+                if (state is DeleteStatementSuccessLoadingState) {
+                  return Expanded(
+                    child: SingleChildScrollView(
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: const [
+                          SizedBox(
+                            height: 30,
+                          ),
+                          Text(
+                            'Deleting Statement',
+                            style: TextStyle(
+                              fontSize: 20,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                          SizedBox(
+                            height: 30,
+                          ),
+                          Text(
+                            'Kindly Wait',
+                            style: TextStyle(
+                              fontSize: 14,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  );
+                }
                 if (state is UpdateStatementsState) {
                   _controllerAmount.text = state.amount!;
                   return Expanded(
@@ -861,21 +933,19 @@ class StatementScreen extends StatelessWidget {
                                                             tooltip:
                                                                 'Delete Letter',
                                                             onPressed: () {
-                                                              // BlocProvider.of<
-                                                              //             VidicAdminBloc>(
-                                                              //         context)
-                                                              //     .add(
-                                                              //   UpdateOccupancyEvent(
-                                                              //     floorId: state
-                                                              //         .data[i].datumId,
-                                                              //     occupancy: state
-                                                              //         .data[i].occupancy
-                                                              //         .toString(),
-                                                              //     capacity: state
-                                                              //         .data[i].capacity
-                                                              //         .toString(),
-                                                              //   ),
-                                                              // );
+                                                              BlocProvider.of<
+                                                                          VidicAdminBloc>(
+                                                                      context)
+                                                                  .add(
+                                                                DeleteStatementRequestEvent(
+                                                                  id: state
+                                                                      .data[
+                                                                          index]
+                                                                      .statementTypes[
+                                                                          i]
+                                                                      .statementTypeId,
+                                                                ),
+                                                              );
                                                             },
                                                           ),
                                                         ),
