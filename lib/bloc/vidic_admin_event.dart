@@ -15,6 +15,10 @@ class VidicLoginEvent extends VidicAdminEvent {
   VidicLoginEvent({required this.email, required this.password});
 }
 
+// get User Name
+class UserGetEvent extends VidicAdminEvent {}
+
+// get details from database
 class LogoutEvent extends VidicAdminEvent {}
 
 class TenantGetEvent extends VidicAdminEvent {}
@@ -448,3 +452,48 @@ class DeleteLetterRequestEvent extends VidicAdminEvent {
 }
 
 class DeleteLetterEvent extends VidicAdminEvent {}
+
+// ---------------------------------------------------------------
+
+// ---------------------------------------------------------------
+// delete invoice
+// ---------------------------------------------------------------
+
+class DeleteInvoiceRequestEvent extends VidicAdminEvent {
+  final int? id;
+  const DeleteInvoiceRequestEvent({
+    required this.id,
+  });
+}
+
+class DeleteInvoiceEvent extends VidicAdminEvent {}
+
+// ---------------------------------------------------------------
+
+// ---------------------------------------------------------------
+// delete statement
+// ---------------------------------------------------------------
+
+class DeleteStatementRequestEvent extends VidicAdminEvent {
+  final int? id;
+  const DeleteStatementRequestEvent({
+    required this.id,
+  });
+}
+
+class DeleteStatementEvent extends VidicAdminEvent {}
+
+// ---------------------------------------------------------------
+
+// ---------------------------------------------------------------
+// delete tenant
+// ---------------------------------------------------------------
+
+class DeleteTenantRequestEvent extends VidicAdminEvent {
+  final int? id;
+  const DeleteTenantRequestEvent({
+    required this.id,
+  });
+}
+
+class DeleteTenantEvent extends VidicAdminEvent {}
