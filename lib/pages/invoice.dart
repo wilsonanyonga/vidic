@@ -71,6 +71,46 @@ class InvoiceScreen extends StatelessWidget {
             BlocConsumer<VidicAdminBloc, VidicAdminState>(
               listener: (context, state) {
                 // TODO: implement listener
+                if (state is DeleteInvoiceSuccessState) {
+                  AwesomeDialog(
+                    context: context,
+                    width: 600,
+                    animType: AnimType.leftSlide,
+                    headerAnimationLoop: false,
+                    dismissOnBackKeyPress: false,
+                    dialogType: DialogType.success,
+                    showCloseIcon: true,
+                    title: 'Invoice Deleted Successfully',
+                    btnOkText: "OK",
+                    btnOkOnPress: () {
+                      BlocProvider.of<VidicAdminBloc>(context)
+                          .add(InvoiceGetEvent());
+                    },
+                    btnOkIcon: Icons.check_circle,
+                    onDismissCallback: (type) {
+                      debugPrint('Dialog Dissmiss from callback $type');
+                    },
+                  ).show();
+                }
+                if (state is DeleteInvoiceRequestState) {
+                  AwesomeDialog(
+                    width: 600,
+                    context: context,
+                    dismissOnBackKeyPress: false,
+                    dialogType: DialogType.question,
+                    animType: AnimType.rightSlide,
+                    title: 'Delete Letter',
+                    desc: 'Are you sure you want to delete the letter',
+                    btnCancelOnPress: () {
+                      BlocProvider.of<VidicAdminBloc>(context)
+                          .add(InvoiceGetEvent());
+                    },
+                    btnOkOnPress: () {
+                      BlocProvider.of<VidicAdminBloc>(context)
+                          .add(DeleteInvoiceEvent());
+                    },
+                  ).show();
+                }
                 if (state is UpdateInvoiceBackOption) {
                   AwesomeDialog(
                     context: context,
@@ -146,6 +186,38 @@ class InvoiceScreen extends StatelessWidget {
                 }
               },
               builder: (context, state) {
+                if (state is DeleteInvoiceSuccessLoadingState) {
+                  return Expanded(
+                    child: SingleChildScrollView(
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: const [
+                          SizedBox(
+                            height: 30,
+                          ),
+                          Text(
+                            'Deleting Invoice',
+                            style: TextStyle(
+                              fontSize: 20,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                          SizedBox(
+                            height: 30,
+                          ),
+                          Text(
+                            'Kindly Wait',
+                            style: TextStyle(
+                              fontSize: 14,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  );
+                }
                 if (state is UpdateInvoicesState) {
                   _controllerAmount.text = state.amount!;
                   _controllerPurpose.text = state.purpose!;
@@ -848,21 +920,19 @@ class InvoiceScreen extends StatelessWidget {
                                                             tooltip:
                                                                 'Delete Letter',
                                                             onPressed: () {
-                                                              // BlocProvider.of<
-                                                              //             VidicAdminBloc>(
-                                                              //         context)
-                                                              //     .add(
-                                                              //   UpdateOccupancyEvent(
-                                                              //     floorId: state
-                                                              //         .data[i].datumId,
-                                                              //     occupancy: state
-                                                              //         .data[i].occupancy
-                                                              //         .toString(),
-                                                              //     capacity: state
-                                                              //         .data[i].capacity
-                                                              //         .toString(),
-                                                              //   ),
-                                                              // );
+                                                              BlocProvider.of<
+                                                                          VidicAdminBloc>(
+                                                                      context)
+                                                                  .add(
+                                                                DeleteInvoiceRequestEvent(
+                                                                  id: state
+                                                                      .data[
+                                                                          index]
+                                                                      .invoiceTypes[
+                                                                          i]
+                                                                      .invoiceTypeId,
+                                                                ),
+                                                              );
                                                             },
                                                           ),
                                                         ),
