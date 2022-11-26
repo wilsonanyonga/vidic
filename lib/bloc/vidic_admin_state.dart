@@ -377,3 +377,33 @@ class DeleteLetterRequestState extends VidicAdminState {}
 class DeleteLetterSuccessState extends VidicAdminState {}
 
 class DeleteLetterSuccessLoadingState extends VidicAdminState {}
+
+// ---------------------------------------------------
+//-------------- delete invoice------------------------
+// ---------------------------------------------------
+// DeleteLetterEvent
+class DeleteInvoiceRequestState extends VidicAdminState {}
+
+class DeleteInvoiceSuccessState extends VidicAdminState {}
+
+class DeleteInvoiceSuccessLoadingState extends VidicAdminState {}
+
+// ---------------------------------------------------
+//-------------- delete statement ------------------------
+// ---------------------------------------------------
+// DeleteLetterEvent
+class DeleteStatementRequestState extends VidicAdminState {}
+
+class DeleteStatementSuccessState extends VidicAdminState {}
+
+class DeleteStatementSuccessLoadingState extends VidicAdminState {}
+
+// ---------------------------------------------------
+//-------------- delete tenant ------------------------
+// ---------------------------------------------------
+// DeleteLetterEvent
+class DeleteTenantRequestState extends VidicAdminState {}
+
+class DeleteTenantSuccessState extends VidicAdminState {}
+
+class DeleteTenantSuccessLoadingState extends VidicAdminState {}
