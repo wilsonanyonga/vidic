@@ -145,6 +145,46 @@ class MyHomePage extends StatelessWidget {
             BlocConsumer<VidicAdminBloc, VidicAdminState>(
               listener: (context, state) {
                 // TODO: implement listener
+                if (state is DeleteTenantSuccessState) {
+                  AwesomeDialog(
+                    context: context,
+                    width: 600,
+                    animType: AnimType.leftSlide,
+                    headerAnimationLoop: false,
+                    dismissOnBackKeyPress: false,
+                    dialogType: DialogType.success,
+                    showCloseIcon: true,
+                    title: 'Tenant Deleted Successfully',
+                    btnOkText: "OK",
+                    btnOkOnPress: () {
+                      BlocProvider.of<VidicAdminBloc>(context)
+                          .add(TenantGetEvent());
+                    },
+                    btnOkIcon: Icons.check_circle,
+                    onDismissCallback: (type) {
+                      debugPrint('Dialog Dissmiss from callback $type');
+                    },
+                  ).show();
+                }
+                if (state is DeleteTenantRequestState) {
+                  AwesomeDialog(
+                    width: 600,
+                    context: context,
+                    dismissOnBackKeyPress: false,
+                    dialogType: DialogType.question,
+                    animType: AnimType.rightSlide,
+                    title: 'Delete Tenant',
+                    desc: 'Are you sure you want to delete the letter',
+                    btnCancelOnPress: () {
+                      BlocProvider.of<VidicAdminBloc>(context)
+                          .add(TenantGetEvent());
+                    },
+                    btnOkOnPress: () {
+                      BlocProvider.of<VidicAdminBloc>(context)
+                          .add(DeleteTenantEvent());
+                    },
+                  ).show();
+                }
                 if (state is UpdateTenantBackOption) {
                   AwesomeDialog(
                     context: context,
@@ -245,6 +285,38 @@ class MyHomePage extends StatelessWidget {
                 }
               },
               builder: (context, state) {
+                if (state is DeleteTenantSuccessLoadingState) {
+                  return Expanded(
+                    child: SingleChildScrollView(
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: const [
+                          SizedBox(
+                            height: 30,
+                          ),
+                          Text(
+                            'Deleting Tenant',
+                            style: TextStyle(
+                              fontSize: 20,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                          SizedBox(
+                            height: 30,
+                          ),
+                          Text(
+                            'Kindly Wait',
+                            style: TextStyle(
+                              fontSize: 14,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  );
+                }
                 if (state is UpdateTenantState) {
                   _controllerName.text = state.name!;
                   _controllerNumber.text = state.number!;
@@ -449,9 +521,9 @@ class MyHomePage extends StatelessWidget {
                                   const SizedBox(
                                     height: 15,
                                   ),
-                                  Text(
-                                    'Lease Start Date${state.leaseStartDate}',
-                                    style: const TextStyle(fontSize: 17),
+                                  const Text(
+                                    'Lease Start Date',
+                                    style: TextStyle(fontSize: 17),
                                   ),
                                   SfDateRangePicker(
                                     initialDisplayDate: state.leaseStartDate,
@@ -1371,21 +1443,16 @@ class MyHomePage extends StatelessWidget {
                                                           tooltip:
                                                               'Delete Letter',
                                                           onPressed: () {
-                                                            // BlocProvider.of<
-                                                            //             VidicAdminBloc>(
-                                                            //         context)
-                                                            //     .add(
-                                                            //   UpdateOccupancyEvent(
-                                                            //     floorId: state
-                                                            //         .data[i].datumId,
-                                                            //     occupancy: state
-                                                            //         .data[i].occupancy
-                                                            //         .toString(),
-                                                            //     capacity: state
-                                                            //         .data[i].capacity
-                                                            //         .toString(),
-                                                            //   ),
-                                                            // );
+                                                            BlocProvider.of<
+                                                                        VidicAdminBloc>(
+                                                                    context)
+                                                                .add(
+                                                              DeleteTenantRequestEvent(
+                                                                id: state
+                                                                    .data[i]
+                                                                    .datumId,
+                                                              ),
+                                                            );
                                                           },
                                                         ),
                                                       ),
