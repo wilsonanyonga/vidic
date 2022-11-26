@@ -791,10 +791,10 @@ class LettersScreen extends StatelessWidget {
                                                                 .data[index]
                                                                 .lettersTypes[i]
                                                                 .date
+                                                                .toLocal()
                                                                 .toString()
-                                                                .replaceAll(
-                                                                    '21:00:00.000Z',
-                                                                    ''),
+                                                                .substring(
+                                                                    0, 10),
                                                           ),
                                                         ),
                                                         DataCell(
