@@ -41,12 +41,12 @@ class VidicAdminBloc extends Bloc<VidicAdminEvent, VidicAdminState> {
   String? tenantInvoiceMonth;
   Uint8List? invoiceFile;
 
-  String letterFileName = '';
+  String letterFileName = 'No File Selected';
   String? tenantLetterId;
   Uint8List? letterFile;
 
   // updating the letter
-  String letterUpdateFileName = '';
+  String letterUpdateFileName = 'No File Selected';
   String letterUpdateSubject = '';
   int? letterUpdateId;
   Uint8List? letterUpdateFile;
@@ -67,9 +67,6 @@ class VidicAdminBloc extends Bloc<VidicAdminEvent, VidicAdminState> {
   DateTime? statementUpdateEndDate;
   String? statementUpdateAmount;
 
-  // deleting letter
-  int? letterDeleteId;
-
   // updating tenant
   int? idTenantUpdate;
   String? nameTenantUpdate;
@@ -84,6 +81,18 @@ class VidicAdminBloc extends Bloc<VidicAdminEvent, VidicAdminState> {
   DateTime? leaseStartDateTenantUpdate;
   DateTime? leaseEndDateTenantUpdate;
   String? activeTenantUpdate;
+
+  // deleting letter
+  int? letterDeleteId;
+
+  // deleting invoice
+  int? invoiceDeleteId;
+
+  // deleting statement
+  int? statementDeleteId;
+
+  // deleting tenant
+  int? tenantDeleteId;
 
   List<DropdownMenuItem<String>> get dropdownItems {
     List<DropdownMenuItem<String>> menuItems = [
@@ -135,6 +144,7 @@ class VidicAdminBloc extends Bloc<VidicAdminEvent, VidicAdminState> {
         SharedPreferences prefs = await SharedPreferences.getInstance();
         prefs.setString('email', event.email);
         prefs.setString('jwt_token', myJwt!.data);
+        prefs.setString('user_name', myJwt.user[0].name);
 
         if (kDebugMode) {
           print('email is ${event.email}');
@@ -1766,6 +1776,150 @@ class VidicAdminBloc extends Bloc<VidicAdminEvent, VidicAdminState> {
           if (kDebugMode) {
             print("error is $e");
             emit(DeleteLetterRequestState());
+          }
+        }
+      },
+    );
+
+    // ----------------------------------------------------------
+    // ----------- Delete Letters----------------------------
+    // ----------------------------------------------------------
+
+    on<DeleteInvoiceRequestEvent>(
+      (event, emit) async {
+        if (kDebugMode) {
+          print('update invoice');
+        }
+        invoiceDeleteId = event.id;
+
+        if (kDebugMode) {
+          print('details are');
+          print(invoiceDeleteId);
+        }
+        emit(DeleteInvoiceRequestState());
+      },
+    );
+
+    on<DeleteInvoiceEvent>(
+      (event, emit) async {
+        if (kDebugMode) {
+          print('delete invoice');
+        }
+        // letterDeleteId = event.id;
+        // DeleteLetterSuccessLoadingState
+        emit(DeleteInvoiceSuccessLoadingState());
+        // emit(DeleteLetterSuccessState(1));
+        if (kDebugMode) {
+          print('details are');
+          print(invoiceDeleteId);
+        }
+        // emit(DeleteLetterRequestState());
+        try {
+          final deleteInvoice =
+              await _client.deleteInvoice(id: invoiceDeleteId);
+          if (deleteInvoice!.status == 200) {
+            emit(DeleteInvoiceSuccessState());
+          }
+        } catch (e) {
+          if (kDebugMode) {
+            print("error is $e");
+            emit(DeleteInvoiceRequestState());
+          }
+        }
+      },
+    );
+    // invoiceDeleteId
+
+    // ----------------------------------------------------------
+    // ----------- Delete Statement ----------------------------
+    // ----------------------------------------------------------
+
+    on<DeleteStatementRequestEvent>(
+      (event, emit) async {
+        if (kDebugMode) {
+          print('update invoice');
+        }
+        statementDeleteId = event.id;
+
+        if (kDebugMode) {
+          print('details are');
+          print(statementDeleteId);
+        }
+        emit(DeleteStatementRequestState());
+      },
+    );
+
+    on<DeleteStatementEvent>(
+      (event, emit) async {
+        if (kDebugMode) {
+          print('delete statement');
+        }
+        // letterDeleteId = event.id;
+        // DeleteLetterSuccessLoadingState
+        emit(DeleteStatementSuccessLoadingState());
+        // emit(DeleteLetterSuccessState(1));
+        if (kDebugMode) {
+          print('details are');
+          print(statementDeleteId);
+        }
+        // emit(DeleteLetterRequestState());
+        try {
+          final deleteStatement =
+              await _client.deleteStatement(id: statementDeleteId);
+          if (deleteStatement!.status == 200) {
+            emit(DeleteStatementSuccessState());
+          }
+        } catch (e) {
+          if (kDebugMode) {
+            print("error is $e");
+            emit(DeleteStatementRequestState());
+          }
+        }
+      },
+    );
+
+    // ----------------------------------------------------------
+    // ----------- Delete Tenant ----------------------------
+    // ----------------------------------------------------------
+
+    on<DeleteTenantRequestEvent>(
+      (event, emit) async {
+        if (kDebugMode) {
+          print('update invoice');
+        }
+        tenantDeleteId = event.id;
+
+        if (kDebugMode) {
+          print('details are');
+          print(tenantDeleteId);
+        }
+        emit(DeleteTenantRequestState());
+      },
+    );
+
+    on<DeleteTenantEvent>(
+      (event, emit) async {
+        if (kDebugMode) {
+          print('delete statement');
+        }
+        // letterDeleteId = event.id;
+        // DeleteLetterSuccessLoadingState
+        emit(DeleteTenantSuccessLoadingState());
+        // emit(DeleteLetterSuccessState(1));
+        if (kDebugMode) {
+          print('details are');
+          print(tenantDeleteId);
+        }
+        // emit(DeleteLetterRequestState());
+        try {
+          final deleteTenant = await _client.deleteTenant(id: tenantDeleteId);
+          if (deleteTenant!.status == 200) {
+            emit(DeleteTenantSuccessState());
+          }
+        } catch (e) {
+          if (kDebugMode) {
+            print("error is $e");
+            emit(DeleteTenantRequestState());
           }
         }
       },
