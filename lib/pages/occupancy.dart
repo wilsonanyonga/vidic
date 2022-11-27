@@ -3,7 +3,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:vidic/bloc/vidic_admin_bloc.dart';
-import 'package:vidic/models/occupancy/get_occupancy.dart';
+// import 'package:vidic/models/occupancy/get_occupancy.dart';
 import 'package:vidic/utils/dio_client.dart';
 import 'package:vidic/widgets/menu_bar.dart';
 import 'package:vidic/widgets/navigation_rail.dart';
@@ -11,7 +11,7 @@ import 'package:vidic/widgets/navigation_rail.dart';
 class OccupancyScreen extends StatelessWidget {
   OccupancyScreen({Key? key}) : super(key: key);
 
-  int _selectedIndex = 4;
+  final int _selectedIndex = 4;
   var mediaQsize, mediaQheight, mediaQwidth;
 
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
@@ -50,6 +50,7 @@ class OccupancyScreen extends StatelessWidget {
             const VerticalDivider(thickness: 1, width: 2),
             BlocConsumer<VidicAdminBloc, VidicAdminState>(
               listener: (context, state) {
+                // ignore: todo
                 // TODO: implement listener
                 if (state is OccupancyBackOption) {
                   AwesomeDialog(
@@ -242,6 +243,7 @@ class OccupancyScreen extends StatelessWidget {
                           ),
                           BlocConsumer<VidicAdminBloc, VidicAdminState>(
                             listener: (context, state) {
+                              // ignore: todo
                               // TODO: implement listener
                             },
                             builder: (context, state) {
@@ -478,6 +480,7 @@ class OccupancyScreen extends StatelessWidget {
         ),
         floatingActionButton: BlocConsumer<VidicAdminBloc, VidicAdminState>(
           listener: (context, state) {
+            // ignore: todo
             // TODO: implement listener
           },
           builder: (context, state) {
