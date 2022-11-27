@@ -12,7 +12,7 @@ import 'package:vidic/widgets/navigation_rail.dart';
 class StatementScreen extends StatelessWidget {
   StatementScreen({Key? key}) : super(key: key);
 
-  int _selectedIndex = 1;
+  final int _selectedIndex = 1;
   var mediaQsize, mediaQheight, mediaQwidth;
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
@@ -51,6 +51,7 @@ class StatementScreen extends StatelessWidget {
             const VerticalDivider(thickness: 1, width: 2),
             BlocConsumer<VidicAdminBloc, VidicAdminState>(
               listener: (context, state) {
+                // ignore: todo
                 // TODO: implement listener
                 if (state is DeleteStatementSuccessState) {
                   AwesomeDialog(
@@ -680,6 +681,7 @@ class StatementScreen extends StatelessWidget {
                           ),
                           BlocConsumer<VidicAdminBloc, VidicAdminState>(
                             listener: (context, state) {
+                              // ignore: todo
                               // TODO: implement listener
                             },
                             builder: (context, state) {
@@ -1029,6 +1031,7 @@ class StatementScreen extends StatelessWidget {
         ),
         floatingActionButton: BlocConsumer<VidicAdminBloc, VidicAdminState>(
           listener: (context, state) {
+            // ignore: todo
             // TODO: implement listener
           },
           builder: (context, state) {
