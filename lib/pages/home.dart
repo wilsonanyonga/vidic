@@ -4,7 +4,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:percent_indicator/percent_indicator.dart';
+// import 'package:percent_indicator/percent_indicator.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:syncfusion_flutter_datepicker/datepicker.dart';
 import 'package:vidic/bloc/vidic_admin_bloc.dart';
@@ -36,19 +36,19 @@ class MyHomePage extends StatelessWidget {
 
   final String title;
 
-  int _counter = 0;
-  int _selectedIndex = 0;
+  // final int _counter = 0;
+  final int _selectedIndex = 0;
 
-  void _incrementCounter() {
-    // setState(() {
-    //   // This call to setState tells the Flutter framework that something has
-    //   // changed in this State, which causes it to rerun the build method below
-    //   // so that the display can reflect the updated values. If we changed
-    //   // _counter without calling setState(), then the build method would not be
-    //   // called again, and so nothing would appear to happen.
-    //   _counter++;
-    // });
-  }
+  // void _incrementCounter() {
+  //   // setState(() {
+  //   //   // This call to setState tells the Flutter framework that something has
+  //   //   // changed in this State, which causes it to rerun the build method below
+  //   //   // so that the display can reflect the updated values. If we changed
+  //   //   // _counter without calling setState(), then the build method would not be
+  //   //   // called again, and so nothing would appear to happen.
+  //   //   _counter++;
+  //   // });
+  // }
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   String? errorMessage = '';
   // bool isLogin = true;
@@ -57,7 +57,7 @@ class MyHomePage extends StatelessWidget {
   final TextEditingController _controllerNumber = TextEditingController();
   final TextEditingController _controllerEmail = TextEditingController();
   final TextEditingController _controllerAbout = TextEditingController();
-  final TextEditingController _controllerFloor = TextEditingController();
+  // final TextEditingController _controllerFloor = TextEditingController();
   final TextEditingController _controllerSize = TextEditingController();
   final TextEditingController _controllerRent = TextEditingController();
   final TextEditingController _controllerEscalation = TextEditingController();
@@ -85,23 +85,23 @@ class MyHomePage extends StatelessWidget {
     // String dropdownValue = floorList.first;
     // String selectedValue = "0";
     String? selectedValue;
-    String? _selectedDate;
+    // String? selectedDate;
 
     // _controllerName.text = 'lol';
     // _controllerNumber.text = null;
     if (kDebugMode) {
       print('object is home');
     }
-    Future<void> signOut() async {
-      await Auth().signOut();
+    // Future<void> signOut() async {
+    //   await Auth().signOut();
 
-      SharedPreferences prefs = await SharedPreferences.getInstance();
-      //Return String
-      String? stringValue = prefs.getString('email');
-      if (kDebugMode) {
-        print(stringValue);
-      }
-    }
+    //   SharedPreferences prefs = await SharedPreferences.getInstance();
+    //   //Return String
+    //   String? stringValue = prefs.getString('email');
+    //   if (kDebugMode) {
+    //     print(stringValue);
+    //   }
+    // }
 
     // This method is rerun every time setState is called, for instance as done
     // by the _incrementCounter method above.
@@ -144,6 +144,7 @@ class MyHomePage extends StatelessWidget {
 
             BlocConsumer<VidicAdminBloc, VidicAdminState>(
               listener: (context, state) {
+                // ignore: todo
                 // TODO: implement listener
                 if (state is DeleteTenantSuccessState) {
                   AwesomeDialog(
@@ -1121,6 +1122,7 @@ class MyHomePage extends StatelessWidget {
                                 ),
                                 BlocConsumer<VidicAdminBloc, VidicAdminState>(
                                   listener: (context, state) {
+                                    // ignore: todo
                                     // TODO: implement listener
                                   },
                                   builder: (context, state) {
@@ -1224,6 +1226,7 @@ class MyHomePage extends StatelessWidget {
                                 ),
                                 BlocConsumer<VidicAdminBloc, VidicAdminState>(
                                   listener: (context, state) {
+                                    // ignore: todo
                                     // TODO: implement listener
                                   },
                                   builder: (context, state) {
@@ -1599,6 +1602,7 @@ class MyHomePage extends StatelessWidget {
         ),
         floatingActionButton: BlocConsumer<VidicAdminBloc, VidicAdminState>(
           listener: (context, state) {
+            // ignore: todo
             // TODO: implement listener
           },
           builder: (context, state) {
