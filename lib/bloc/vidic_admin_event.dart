@@ -10,9 +10,9 @@ abstract class VidicAdminEvent extends Equatable {
 class VidicInitialEvent extends VidicAdminEvent {}
 
 class VidicLoginEvent extends VidicAdminEvent {
-  String email;
-  String password;
-  VidicLoginEvent({required this.email, required this.password});
+  final String email;
+  final String password;
+  const VidicLoginEvent({required this.email, required this.password});
 }
 
 // get User Name
@@ -39,34 +39,34 @@ class ComplaintGetEvent extends VidicAdminEvent {}
 class CreateTenantEvent extends VidicAdminEvent {}
 
 class CreateFloorEvent extends VidicAdminEvent {
-  String? floor;
-  CreateFloorEvent({required this.floor});
+  final String? floor;
+  const CreateFloorEvent({required this.floor});
 }
 
 class CreateStartDateEvent extends VidicAdminEvent {
-  String? startDate;
-  CreateStartDateEvent({required this.startDate});
+  final String? startDate;
+  const CreateStartDateEvent({required this.startDate});
 }
 
 class CreateEndDateEvent extends VidicAdminEvent {
-  String? endDate;
-  CreateEndDateEvent({required this.endDate});
+  final String? endDate;
+  const CreateEndDateEvent({required this.endDate});
 }
 
 class CreateTenantDataEvent extends VidicAdminEvent {
-  String name;
-  String number;
-  String officialEmail;
-  String about;
-  String? floor;
-  String size;
-  String rent;
-  String escalation;
-  String pobox;
-  String leaseStartDate;
-  String leaseEndDate;
-  String active;
-  CreateTenantDataEvent(
+  final String name;
+  final String number;
+  final String officialEmail;
+  final String about;
+  final String? floor;
+  final String size;
+  final String rent;
+  final String escalation;
+  final String pobox;
+  final String leaseStartDate;
+  final String leaseEndDate;
+  final String active;
+  const CreateTenantDataEvent(
       {required this.name,
       required this.number,
       required this.officialEmail,
@@ -88,24 +88,24 @@ class CreateStatementEvent extends VidicAdminEvent {}
 class UploadStatementFileEvent extends VidicAdminEvent {}
 
 class CreateStatementStartDateEvent extends VidicAdminEvent {
-  String? statementStartDate;
-  CreateStatementStartDateEvent({required this.statementStartDate});
+  final String? statementStartDate;
+  const CreateStatementStartDateEvent({required this.statementStartDate});
 }
 
 class CreateStatementEndDateEvent extends VidicAdminEvent {
-  String? statementEndDate;
-  CreateStatementEndDateEvent({required this.statementEndDate});
+  final String? statementEndDate;
+  const CreateStatementEndDateEvent({required this.statementEndDate});
 }
 
 class CreateTenantStatementEvent extends VidicAdminEvent {
-  String? tenantStatementName;
-  CreateTenantStatementEvent({required this.tenantStatementName});
+  final String? tenantStatementName;
+  const CreateTenantStatementEvent({required this.tenantStatementName});
 }
 
 class UploadTenantStatementEvent extends VidicAdminEvent {
-  String? amount;
+  final String? amount;
 
-  UploadTenantStatementEvent({required this.amount});
+  const UploadTenantStatementEvent({required this.amount});
 }
 
 // ---------------------------------------------------------------
@@ -113,22 +113,22 @@ class UploadTenantStatementEvent extends VidicAdminEvent {
 class CreateInvoiceEvent extends VidicAdminEvent {}
 
 class SetTenantInvoiceIdEvent extends VidicAdminEvent {
-  String? tenantInvoiceId;
-  SetTenantInvoiceIdEvent({required this.tenantInvoiceId});
+  final String? tenantInvoiceId;
+  const SetTenantInvoiceIdEvent({required this.tenantInvoiceId});
 }
 
 class SetTenantInvoiceMonthEvent extends VidicAdminEvent {
-  String? tenantInvoiceMonth;
-  SetTenantInvoiceMonthEvent({required this.tenantInvoiceMonth});
+  final String? tenantInvoiceMonth;
+  const SetTenantInvoiceMonthEvent({required this.tenantInvoiceMonth});
 }
 
 class UploadInvoiceFileEvent extends VidicAdminEvent {}
 
 class UploadTenantInvoiceEvent extends VidicAdminEvent {
-  String? amount;
-  String? purpose;
+  final String? amount;
+  final String? purpose;
 
-  UploadTenantInvoiceEvent({
+  const UploadTenantInvoiceEvent({
     required this.amount,
     required this.purpose,
   });
@@ -140,16 +140,16 @@ class UploadTenantInvoiceEvent extends VidicAdminEvent {
 class CreateLetterEvent extends VidicAdminEvent {}
 
 class SetTenantLetterIdEvent extends VidicAdminEvent {
-  String? tenantLetterId;
-  SetTenantLetterIdEvent({required this.tenantLetterId});
+  final String? tenantLetterId;
+  const SetTenantLetterIdEvent({required this.tenantLetterId});
 }
 
 class UploadLetterFileEvent extends VidicAdminEvent {}
 
 class UploadTenantLetterEvent extends VidicAdminEvent {
-  String? subject;
+  final String? subject;
 
-  UploadTenantLetterEvent({
+  const UploadTenantLetterEvent({
     required this.subject,
   });
 }
@@ -158,11 +158,11 @@ class UploadTenantLetterEvent extends VidicAdminEvent {
 // create new occupancy
 
 class UpdateOccupancyEvent extends VidicAdminEvent {
-  int floorId;
-  String occupancy;
-  String capacity;
+  final int floorId;
+  final String occupancy;
+  final String capacity;
 
-  UpdateOccupancyEvent({
+  const UpdateOccupancyEvent({
     required this.floorId,
     required this.occupancy,
     required this.capacity,
@@ -170,11 +170,11 @@ class UpdateOccupancyEvent extends VidicAdminEvent {
 }
 
 class UpdateOccupancyPatchEvent extends VidicAdminEvent {
-  int floorId;
-  String occupancy;
-  String capacity;
+  final int floorId;
+  final String occupancy;
+  final String capacity;
 
-  UpdateOccupancyPatchEvent({
+  const UpdateOccupancyPatchEvent({
     required this.floorId,
     required this.occupancy,
     required this.capacity,
@@ -185,11 +185,11 @@ class UpdateOccupancyPatchEvent extends VidicAdminEvent {
 // update letters
 
 class UpdateLettersPatchEvent extends VidicAdminEvent {
-  int id;
-  String subject;
+  final int id;
+  final String subject;
   // String date;
 
-  UpdateLettersPatchEvent({
+  const UpdateLettersPatchEvent({
     required this.id,
     required this.subject,
     // required this.date,
@@ -199,10 +199,10 @@ class UpdateLettersPatchEvent extends VidicAdminEvent {
 class UploadLetterUpdateFileEvent extends VidicAdminEvent {}
 
 class UpdateLettersPatchSendEvent extends VidicAdminEvent {
-  String subject;
+  final String subject;
   // String date;
 
-  UpdateLettersPatchSendEvent({
+  const UpdateLettersPatchSendEvent({
     required this.subject,
   });
 }
@@ -212,13 +212,13 @@ class UpdateLettersPatchSendEvent extends VidicAdminEvent {
 // update invoices
 // ---------------------------------------------------------------
 class UpdateInvoicesEvent extends VidicAdminEvent {
-  int id;
-  String amount;
-  String purpose;
-  String invoiceMonth;
+  final int id;
+  final String amount;
+  final String purpose;
+  final String invoiceMonth;
   // String date;
 
-  UpdateInvoicesEvent({
+  const UpdateInvoicesEvent({
     required this.id,
     required this.amount,
     required this.purpose,
@@ -227,11 +227,11 @@ class UpdateInvoicesEvent extends VidicAdminEvent {
 }
 
 class UpdateInvoiceMonthEvent extends VidicAdminEvent {
-  String? tenantInvoiceMonth;
-  String? purpose;
-  String? amount;
-  String uploadName;
-  UpdateInvoiceMonthEvent({
+  final String? tenantInvoiceMonth;
+  final String? purpose;
+  final String? amount;
+  final String uploadName;
+  const UpdateInvoiceMonthEvent({
     required this.tenantInvoiceMonth,
     required this.purpose,
     required this.amount,
@@ -240,18 +240,18 @@ class UpdateInvoiceMonthEvent extends VidicAdminEvent {
 }
 
 class UploadInvoiceUpdateFileEvent extends VidicAdminEvent {
-  String? purpose;
-  String? amount;
-  UploadInvoiceUpdateFileEvent({
+  final String? purpose;
+  final String? amount;
+  const UploadInvoiceUpdateFileEvent({
     required this.purpose,
     required this.amount,
   });
 }
 
 class UpdateInvoicePatchSendEvent extends VidicAdminEvent {
-  String? purpose;
-  String? amount;
-  UpdateInvoicePatchSendEvent({
+  final String? purpose;
+  final String? amount;
+  const UpdateInvoicePatchSendEvent({
     required this.purpose,
     required this.amount,
   });
