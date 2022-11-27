@@ -14,10 +14,11 @@ class LoginState extends VidicAdminState {}
 class LoginLoading extends VidicAdminState {}
 
 class LoginError extends VidicAdminState {
-  String? message;
-  LoginError(this.message);
+  final String? message;
+  const LoginError(this.message);
 
   @override
+  // ignore: todo
   // TODO: implement props
   List<Object> get props => [message!];
 }
@@ -26,11 +27,12 @@ class LoginError extends VidicAdminState {
 class TenantLoading extends VidicAdminState {}
 
 class TenantLoaded extends VidicAdminState {
-  List<DatumTenant> data;
-  List<DatumOccupancy> occupy;
-  TenantLoaded(this.data, this.occupy);
+  final List<DatumTenant> data;
+  final List<DatumOccupancy> occupy;
+  const TenantLoaded(this.data, this.occupy);
 
   @override
+  // ignore: todo
   // TODO: implement props
   List<Object> get props => [data, occupy];
 }
@@ -41,10 +43,11 @@ class TenantLoaded extends VidicAdminState {
 class StatementLoading extends VidicAdminState {}
 
 class StatementLoaded extends VidicAdminState {
-  List<Datum> data;
-  StatementLoaded(this.data);
+  final List<Datum> data;
+  const StatementLoaded(this.data);
 
   @override
+  // ignore: todo
   // TODO: implement props
   List<Object> get props => [data];
 }
@@ -56,10 +59,11 @@ class StatementLoaded extends VidicAdminState {
 class InvoiceLoading extends VidicAdminState {}
 
 class InvoiceLoaded extends VidicAdminState {
-  List<DatumInvoice> data;
-  InvoiceLoaded(this.data);
+  final List<DatumInvoice> data;
+  const InvoiceLoaded(this.data);
 
   @override
+  // ignore: todo
   // TODO: implement props
   List<Object> get props => [data];
 }
@@ -71,10 +75,11 @@ class InvoiceLoaded extends VidicAdminState {
 class LetterLoading extends VidicAdminState {}
 
 class LetterLoaded extends VidicAdminState {
-  List<DatumLetter> data;
-  LetterLoaded(this.data);
+  final List<DatumLetter> data;
+  const LetterLoaded(this.data);
 
   @override
+  // ignore: todo
   // TODO: implement props
   List<Object> get props => [data];
 }
@@ -86,10 +91,11 @@ class LetterLoaded extends VidicAdminState {
 class ComplaintLoading extends VidicAdminState {}
 
 class ComplaintLoaded extends VidicAdminState {
-  List<DatumTenantLetter> data;
-  ComplaintLoaded(this.data);
+  final List<DatumTenantLetter> data;
+  const ComplaintLoaded(this.data);
 
   @override
+  // ignore: todo
   // TODO: implement props
   List<Object> get props => [data];
 }
@@ -101,10 +107,11 @@ class ComplaintLoaded extends VidicAdminState {
 class OccupancyLoading extends VidicAdminState {}
 
 class OccupancyLoaded extends VidicAdminState {
-  List<DatumOccupancy> data;
-  OccupancyLoaded(this.data);
+  final List<DatumOccupancy> data;
+  const OccupancyLoaded(this.data);
 
   @override
+  // ignore: todo
   // TODO: implement props
   List<Object> get props => [data];
 }
@@ -116,9 +123,10 @@ class OccupancyLoaded extends VidicAdminState {
 // ------ CREATE NEW TENANT -----------------------
 
 class CreateTenantState extends VidicAdminState {
-  int loadingButton;
-  CreateTenantState(this.loadingButton);
+  final int loadingButton;
+  const CreateTenantState(this.loadingButton);
   @override
+  // ignore: todo
   // TODO: implement props
   List<Object> get props => [loadingButton];
 }
@@ -127,11 +135,13 @@ class TenantBackOption extends VidicAdminState {}
 
 // ------ CREATE NEW Statemnt -----------------------
 class CreateStatementState extends VidicAdminState {
-  int loadingButton;
-  String? fileName;
-  List<DropdownMenuItem<String>> dropdownItems;
-  CreateStatementState(this.loadingButton, this.fileName, this.dropdownItems);
+  final int loadingButton;
+  final String? fileName;
+  final List<DropdownMenuItem<String>> dropdownItems;
+  const CreateStatementState(
+      this.loadingButton, this.fileName, this.dropdownItems);
   @override
+  // ignore: todo
   // TODO: implement props
   List<Object> get props => [loadingButton, fileName!, dropdownItems];
 }
@@ -143,15 +153,16 @@ class StatementBackOption extends VidicAdminState {}
 // ------ CREATE NEW Invoice -----------------------
 
 class CreateInvoiceState extends VidicAdminState {
-  int loadingButton;
-  List<DropdownMenuItem<String>> dropdownItems;
-  String invoiceFileName;
-  CreateInvoiceState(
+  final int loadingButton;
+  final List<DropdownMenuItem<String>> dropdownItems;
+  final String invoiceFileName;
+  const CreateInvoiceState(
     this.loadingButton,
     this.invoiceFileName,
     this.dropdownItems,
   );
   @override
+  // ignore: todo
   // TODO: implement props
   List<Object> get props => [loadingButton, invoiceFileName, dropdownItems];
 }
@@ -163,15 +174,16 @@ class InvoiceBackOption extends VidicAdminState {}
 // ------ CREATE NEW Letter -----------------------
 
 class CreateLetterState extends VidicAdminState {
-  int loadingButton;
-  List<DropdownMenuItem<String>> dropdownItems;
-  String letterFileName;
-  CreateLetterState(
+  final int loadingButton;
+  final List<DropdownMenuItem<String>> dropdownItems;
+  final String letterFileName;
+  const CreateLetterState(
     this.loadingButton,
     this.letterFileName,
     this.dropdownItems,
   );
   @override
+  // ignore: todo
   // TODO: implement props
   List<Object> get props => [loadingButton, letterFileName, dropdownItems];
 }
@@ -184,12 +196,12 @@ class LetterBackOption extends VidicAdminState {}
 
 // CreateOccupancyEvent
 class UpdateOccupancyState extends VidicAdminState {
-  int floorId;
-  String occupancy;
-  String capacity;
-  int loadingButton;
+  final int floorId;
+  final String occupancy;
+  final String capacity;
+  final int loadingButton;
 
-  UpdateOccupancyState(
+  const UpdateOccupancyState(
     this.floorId,
     this.occupancy,
     this.capacity,
@@ -197,6 +209,7 @@ class UpdateOccupancyState extends VidicAdminState {
   );
 
   @override
+  // ignore: todo
   // TODO: implement props
   List<Object> get props => [floorId, occupancy, capacity, loadingButton];
 }
@@ -209,21 +222,20 @@ class OccupancyBackOption extends VidicAdminState {}
 
 // display the update page and pass parametters
 class UpdateLettersPatchState extends VidicAdminState {
-  int? id;
-  String subject;
-  // String date;
-  int loadingButton;
-  String letterUpdateFileName;
+  final int? id;
+  final String subject;
+  final int loadingButton;
+  final String letterUpdateFileName;
 
-  UpdateLettersPatchState(
+  const UpdateLettersPatchState(
     this.id,
     this.subject,
-    // this.date,
     this.loadingButton,
     this.letterUpdateFileName,
   );
 
   @override
+  // ignore: todo
   // TODO: implement props
   List<Object> get props => [id!, subject, loadingButton, letterUpdateFileName];
 }
@@ -234,14 +246,14 @@ class UpdateLetterBackOption extends VidicAdminState {}
 
 // display the invoices update page and pass parametters
 class UpdateInvoicesState extends VidicAdminState {
-  int? id;
-  String? amount;
-  String? purpose;
-  String? invoiceMonth;
-  String letterUpdateFileName;
-  int loadingButton;
+  final int? id;
+  final String? amount;
+  final String? purpose;
+  final String? invoiceMonth;
+  final String letterUpdateFileName;
+  final int loadingButton;
 
-  UpdateInvoicesState(
+  const UpdateInvoicesState(
     this.id,
     this.amount,
     this.purpose,
@@ -251,6 +263,7 @@ class UpdateInvoicesState extends VidicAdminState {
   );
 
   @override
+  // ignore: todo
   // TODO: implement props
   List<Object> get props => [
         id!,
@@ -271,13 +284,13 @@ class UpdateInvoiceBackOption extends VidicAdminState {}
 // display the invoices update page and pass parametters
 class UpdateStatementsState extends VidicAdminState {
   // int? id;
-  String? amount;
-  DateTime? startDate;
-  DateTime? endDate;
-  String statementUpdateFileName;
-  int loadingButton;
+  final String? amount;
+  final DateTime? startDate;
+  final DateTime? endDate;
+  final String statementUpdateFileName;
+  final int loadingButton;
 
-  UpdateStatementsState(
+  const UpdateStatementsState(
     // this.id,
     this.amount,
     this.startDate,
@@ -287,6 +300,7 @@ class UpdateStatementsState extends VidicAdminState {
   );
 
   @override
+  // ignore: todo
   // TODO: implement props
   List<Object> get props => [
         // id!,
@@ -347,6 +361,7 @@ class UpdateTenantState extends VidicAdminState {
   );
 
   @override
+  // ignore: todo
   // TODO: implement props
   List<Object> get props => [
         // id!,
