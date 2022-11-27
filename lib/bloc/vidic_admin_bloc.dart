@@ -1,5 +1,6 @@
 import 'dart:io';
 
+// ignore: depend_on_referenced_packages
 import 'package:bloc/bloc.dart';
 import 'package:dio/dio.dart';
 import 'package:equatable/equatable.dart';
@@ -12,7 +13,7 @@ import 'package:vidic/models/invoice/get_invoice2.dart';
 import 'package:vidic/models/landing/tenants2.dart';
 import 'package:vidic/models/letter/get_letter2.dart';
 import 'package:vidic/models/occupancy/get_occupancy2.dart';
-import 'package:vidic/models/statement/get_statement.dart';
+// import 'package:vidic/models/statement/get_statement.dart';
 import 'package:vidic/models/statement/get_statement_data.dart';
 import 'package:vidic/models/tenant_letter/get_tenant_letter2.dart';
 import 'package:vidic/utils/auth.dart';
@@ -106,6 +107,7 @@ class VidicAdminBloc extends Bloc<VidicAdminEvent, VidicAdminState> {
 
   VidicAdminBloc(DioClient of) : super(VidicAdminInitial()) {
     on<VidicAdminEvent>((event, emit) async {
+      // ignore: todo
       // TODO: implement event handler
       // if (await Auth().authStateChanges.isEmpty) {
       //   emit(Login());
@@ -123,6 +125,7 @@ class VidicAdminBloc extends Bloc<VidicAdminEvent, VidicAdminState> {
     });
 
     on<VidicInitialEvent>((event, emit) async {
+      // ignore: todo
       // TODO: implement event handler
       emit(LoginState());
     });
@@ -163,6 +166,7 @@ class VidicAdminBloc extends Bloc<VidicAdminEvent, VidicAdminState> {
     });
 
     on<LogoutEvent>((event, emit) async {
+      // ignore: todo
       // TODO: implement event handler
       // emit(LoginState());
     });
@@ -172,6 +176,7 @@ class VidicAdminBloc extends Bloc<VidicAdminEvent, VidicAdminState> {
     // ------------------------------------------------------------------------------------------
 
     on<TenantGetEvent>((event, emit) async {
+      // ignore: todo
       // TODO: implement event handler
       emit(TenantLoading());
       if (kDebugMode) {
@@ -214,6 +219,7 @@ class VidicAdminBloc extends Bloc<VidicAdminEvent, VidicAdminState> {
     // ----------- STATEMENT --------------------------------
 
     on<StatementGetEvent>((event, emit) async {
+      // ignore: todo
       // TODO: implement event handler
       emit(StatementLoading());
       // await Future.delayed(const Duration(seconds: 2));
@@ -231,6 +237,7 @@ class VidicAdminBloc extends Bloc<VidicAdminEvent, VidicAdminState> {
     // ----------- INVOICE --------------------------------
 
     on<InvoiceGetEvent>((event, emit) async {
+      // ignore: todo
       // TODO: implement event handler
       emit(InvoiceLoading());
       // await Future.delayed(const Duration(seconds: 2));
@@ -251,6 +258,7 @@ class VidicAdminBloc extends Bloc<VidicAdminEvent, VidicAdminState> {
     // ------------------------------------------------------------------------------------------
 
     on<LetterGetEvent>((event, emit) async {
+      // ignore: todo
       // TODO: implement event handler
       emit(LetterLoading());
       // await Future.delayed(const Duration(seconds: 2));
@@ -271,6 +279,7 @@ class VidicAdminBloc extends Bloc<VidicAdminEvent, VidicAdminState> {
     // ------------------------------------------------------------------------------------------
 
     on<ComplaintGetEvent>((event, emit) async {
+      // ignore: todo
       // TODO: implement event handler
       emit(ComplaintLoading());
       // await Future.delayed(const Duration(seconds: 2));
@@ -287,6 +296,7 @@ class VidicAdminBloc extends Bloc<VidicAdminEvent, VidicAdminState> {
     // ----------- Occupancy  --------------------------------
 
     on<OccupancyGetEvent>((event, emit) async {
+      // ignore: todo
       // TODO: implement event handler
       emit(OccupancyLoading());
       // await Future.delayed(const Duration(seconds: 2));
@@ -304,7 +314,7 @@ class VidicAdminBloc extends Bloc<VidicAdminEvent, VidicAdminState> {
 
     // ----------- Create New Tenant ----------------------------
     on<CreateTenantEvent>((event, emit) {
-      emit(CreateTenantState(0));
+      emit(const CreateTenantState(0));
     });
 
     on<CreateFloorEvent>((event, emit) {
@@ -312,25 +322,25 @@ class VidicAdminBloc extends Bloc<VidicAdminEvent, VidicAdminState> {
       if (kDebugMode) {
         print("$floor is state");
       }
-      emit(CreateTenantState(0));
+      emit(const CreateTenantState(0));
     });
     on<CreateStartDateEvent>((event, emit) {
       startDate = event.startDate;
       if (kDebugMode) {
         print("$startDate is state");
       }
-      emit(CreateTenantState(0));
+      emit(const CreateTenantState(0));
     });
     on<CreateEndDateEvent>((event, emit) {
       endDate = event.endDate;
       if (kDebugMode) {
         print("$endDate is state");
       }
-      emit(CreateTenantState(0));
+      emit(const CreateTenantState(0));
     });
 
     on<CreateTenantDataEvent>((event, emit) async {
-      emit(CreateTenantState(1));
+      emit(const CreateTenantState(1));
       if (kDebugMode) {
         print(event.name);
         print(event.number);
@@ -367,7 +377,7 @@ class VidicAdminBloc extends Bloc<VidicAdminEvent, VidicAdminState> {
           print(newTenant.status);
         }
         if (newTenant!.status == 200) {
-          emit(CreateTenantState(0));
+          emit(const CreateTenantState(0));
           emit(TenantBackOption());
         }
       } catch (e) {
