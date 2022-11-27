@@ -11,13 +11,13 @@ import 'package:vidic/widgets/navigation_rail.dart';
 class LettersScreen extends StatelessWidget {
   LettersScreen({Key? key}) : super(key: key);
 
-  int _selectedIndex = 3;
+  final int _selectedIndex = 3;
   var mediaQsize, mediaQheight, mediaQwidth;
 
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
   final TextEditingController _controllerSubject = TextEditingController();
-  final TextEditingController _controllerDate = TextEditingController();
+  // final TextEditingController _controllerDate = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -52,6 +52,7 @@ class LettersScreen extends StatelessWidget {
             const VerticalDivider(thickness: 1, width: 2),
             BlocConsumer<VidicAdminBloc, VidicAdminState>(
               listener: (context, state) {
+                // ignore: todo
                 // TODO: implement listener
                 if (state is DeleteLetterSuccessState) {
                   AwesomeDialog(
@@ -576,6 +577,7 @@ class LettersScreen extends StatelessWidget {
                           ),
                           BlocConsumer<VidicAdminBloc, VidicAdminState>(
                             listener: (context, state) {
+                              // ignore: todo
                               // TODO: implement listener
                             },
                             builder: (context, state) {
@@ -884,6 +886,7 @@ class LettersScreen extends StatelessWidget {
         ),
         floatingActionButton: BlocConsumer<VidicAdminBloc, VidicAdminState>(
           listener: (context, state) {
+            // ignore: todo
             // TODO: implement listener
           },
           builder: (context, state) {
