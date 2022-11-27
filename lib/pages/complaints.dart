@@ -9,7 +9,7 @@ import 'package:vidic/widgets/navigation_rail.dart';
 class ComplaintsScreen extends StatelessWidget {
   ComplaintsScreen({Key? key}) : super(key: key);
 
-  int _selectedIndex = 5;
+  final int _selectedIndex = 5;
   var mediaQsize, mediaQheight, mediaQwidth;
 
   @override
@@ -107,6 +107,7 @@ class ComplaintsScreen extends StatelessWidget {
                   ),
                   BlocConsumer<VidicAdminBloc, VidicAdminState>(
                     listener: (context, state) {
+                      // ignore: todo
                       // TODO: implement listener
                     },
                     builder: (context, state) {
