@@ -11,7 +11,7 @@ import 'package:vidic/widgets/navigation_rail.dart';
 class InvoiceScreen extends StatelessWidget {
   InvoiceScreen({Key? key}) : super(key: key);
 
-  int _selectedIndex = 2;
+  final int _selectedIndex = 2;
   var mediaQsize, mediaQheight, mediaQwidth;
 
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
@@ -70,6 +70,7 @@ class InvoiceScreen extends StatelessWidget {
             const VerticalDivider(thickness: 1, width: 2),
             BlocConsumer<VidicAdminBloc, VidicAdminState>(
               listener: (context, state) {
+                // ignore: todo
                 // TODO: implement listener
                 if (state is DeleteInvoiceSuccessState) {
                   AwesomeDialog(
@@ -671,6 +672,7 @@ class InvoiceScreen extends StatelessWidget {
                           ),
                           BlocConsumer<VidicAdminBloc, VidicAdminState>(
                             listener: (context, state) {
+                              // ignore: todo
                               // TODO: implement listener
                             },
                             builder: (context, state) {
@@ -1000,6 +1002,7 @@ class InvoiceScreen extends StatelessWidget {
         ),
         floatingActionButton: BlocConsumer<VidicAdminBloc, VidicAdminState>(
           listener: (context, state) {
+            // ignore: todo
             // TODO: implement listener
           },
           builder: (context, state) {
