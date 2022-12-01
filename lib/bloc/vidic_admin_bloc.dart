@@ -9,10 +9,14 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:vidic/models/invoice/get_invoice.dart';
 import 'package:vidic/models/invoice/get_invoice2.dart';
+import 'package:vidic/models/landing/tenants.dart';
 import 'package:vidic/models/landing/tenants2.dart';
 import 'package:vidic/models/letter/get_letter2.dart';
+import 'package:vidic/models/occupancy/get_occupancy.dart';
 import 'package:vidic/models/occupancy/get_occupancy2.dart';
+import 'package:vidic/models/statement/get_statement.dart';
 // import 'package:vidic/models/statement/get_statement.dart';
 import 'package:vidic/models/statement/get_statement_data.dart';
 import 'package:vidic/models/tenant_letter/get_tenant_letter2.dart';
@@ -94,6 +98,12 @@ class VidicAdminBloc extends Bloc<VidicAdminEvent, VidicAdminState> {
 
   // deleting tenant
   int? tenantDeleteId;
+
+  // search functions
+  GetStatement? searchStatement;
+  GetTenant? searchTenant;
+  GetOccupancy? searchOccupancy;
+  GetInvoice? searchInvoice;
 
   List<DropdownMenuItem<String>> get dropdownItems {
     List<DropdownMenuItem<String>> menuItems = [
@@ -188,30 +198,63 @@ class VidicAdminBloc extends Bloc<VidicAdminEvent, VidicAdminState> {
       if (stringValue == null) {
         await Future.delayed(const Duration(seconds: 2));
 
-        final statements = await _client.getTenants();
+        try {
+          final statements = await _client.getTenants();
 
+          final occupancy = await _client.getOccupancy();
+          // delay for token to be stored well in shared preferences
+
+          // tenantsList = statements!.data;
+          if (kDebugMode) {
+            print("get home awaiting");
+            print(statements!.data);
+          }
+          emit(TenantLoaded(statements!.data, occupancy!.data));
+        } catch (e) {
+          if (kDebugMode) {
+            print("get home awaiting");
+            print(e);
+          }
+          emit(TenantLoadingFailed());
+        }
+      }
+
+      try {
+        final statements = await _client.getTenants();
+        searchTenant = statements;
         final occupancy = await _client.getOccupancy();
+        searchOccupancy = occupancy;
         // delay for token to be stored well in shared preferences
 
         // tenantsList = statements!.data;
         if (kDebugMode) {
-          print("get home awaiting");
+          print("get home direct");
           print(statements!.data);
         }
         emit(TenantLoaded(statements!.data, occupancy!.data));
+      } catch (e) {
+        if (kDebugMode) {
+          print("get home awaiting");
+          print(e);
+        }
+        emit(TenantLoadingFailed());
       }
+    });
 
-      final statements = await _client.getTenants();
-
-      final occupancy = await _client.getOccupancy();
-      // delay for token to be stored well in shared preferences
-
-      // tenantsList = statements!.data;
+    on<TenantSearchEvent>((event, emit) async {
+      // ignore: todo
+      // TODO: implement event handler
+      // emit(StatementLoading());
       if (kDebugMode) {
-        print("get home direct");
-        print(statements!.data);
+        print(event.searchMe);
       }
-      emit(TenantLoaded(statements!.data, occupancy!.data));
+      emit(TenantLoaded(
+          searchTenant!.data.where(
+            (element) {
+              return element.name.toLowerCase().contains(event.searchMe);
+            },
+          ).toList(),
+          searchOccupancy!.data));
     });
 
     // ----------- Tenants END--------------------------------
@@ -222,14 +265,42 @@ class VidicAdminBloc extends Bloc<VidicAdminEvent, VidicAdminState> {
       // ignore: todo
       // TODO: implement event handler
       emit(StatementLoading());
-      // await Future.delayed(const Duration(seconds: 2));
-      final statements = await _client.getStatement();
-      // tenantsList = statements!.data;
-      if (kDebugMode) {
-        print("hehe");
-        print(statements!.data);
+
+      try {
+        final statements = await _client.getStatement();
+        searchStatement = statements;
+        // tenantsList = statements!.data;
+        if (kDebugMode) {
+          print("hehe");
+          print(statements!.data);
+        }
+        emit(StatementLoaded(statements!.data));
+      } catch (e) {
+        if (kDebugMode) {
+          print("get home awaiting");
+          print(e);
+        }
+        emit(StatementLoadingFailed());
       }
-      emit(StatementLoaded(statements!.data));
+    });
+
+    on<StatementSearchEvent>((event, emit) async {
+      // ignore: todo
+      // TODO: implement event handler
+      // emit(StatementLoading());
+      if (kDebugMode) {
+        print(event.searchMe);
+      }
+
+      emit(
+        StatementLoaded(
+          searchStatement!.data.where(
+            (element) {
+              return element.name.toLowerCase().contains(event.searchMe);
+            },
+          ).toList(),
+        ),
+      );
     });
 
     // ----------- STATEMENT END--------------------------------
@@ -240,13 +311,41 @@ class VidicAdminBloc extends Bloc<VidicAdminEvent, VidicAdminState> {
       // ignore: todo
       // TODO: implement event handler
       emit(InvoiceLoading());
-      // await Future.delayed(const Duration(seconds: 2));
-      final invoices = await _client.getInvoice();
-      if (kDebugMode) {
-        print("hehe");
-        print(invoices!.data);
+
+      try {
+        final invoices = await _client.getInvoice();
+        searchInvoice = invoices;
+        if (kDebugMode) {
+          print("hehe");
+          print(invoices!.data);
+        }
+        emit(InvoiceLoaded(invoices!.data));
+      } catch (e) {
+        if (kDebugMode) {
+          print("get home awaiting");
+          print(e);
+        }
+        emit(InvoiceLoadingFailed());
       }
-      emit(InvoiceLoaded(invoices!.data));
+    });
+
+    on<InvoiceSearchEvent>((event, emit) async {
+      // ignore: todo
+      // TODO: implement event handler
+      // emit(StatementLoading());
+      if (kDebugMode) {
+        print(event.searchMe);
+      }
+
+      emit(
+        InvoiceLoaded(
+          searchInvoice!.data.where(
+            (element) {
+              return element.name.toLowerCase().contains(event.searchMe);
+            },
+          ).toList(),
+        ),
+      );
     });
 
     // ------------------------------------------------------------------------------------------------------------
@@ -261,13 +360,21 @@ class VidicAdminBloc extends Bloc<VidicAdminEvent, VidicAdminState> {
       // ignore: todo
       // TODO: implement event handler
       emit(LetterLoading());
-      // await Future.delayed(const Duration(seconds: 2));
-      final letters = await _client.getLetter();
-      if (kDebugMode) {
-        print("hehe");
-        print(letters!.data);
+
+      try {
+        final letters = await _client.getLetter();
+        if (kDebugMode) {
+          print("hehe");
+          print(letters!.data);
+        }
+        emit(LetterLoaded(letters!.data));
+      } catch (e) {
+        if (kDebugMode) {
+          print("get home awaiting");
+          print(e);
+        }
+        emit(LetterLoadingFailed());
       }
-      emit(LetterLoaded(letters!.data));
     });
 
     // ------------------------------------------------------------------------------------------------------------
@@ -282,13 +389,21 @@ class VidicAdminBloc extends Bloc<VidicAdminEvent, VidicAdminState> {
       // ignore: todo
       // TODO: implement event handler
       emit(ComplaintLoading());
-      // await Future.delayed(const Duration(seconds: 2));
-      final complaint = await _client.getTenantLetter();
-      if (kDebugMode) {
-        print("hehe");
-        print(complaint!.data);
+
+      try {
+        final complaint = await _client.getTenantLetter();
+        if (kDebugMode) {
+          print("hehe");
+          print(complaint!.data);
+        }
+        emit(ComplaintLoaded(complaint!.data));
+      } catch (e) {
+        if (kDebugMode) {
+          print("get home awaiting");
+          print(e);
+        }
+        emit(ComplaintLoadingFailed());
       }
-      emit(ComplaintLoaded(complaint!.data));
     });
 
     // ----------- Letter Complaint END--------------------------------
@@ -299,13 +414,20 @@ class VidicAdminBloc extends Bloc<VidicAdminEvent, VidicAdminState> {
       // ignore: todo
       // TODO: implement event handler
       emit(OccupancyLoading());
-      // await Future.delayed(const Duration(seconds: 2));
-      final occupancy = await _client.getOccupancy();
-      if (kDebugMode) {
-        print("hehe");
-        print(occupancy!.data);
+      try {
+        final occupancy = await _client.getOccupancy();
+        if (kDebugMode) {
+          print("hehe");
+          print(occupancy!.data);
+        }
+        emit(OccupancyLoaded(occupancy!.data));
+      } catch (e) {
+        if (kDebugMode) {
+          print("get home awaiting");
+          print(e);
+        }
+        emit(OccupancyLoadingFailed());
       }
-      emit(OccupancyLoaded(occupancy!.data));
     });
 
     // ----------- Occupancy END--------------------------------
