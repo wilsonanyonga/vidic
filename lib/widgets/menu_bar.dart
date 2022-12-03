@@ -41,7 +41,15 @@ class _MyAppState extends State<MenuBarWidget> {
   void userName() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     //Return String
+
     String? stringValue = prefs.getString('user_name');
+
+    if (stringValue == null) {
+      await Future.delayed(const Duration(seconds: 2));
+      setState(() {
+        name = stringValue!;
+      });
+    }
     setState(() {
       name = stringValue!;
     });
