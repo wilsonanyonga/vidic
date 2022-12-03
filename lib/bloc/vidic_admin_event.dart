@@ -23,15 +23,40 @@ class LogoutEvent extends VidicAdminEvent {}
 
 class TenantGetEvent extends VidicAdminEvent {}
 
+class TenantSearchEvent extends VidicAdminEvent {
+  final String searchMe;
+  const TenantSearchEvent({required this.searchMe});
+}
+
 class StatementGetEvent extends VidicAdminEvent {}
+
+class StatementSearchEvent extends VidicAdminEvent {
+  final String searchMe;
+  const StatementSearchEvent({required this.searchMe});
+}
 
 class InvoiceGetEvent extends VidicAdminEvent {}
 
+class InvoiceSearchEvent extends VidicAdminEvent {
+  final String searchMe;
+  const InvoiceSearchEvent({required this.searchMe});
+}
+
 class LetterGetEvent extends VidicAdminEvent {}
+
+class LetterSearchEvent extends VidicAdminEvent {
+  final String searchMe;
+  const LetterSearchEvent({required this.searchMe});
+}
 
 class OccupancyGetEvent extends VidicAdminEvent {}
 
 class ComplaintGetEvent extends VidicAdminEvent {}
+
+class ComplaintSearchEvent extends VidicAdminEvent {
+  final String searchMe;
+  const ComplaintSearchEvent({required this.searchMe});
+}
 // ---------------------------------------------------------------
 
 // create new tenant account
