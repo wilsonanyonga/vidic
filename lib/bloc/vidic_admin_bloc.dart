@@ -13,12 +13,14 @@ import 'package:vidic/models/invoice/get_invoice.dart';
 import 'package:vidic/models/invoice/get_invoice2.dart';
 import 'package:vidic/models/landing/tenants.dart';
 import 'package:vidic/models/landing/tenants2.dart';
+import 'package:vidic/models/letter/get_letter.dart';
 import 'package:vidic/models/letter/get_letter2.dart';
 import 'package:vidic/models/occupancy/get_occupancy.dart';
 import 'package:vidic/models/occupancy/get_occupancy2.dart';
 import 'package:vidic/models/statement/get_statement.dart';
 // import 'package:vidic/models/statement/get_statement.dart';
 import 'package:vidic/models/statement/get_statement_data.dart';
+import 'package:vidic/models/tenant_letter/get_tenant_letter.dart';
 import 'package:vidic/models/tenant_letter/get_tenant_letter2.dart';
 import 'package:vidic/utils/auth.dart';
 import 'package:vidic/utils/dio_client.dart';
@@ -104,6 +106,8 @@ class VidicAdminBloc extends Bloc<VidicAdminEvent, VidicAdminState> {
   GetTenant? searchTenant;
   GetOccupancy? searchOccupancy;
   GetInvoice? searchInvoice;
+  GetLetter? searchLetters;
+  GetTenantLetter? searchComplaint;
 
   List<DropdownMenuItem<String>> get dropdownItems {
     List<DropdownMenuItem<String>> menuItems = [
@@ -200,10 +204,10 @@ class VidicAdminBloc extends Bloc<VidicAdminEvent, VidicAdminState> {
 
         try {
           final statements = await _client.getTenants();
-
+          searchTenant = statements;
           final occupancy = await _client.getOccupancy();
           // delay for token to be stored well in shared preferences
-
+          searchOccupancy = occupancy;
           // tenantsList = statements!.data;
           if (kDebugMode) {
             print("get home awaiting");
@@ -251,7 +255,9 @@ class VidicAdminBloc extends Bloc<VidicAdminEvent, VidicAdminState> {
       emit(TenantLoaded(
           searchTenant!.data.where(
             (element) {
-              return element.name.toLowerCase().contains(event.searchMe);
+              return element.name.toLowerCase().contains(
+                    event.searchMe.toLowerCase(),
+                  );
             },
           ).toList(),
           searchOccupancy!.data));
@@ -296,7 +302,9 @@ class VidicAdminBloc extends Bloc<VidicAdminEvent, VidicAdminState> {
         StatementLoaded(
           searchStatement!.data.where(
             (element) {
-              return element.name.toLowerCase().contains(event.searchMe);
+              return element.name.toLowerCase().contains(
+                    event.searchMe.toLowerCase(),
+                  );
             },
           ).toList(),
         ),
@@ -341,7 +349,9 @@ class VidicAdminBloc extends Bloc<VidicAdminEvent, VidicAdminState> {
         InvoiceLoaded(
           searchInvoice!.data.where(
             (element) {
-              return element.name.toLowerCase().contains(event.searchMe);
+              return element.name.toLowerCase().contains(
+                    event.searchMe.toLowerCase(),
+                  );
             },
           ).toList(),
         ),
@@ -363,6 +373,7 @@ class VidicAdminBloc extends Bloc<VidicAdminEvent, VidicAdminState> {
 
       try {
         final letters = await _client.getLetter();
+        searchLetters = letters;
         if (kDebugMode) {
           print("hehe");
           print(letters!.data);
@@ -375,6 +386,27 @@ class VidicAdminBloc extends Bloc<VidicAdminEvent, VidicAdminState> {
         }
         emit(LetterLoadingFailed());
       }
+    });
+
+    on<LetterSearchEvent>((event, emit) async {
+      // ignore: todo
+      // TODO: implement event handler
+      // emit(StatementLoading());
+      if (kDebugMode) {
+        print(event.searchMe);
+      }
+
+      emit(
+        LetterLoaded(
+          searchLetters!.data.where(
+            (element) {
+              return element.name.toLowerCase().contains(
+                    event.searchMe.toLowerCase(),
+                  );
+            },
+          ).toList(),
+        ),
+      );
     });
 
     // ------------------------------------------------------------------------------------------------------------
@@ -392,6 +424,7 @@ class VidicAdminBloc extends Bloc<VidicAdminEvent, VidicAdminState> {
 
       try {
         final complaint = await _client.getTenantLetter();
+        searchComplaint = complaint;
         if (kDebugMode) {
           print("hehe");
           print(complaint!.data);
@@ -404,6 +437,27 @@ class VidicAdminBloc extends Bloc<VidicAdminEvent, VidicAdminState> {
         }
         emit(ComplaintLoadingFailed());
       }
+    });
+
+    on<ComplaintSearchEvent>((event, emit) async {
+      // ignore: todo
+      // TODO: implement event handler
+      // emit(StatementLoading());
+      if (kDebugMode) {
+        print(event.searchMe);
+      }
+
+      emit(
+        ComplaintLoaded(
+          searchComplaint!.data.where(
+            (element) {
+              return element.name
+                  .toLowerCase()
+                  .contains(event.searchMe.toLowerCase());
+            },
+          ).toList(),
+        ),
+      );
     });
 
     // ----------- Letter Complaint END--------------------------------
@@ -498,7 +552,7 @@ class VidicAdminBloc extends Bloc<VidicAdminEvent, VidicAdminState> {
           print(newTenant!.data);
           print(newTenant.status);
         }
-        if (newTenant!.status == 200) {
+        if (newTenant!.status == 2000) {
           emit(const CreateTenantState(0));
           emit(TenantBackOption());
         }
