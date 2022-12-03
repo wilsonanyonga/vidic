@@ -8,6 +8,8 @@ import 'package:vidic/utils/dio_client.dart';
 import 'package:vidic/widgets/menu_bar.dart';
 import 'package:vidic/widgets/navigation_rail.dart';
 
+import 'dart:js' as js;
+
 class InvoiceScreen extends StatelessWidget {
   InvoiceScreen({Key? key}) : super(key: key);
 
@@ -628,44 +630,62 @@ class InvoiceScreen extends StatelessWidget {
                           const SizedBox(
                             height: 20,
                           ),
-                          Padding(
-                            padding: const EdgeInsets.fromLTRB(20, 0, 0, 0),
-                            child: SizedBox(
-                              height: 40,
-                              width: 250,
-                              child: TextField(
-                                decoration: InputDecoration(
-                                  enabledBorder: OutlineInputBorder(
-                                    borderRadius: BorderRadius.circular(20),
-                                    borderSide: BorderSide.none,
-                                    // borderSide: const BorderSide(
-                                    //   color: Colors.green,
-                                    //   width: 1.0,
-                                    // ),
-                                  ),
-                                  focusedBorder: OutlineInputBorder(
-                                    borderRadius: BorderRadius.circular(25),
-                                    borderSide: const BorderSide(
-                                      color: Colors.white,
-                                      width: 1.0,
+                          BlocConsumer<VidicAdminBloc, VidicAdminState>(
+                            listener: (context, state) {
+                              // TODO: implement listener
+                            },
+                            builder: (context, state) {
+                              if (state is InvoiceLoaded) {
+                                return Padding(
+                                  padding:
+                                      const EdgeInsets.fromLTRB(20, 0, 0, 0),
+                                  child: SizedBox(
+                                    height: 40,
+                                    width: 250,
+                                    child: TextField(
+                                      onChanged: (value) {
+                                        BlocProvider.of<VidicAdminBloc>(context)
+                                            .add(InvoiceSearchEvent(
+                                                searchMe: value));
+                                      },
+                                      decoration: InputDecoration(
+                                        enabledBorder: OutlineInputBorder(
+                                          borderRadius:
+                                              BorderRadius.circular(20),
+                                          borderSide: BorderSide.none,
+                                          // borderSide: const BorderSide(
+                                          //   color: Colors.green,
+                                          //   width: 1.0,
+                                          // ),
+                                        ),
+                                        focusedBorder: OutlineInputBorder(
+                                          borderRadius:
+                                              BorderRadius.circular(25),
+                                          borderSide: const BorderSide(
+                                            color: Colors.white,
+                                            width: 1.0,
+                                          ),
+                                        ),
+                                        filled: true,
+                                        fillColor: Colors.grey.shade300,
+                                        // input border should appear when data is being modified
+                                        // border: OutlineInputBorder(
+                                        //   borderRadius: BorderRadius.circular(10.0),
+                                        // ),
+                                        floatingLabelStyle: const TextStyle(
+                                            color: Colors.black),
+                                        labelText: 'Search',
+                                        prefixIcon: const Icon(
+                                          Icons.search,
+                                          color: Colors.black,
+                                        ),
+                                      ),
                                     ),
                                   ),
-                                  filled: true,
-                                  fillColor: Colors.grey.shade300,
-                                  // input border should appear when data is being modified
-                                  // border: OutlineInputBorder(
-                                  //   borderRadius: BorderRadius.circular(10.0),
-                                  // ),
-                                  floatingLabelStyle:
-                                      const TextStyle(color: Colors.black),
-                                  labelText: 'Search',
-                                  prefixIcon: const Icon(
-                                    Icons.search,
-                                    color: Colors.black,
-                                  ),
-                                ),
-                              ),
-                            ),
+                                );
+                              }
+                              return const Text('');
+                            },
                           ),
                           const SizedBox(
                             height: 20,
@@ -679,6 +699,17 @@ class InvoiceScreen extends StatelessWidget {
                               if (state is InvoiceLoading) {
                                 return const Center(
                                     child: CircularProgressIndicator());
+                              }
+                              if (state is InvoiceLoadingFailed) {
+                                return Center(
+                                  child: ElevatedButton(
+                                      onPressed: () {
+                                        BlocProvider.of<VidicAdminBloc>(context)
+                                            .add(InvoiceGetEvent());
+                                      },
+                                      child:
+                                          const Text('Network Error, Reload')),
+                                );
                               }
                               if (state is InvoiceLoaded) {
                                 return ListView.builder(
@@ -698,7 +729,12 @@ class InvoiceScreen extends StatelessWidget {
                                           // ),
                                           title: Row(
                                             children: [
-                                              Text(state.data[index].name),
+                                              Text(
+                                                state.data[index].name,
+                                                style: const TextStyle(
+                                                  fontWeight: FontWeight.bold,
+                                                ),
+                                              ),
                                               const SizedBox(
                                                 width: 50,
                                               ),
@@ -752,22 +788,7 @@ class InvoiceScreen extends StatelessWidget {
                                                 backgroundColor:
                                                     Colors.pink[300],
                                               ),
-                                              // Chip(
-                                              //   label: Text(
-                                              //     '${state.data[index].floor} Floor',
-                                              //     style: const TextStyle(
-                                              //         color: Colors.white),
-                                              //   ),
-                                              //   backgroundColor: Colors.pink[300],
-                                              // ),
-                                              // const SizedBox(
-                                              //   width: 50,
-                                              // ),
-                                              // Text("${state.data[index].size} sq ft"),
-                                              // const SizedBox(
-                                              //   width: 50,
-                                              // ),
-                                              // const Text("18/5/2021"),
+
                                               const SizedBox(
                                                 width: 50,
                                               ),
@@ -832,6 +853,24 @@ class InvoiceScreen extends StatelessWidget {
                                                               FontWeight.bold),
                                                     ),
                                                   ),
+                                                  DataColumn(
+                                                    label: Text(
+                                                      'View',
+                                                      style: TextStyle(
+                                                          fontSize: 14,
+                                                          fontWeight:
+                                                              FontWeight.bold),
+                                                    ),
+                                                  ),
+                                                  // DataColumn(
+                                                  //   label: Text(
+                                                  //     'Download',
+                                                  //     style: TextStyle(
+                                                  //         fontSize: 14,
+                                                  //         fontWeight:
+                                                  //             FontWeight.bold),
+                                                  //   ),
+                                                  // ),
                                                   DataColumn(
                                                     label: Text(
                                                       'Delete',
@@ -915,6 +954,50 @@ class InvoiceScreen extends StatelessWidget {
                                                               .amount
                                                               .toString()),
                                                         ),
+                                                        DataCell(
+                                                          IconButton(
+                                                            icon: const Icon(Icons
+                                                                .remove_red_eye),
+                                                            tooltip:
+                                                                'View Invoice',
+                                                            onPressed: () {
+                                                              js.context
+                                                                  .callMethod(
+                                                                      'open', [
+                                                                (state
+                                                                    .data[index]
+                                                                    .invoiceTypes[
+                                                                        i]
+                                                                    .invoiceName)
+                                                              ]);
+                                                            },
+                                                          ),
+                                                        ),
+                                                        // DataCell(
+                                                        //   IconButton(
+                                                        //     icon: const Icon(
+                                                        //         Icons.download),
+                                                        //     tooltip:
+                                                        //         'Download Invoice',
+                                                        //     onPressed: () {
+                                                        //       // BlocProvider.of<
+                                                        //       //             VidicAdminBloc>(
+                                                        //       //         context)
+                                                        //       //     .add(
+                                                        //       //   UpdateOccupancyEvent(
+                                                        //       //     floorId: state
+                                                        //       //         .data[i].datumId,
+                                                        //       //     occupancy: state
+                                                        //       //         .data[i].occupancy
+                                                        //       //         .toString(),
+                                                        //       //     capacity: state
+                                                        //       //         .data[i].capacity
+                                                        //       //         .toString(),
+                                                        //       //   ),
+                                                        //       // );
+                                                        //     },
+                                                        //   ),
+                                                        // ),
                                                         DataCell(
                                                           IconButton(
                                                             icon: const Icon(Icons
@@ -1011,6 +1094,9 @@ class InvoiceScreen extends StatelessWidget {
                   onPressed: () {
                     BlocProvider.of<VidicAdminBloc>(context)
                         .add(InvoiceGetEvent());
+                    _controllerAmount.text = '';
+                    _controllerPurpose.text = '';
+                    selectedTenant = null;
                   },
                   tooltip: 'Go Back',
                   child: const Icon(Icons.close));
@@ -1020,6 +1106,9 @@ class InvoiceScreen extends StatelessWidget {
                   onPressed: () {
                     BlocProvider.of<VidicAdminBloc>(context)
                         .add(InvoiceGetEvent());
+                    _controllerAmount.text = '';
+                    _controllerPurpose.text = '';
+                    selectedTenant = null;
                   },
                   tooltip: 'Go Back',
                   child: const Icon(Icons.close));
