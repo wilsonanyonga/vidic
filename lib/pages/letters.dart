@@ -8,6 +8,8 @@ import 'package:vidic/utils/dio_client.dart';
 import 'package:vidic/widgets/menu_bar.dart';
 import 'package:vidic/widgets/navigation_rail.dart';
 
+import 'dart:js' as js;
+
 class LettersScreen extends StatelessWidget {
   LettersScreen({Key? key}) : super(key: key);
 
@@ -156,7 +158,7 @@ class LettersScreen extends StatelessWidget {
                     dismissOnBackKeyPress: false,
                     dialogType: DialogType.success,
                     showCloseIcon: true,
-                    title: 'Letters Updated Successfully',
+                    title: 'Letters Created Successfully',
                     desc:
                         'You can choose to either go back home or add a new Invoice',
                     btnCancelText: "Back Home",
@@ -533,44 +535,62 @@ class LettersScreen extends StatelessWidget {
                           const SizedBox(
                             height: 20,
                           ),
-                          Padding(
-                            padding: const EdgeInsets.fromLTRB(20, 0, 0, 0),
-                            child: SizedBox(
-                              height: 40,
-                              width: 250,
-                              child: TextField(
-                                decoration: InputDecoration(
-                                  enabledBorder: OutlineInputBorder(
-                                    borderRadius: BorderRadius.circular(20),
-                                    borderSide: BorderSide.none,
-                                    // borderSide: const BorderSide(
-                                    //   color: Colors.green,
-                                    //   width: 1.0,
-                                    // ),
-                                  ),
-                                  focusedBorder: OutlineInputBorder(
-                                    borderRadius: BorderRadius.circular(25),
-                                    borderSide: const BorderSide(
-                                      color: Colors.white,
-                                      width: 1.0,
+                          BlocConsumer<VidicAdminBloc, VidicAdminState>(
+                            listener: (context, state) {
+                              // TODO: implement listener
+                            },
+                            builder: (context, state) {
+                              if (state is LetterLoaded) {
+                                return Padding(
+                                  padding:
+                                      const EdgeInsets.fromLTRB(20, 0, 0, 0),
+                                  child: SizedBox(
+                                    height: 40,
+                                    width: 250,
+                                    child: TextField(
+                                      onChanged: (value) {
+                                        BlocProvider.of<VidicAdminBloc>(context)
+                                            .add(LetterSearchEvent(
+                                                searchMe: value));
+                                      },
+                                      decoration: InputDecoration(
+                                        enabledBorder: OutlineInputBorder(
+                                          borderRadius:
+                                              BorderRadius.circular(20),
+                                          borderSide: BorderSide.none,
+                                          // borderSide: const BorderSide(
+                                          //   color: Colors.green,
+                                          //   width: 1.0,
+                                          // ),
+                                        ),
+                                        focusedBorder: OutlineInputBorder(
+                                          borderRadius:
+                                              BorderRadius.circular(25),
+                                          borderSide: const BorderSide(
+                                            color: Colors.white,
+                                            width: 1.0,
+                                          ),
+                                        ),
+                                        filled: true,
+                                        fillColor: Colors.grey.shade300,
+                                        // input border should appear when data is being modified
+                                        // border: OutlineInputBorder(
+                                        //   borderRadius: BorderRadius.circular(10.0),
+                                        // ),
+                                        floatingLabelStyle: const TextStyle(
+                                            color: Colors.black),
+                                        labelText: 'Search',
+                                        prefixIcon: const Icon(
+                                          Icons.search,
+                                          color: Colors.black,
+                                        ),
+                                      ),
                                     ),
                                   ),
-                                  filled: true,
-                                  fillColor: Colors.grey.shade300,
-                                  // input border should appear when data is being modified
-                                  // border: OutlineInputBorder(
-                                  //   borderRadius: BorderRadius.circular(10.0),
-                                  // ),
-                                  floatingLabelStyle:
-                                      const TextStyle(color: Colors.black),
-                                  labelText: 'Search',
-                                  prefixIcon: const Icon(
-                                    Icons.search,
-                                    color: Colors.black,
-                                  ),
-                                ),
-                              ),
-                            ),
+                                );
+                              }
+                              return const Text('');
+                            },
                           ),
                           const SizedBox(
                             height: 20,
@@ -584,6 +604,17 @@ class LettersScreen extends StatelessWidget {
                               if (state is LetterLoading) {
                                 return const Center(
                                     child: CircularProgressIndicator());
+                              }
+                              if (state is LetterLoadingFailed) {
+                                return Center(
+                                  child: ElevatedButton(
+                                      onPressed: () {
+                                        BlocProvider.of<VidicAdminBloc>(context)
+                                            .add(LetterGetEvent());
+                                      },
+                                      child:
+                                          const Text('Network Error, Reload')),
+                                );
                               }
                               if (state is LetterLoaded) {
                                 return ListView.builder(
@@ -614,7 +645,13 @@ class LettersScreen extends StatelessWidget {
                                               scrollDirection: Axis.horizontal,
                                               child: Row(
                                                 children: [
-                                                  Text(state.data[index].name),
+                                                  Text(
+                                                    state.data[index].name,
+                                                    style: const TextStyle(
+                                                      fontWeight:
+                                                          FontWeight.bold,
+                                                    ),
+                                                  ),
                                                   // const SizedBox(
                                                   //   width: 50,
                                                   // ),
@@ -722,6 +759,24 @@ class LettersScreen extends StatelessWidget {
                                                   ),
                                                   DataColumn(
                                                     label: Text(
+                                                      'View',
+                                                      style: TextStyle(
+                                                          fontSize: 14,
+                                                          fontWeight:
+                                                              FontWeight.bold),
+                                                    ),
+                                                  ),
+                                                  // DataColumn(
+                                                  //   label: Text(
+                                                  //     'Download',
+                                                  //     style: TextStyle(
+                                                  //         fontSize: 14,
+                                                  //         fontWeight:
+                                                  //             FontWeight.bold),
+                                                  //   ),
+                                                  // ),
+                                                  DataColumn(
+                                                    label: Text(
                                                       'Delete',
                                                       style: TextStyle(
                                                           fontSize: 14,
@@ -799,6 +854,50 @@ class LettersScreen extends StatelessWidget {
                                                                     0, 10),
                                                           ),
                                                         ),
+                                                        DataCell(
+                                                          IconButton(
+                                                            icon: const Icon(Icons
+                                                                .remove_red_eye),
+                                                            tooltip:
+                                                                'View Letter',
+                                                            onPressed: () {
+                                                              js.context
+                                                                  .callMethod(
+                                                                      'open', [
+                                                                (state
+                                                                    .data[index]
+                                                                    .lettersTypes[
+                                                                        i]
+                                                                    .letterName)
+                                                              ]);
+                                                            },
+                                                          ),
+                                                        ),
+                                                        // DataCell(
+                                                        //   IconButton(
+                                                        //     icon: const Icon(
+                                                        //         Icons.download),
+                                                        //     tooltip:
+                                                        //         'Download Letter',
+                                                        //     onPressed: () {
+                                                        //       // BlocProvider.of<
+                                                        //       //             VidicAdminBloc>(
+                                                        //       //         context)
+                                                        //       //     .add(
+                                                        //       //   UpdateOccupancyEvent(
+                                                        //       //     floorId: state
+                                                        //       //         .data[i].datumId,
+                                                        //       //     occupancy: state
+                                                        //       //         .data[i].occupancy
+                                                        //       //         .toString(),
+                                                        //       //     capacity: state
+                                                        //       //         .data[i].capacity
+                                                        //       //         .toString(),
+                                                        //       //   ),
+                                                        //       // );
+                                                        //     },
+                                                        //   ),
+                                                        // ),
                                                         DataCell(
                                                           IconButton(
                                                             icon: const Icon(Icons
@@ -895,6 +994,8 @@ class LettersScreen extends StatelessWidget {
                   onPressed: () {
                     BlocProvider.of<VidicAdminBloc>(context)
                         .add(LetterGetEvent());
+                    _controllerSubject.text = '';
+                    selectedTenant = null;
                   },
                   tooltip: 'Go Back',
                   child: const Icon(Icons.close));
@@ -904,6 +1005,8 @@ class LettersScreen extends StatelessWidget {
                   onPressed: () {
                     BlocProvider.of<VidicAdminBloc>(context)
                         .add(LetterGetEvent());
+                    _controllerSubject.text = '';
+                    selectedTenant = null;
                   },
                   tooltip: 'Go Back',
                   child: const Icon(Icons.close));
