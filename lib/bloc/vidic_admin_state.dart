@@ -26,6 +26,8 @@ class LoginError extends VidicAdminState {
 // ---------Tenant---------------------------
 class TenantLoading extends VidicAdminState {}
 
+class TenantLoadingFailed extends VidicAdminState {}
+
 class TenantLoaded extends VidicAdminState {
   final List<DatumTenant> data;
   final List<DatumOccupancy> occupy;
@@ -41,6 +43,8 @@ class TenantLoaded extends VidicAdminState {
 
 // ---------STATEMENT---------------------------
 class StatementLoading extends VidicAdminState {}
+
+class StatementLoadingFailed extends VidicAdminState {}
 
 class StatementLoaded extends VidicAdminState {
   final List<Datum> data;
@@ -58,6 +62,8 @@ class StatementLoaded extends VidicAdminState {
 
 class InvoiceLoading extends VidicAdminState {}
 
+class InvoiceLoadingFailed extends VidicAdminState {}
+
 class InvoiceLoaded extends VidicAdminState {
   final List<DatumInvoice> data;
   const InvoiceLoaded(this.data);
@@ -73,6 +79,8 @@ class InvoiceLoaded extends VidicAdminState {
 // ---------LETTER---------------------------
 
 class LetterLoading extends VidicAdminState {}
+
+class LetterLoadingFailed extends VidicAdminState {}
 
 class LetterLoaded extends VidicAdminState {
   final List<DatumLetter> data;
@@ -90,6 +98,8 @@ class LetterLoaded extends VidicAdminState {
 
 class ComplaintLoading extends VidicAdminState {}
 
+class ComplaintLoadingFailed extends VidicAdminState {}
+
 class ComplaintLoaded extends VidicAdminState {
   final List<DatumTenantLetter> data;
   const ComplaintLoaded(this.data);
@@ -105,6 +115,8 @@ class ComplaintLoaded extends VidicAdminState {
 // ---------Occupancy---------------------------
 
 class OccupancyLoading extends VidicAdminState {}
+
+class OccupancyLoadingFailed extends VidicAdminState {}
 
 class OccupancyLoaded extends VidicAdminState {
   final List<DatumOccupancy> data;
