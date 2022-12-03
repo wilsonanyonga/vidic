@@ -9,6 +9,8 @@ import 'package:vidic/utils/dio_client.dart';
 import 'package:vidic/widgets/menu_bar.dart';
 import 'package:vidic/widgets/navigation_rail.dart';
 
+import 'dart:js' as js;
+
 class StatementScreen extends StatelessWidget {
   StatementScreen({Key? key}) : super(key: key);
 
@@ -637,44 +639,62 @@ class StatementScreen extends StatelessWidget {
                           const SizedBox(
                             height: 20,
                           ),
-                          Padding(
-                            padding: const EdgeInsets.fromLTRB(20, 0, 0, 0),
-                            child: SizedBox(
-                              height: 40,
-                              width: 250,
-                              child: TextField(
-                                decoration: InputDecoration(
-                                  enabledBorder: OutlineInputBorder(
-                                    borderRadius: BorderRadius.circular(20),
-                                    borderSide: BorderSide.none,
-                                    // borderSide: const BorderSide(
-                                    //   color: Colors.green,
-                                    //   width: 1.0,
-                                    // ),
-                                  ),
-                                  focusedBorder: OutlineInputBorder(
-                                    borderRadius: BorderRadius.circular(25),
-                                    borderSide: const BorderSide(
-                                      color: Colors.white,
-                                      width: 1.0,
+                          BlocConsumer<VidicAdminBloc, VidicAdminState>(
+                            listener: (context, state) {
+                              // TODO: implement listener
+                            },
+                            builder: (context, state) {
+                              if (state is StatementLoaded) {
+                                return Padding(
+                                  padding:
+                                      const EdgeInsets.fromLTRB(20, 0, 0, 0),
+                                  child: SizedBox(
+                                    height: 40,
+                                    width: 250,
+                                    child: TextField(
+                                      onChanged: (value) {
+                                        BlocProvider.of<VidicAdminBloc>(context)
+                                            .add(StatementSearchEvent(
+                                                searchMe: value));
+                                      },
+                                      decoration: InputDecoration(
+                                        enabledBorder: OutlineInputBorder(
+                                          borderRadius:
+                                              BorderRadius.circular(20),
+                                          borderSide: BorderSide.none,
+                                          // borderSide: const BorderSide(
+                                          //   color: Colors.green,
+                                          //   width: 1.0,
+                                          // ),
+                                        ),
+                                        focusedBorder: OutlineInputBorder(
+                                          borderRadius:
+                                              BorderRadius.circular(25),
+                                          borderSide: const BorderSide(
+                                            color: Colors.white,
+                                            width: 1.0,
+                                          ),
+                                        ),
+                                        filled: true,
+                                        fillColor: Colors.grey.shade300,
+                                        // input border should appear when data is being modified
+                                        // border: OutlineInputBorder(
+                                        //   borderRadius: BorderRadius.circular(10.0),
+                                        // ),
+                                        floatingLabelStyle: const TextStyle(
+                                            color: Colors.black),
+                                        labelText: 'Search',
+                                        prefixIcon: const Icon(
+                                          Icons.search,
+                                          color: Colors.black,
+                                        ),
+                                      ),
                                     ),
                                   ),
-                                  filled: true,
-                                  fillColor: Colors.grey.shade300,
-                                  // input border should appear when data is being modified
-                                  // border: OutlineInputBorder(
-                                  //   borderRadius: BorderRadius.circular(10.0),
-                                  // ),
-                                  floatingLabelStyle:
-                                      const TextStyle(color: Colors.black),
-                                  labelText: 'Search',
-                                  prefixIcon: const Icon(
-                                    Icons.search,
-                                    color: Colors.black,
-                                  ),
-                                ),
-                              ),
-                            ),
+                                );
+                              }
+                              return const Text('');
+                            },
                           ),
                           const SizedBox(
                             height: 20,
@@ -688,6 +708,18 @@ class StatementScreen extends StatelessWidget {
                               if (state is StatementLoading) {
                                 return const Center(
                                     child: CircularProgressIndicator());
+                              }
+
+                              if (state is StatementLoadingFailed) {
+                                return Center(
+                                  child: ElevatedButton(
+                                      onPressed: () {
+                                        BlocProvider.of<VidicAdminBloc>(context)
+                                            .add(StatementGetEvent());
+                                      },
+                                      child:
+                                          const Text('Network Error, Reload')),
+                                );
                               }
 
                               if (state is StatementLoaded) {
@@ -838,6 +870,24 @@ class StatementScreen extends StatelessWidget {
                                                   ),
                                                   DataColumn(
                                                     label: Text(
+                                                      'View',
+                                                      style: TextStyle(
+                                                          fontSize: 14,
+                                                          fontWeight:
+                                                              FontWeight.bold),
+                                                    ),
+                                                  ),
+                                                  // DataColumn(
+                                                  //   label: Text(
+                                                  //     'Download',
+                                                  //     style: TextStyle(
+                                                  //         fontSize: 14,
+                                                  //         fontWeight:
+                                                  //             FontWeight.bold),
+                                                  //   ),
+                                                  // ),
+                                                  DataColumn(
+                                                    label: Text(
                                                       'Delete',
                                                       style: TextStyle(
                                                           fontSize: 14,
@@ -931,6 +981,65 @@ class StatementScreen extends StatelessWidget {
                                                         DataCell(
                                                           IconButton(
                                                             icon: const Icon(Icons
+                                                                .remove_red_eye),
+                                                            tooltip:
+                                                                'View Letter',
+                                                            onPressed: () {
+                                                              js.context
+                                                                  .callMethod(
+                                                                      'open', [
+                                                                (state
+                                                                    .data[index]
+                                                                    .statementTypes[
+                                                                        i]
+                                                                    .statementName)
+                                                              ]);
+                                                              // BlocProvider.of<
+                                                              //             VidicAdminBloc>(
+                                                              //         context)
+                                                              //     .add(
+                                                              //   UpdateOccupancyEvent(
+                                                              //     floorId: state
+                                                              //         .data[i].datumId,
+                                                              //     occupancy: state
+                                                              //         .data[i].occupancy
+                                                              //         .toString(),
+                                                              //     capacity: state
+                                                              //         .data[i].capacity
+                                                              //         .toString(),
+                                                              //   ),
+                                                              // );
+                                                            },
+                                                          ),
+                                                        ),
+                                                        // DataCell(
+                                                        //   IconButton(
+                                                        //     icon: const Icon(
+                                                        //         Icons.download),
+                                                        //     tooltip:
+                                                        //         'Download Letter',
+                                                        //     onPressed: () {
+                                                        //       // BlocProvider.of<
+                                                        //       //             VidicAdminBloc>(
+                                                        //       //         context)
+                                                        //       //     .add(
+                                                        //       //   UpdateOccupancyEvent(
+                                                        //       //     floorId: state
+                                                        //       //         .data[i].datumId,
+                                                        //       //     occupancy: state
+                                                        //       //         .data[i].occupancy
+                                                        //       //         .toString(),
+                                                        //       //     capacity: state
+                                                        //       //         .data[i].capacity
+                                                        //       //         .toString(),
+                                                        //       //   ),
+                                                        //       // );
+                                                        //     },
+                                                        //   ),
+                                                        // ),
+                                                        DataCell(
+                                                          IconButton(
+                                                            icon: const Icon(Icons
                                                                 .delete_forever),
                                                             tooltip:
                                                                 'Delete Letter',
@@ -1017,7 +1126,7 @@ class StatementScreen extends StatelessWidget {
                                   },
                                 );
                               }
-                              return const Text('Error Occured');
+                              return const Text('Loading, Kindly Wait.');
                             },
                           ),
                         ],
@@ -1040,6 +1149,7 @@ class StatementScreen extends StatelessWidget {
                   onPressed: () {
                     BlocProvider.of<VidicAdminBloc>(context)
                         .add(StatementGetEvent());
+                    _controllerAmount.text = '';
                   },
                   tooltip: 'Go Back',
                   child: const Icon(Icons.close));
@@ -1049,6 +1159,7 @@ class StatementScreen extends StatelessWidget {
                   onPressed: () {
                     BlocProvider.of<VidicAdminBloc>(context)
                         .add(StatementGetEvent());
+                    _controllerAmount.text = '';
                   },
                   tooltip: 'Go Back',
                   child: const Icon(Icons.close));
