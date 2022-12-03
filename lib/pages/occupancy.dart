@@ -251,6 +251,17 @@ class OccupancyScreen extends StatelessWidget {
                                 return const Center(
                                     child: CircularProgressIndicator());
                               }
+                              if (state is OccupancyLoadingFailed) {
+                                return Center(
+                                  child: ElevatedButton(
+                                      onPressed: () {
+                                        BlocProvider.of<VidicAdminBloc>(context)
+                                            .add(OccupancyGetEvent());
+                                      },
+                                      child:
+                                          const Text('Network Error, Reload')),
+                                );
+                              }
                               // shrinkWrap: true,
                               //     physics: const NeverScrollableScrollPhysics(),
                               if (state is OccupancyLoaded) {
