@@ -42,7 +42,7 @@ class MyApp extends StatelessWidget {
                   routeInformationParser: _router.routeInformationParser,
                   routerDelegate: _router.routerDelegate,
 
-                  title: 'Flutter Demo',
+                  title: 'VIDIC Admin',
                   debugShowCheckedModeBanner: false,
                   theme: ThemeData(
                       // This is the theme of your application.
@@ -65,7 +65,7 @@ class MyApp extends StatelessWidget {
                   routeInformationParser: _routerLogin.routeInformationParser,
                   routerDelegate: _routerLogin.routerDelegate,
 
-                  title: 'Flutter Demo',
+                  title: 'VIDIC Admin',
                   debugShowCheckedModeBanner: false,
                   theme: ThemeData(
                       // This is the theme of your application.
@@ -109,7 +109,7 @@ class MyApp extends StatelessWidget {
         // },
 
         builder: (BuildContext context, GoRouterState state) =>
-            MyHomePage(title: 'Flutter Demo Home Page'),
+            MyHomePage(title: 'VIDIC Admin Home Page'),
         // // builder: (BuildContext context, GoRouterState state) => Login(),
 
         // redirect: (state) => '/dala',
@@ -126,7 +126,7 @@ class MyApp extends StatelessWidget {
           GoRoute(
             path: 'dala',
             builder: (BuildContext context, GoRouterState state) =>
-                MyHomePage(title: 'Flutter Demo Home Page'),
+                MyHomePage(title: 'VIDIC Admin Home Page'),
           ),
           GoRoute(
             path: 'statement',
