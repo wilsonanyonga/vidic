@@ -1130,6 +1130,18 @@ class MyHomePage extends StatelessWidget {
                                       return const Center(
                                           child: CircularProgressIndicator());
                                     }
+                                    if (state is TenantLoadingFailed) {
+                                      return Center(
+                                        child: ElevatedButton(
+                                            onPressed: () {
+                                              BlocProvider.of<VidicAdminBloc>(
+                                                      context)
+                                                  .add(TenantGetEvent());
+                                            },
+                                            child: const Text(
+                                                'Network Error, Reload')),
+                                      );
+                                    }
                                     if (state is TenantLoaded) {
                                       return ScrollConfiguration(
                                         behavior:
@@ -1185,41 +1197,59 @@ class MyHomePage extends StatelessWidget {
                                 const SizedBox(
                                   height: 20,
                                 ),
-                                SizedBox(
-                                  height: 40,
-                                  width: 250,
-                                  child: TextField(
-                                    decoration: InputDecoration(
-                                      enabledBorder: OutlineInputBorder(
-                                        borderRadius: BorderRadius.circular(20),
-                                        borderSide: BorderSide.none,
-                                        // borderSide: const BorderSide(
-                                        //   color: Colors.green,
-                                        //   width: 1.0,
-                                        // ),
-                                      ),
-                                      focusedBorder: OutlineInputBorder(
-                                        borderRadius: BorderRadius.circular(25),
-                                        borderSide: const BorderSide(
-                                          color: Colors.white,
-                                          width: 1.0,
+                                BlocConsumer<VidicAdminBloc, VidicAdminState>(
+                                  listener: (context, state) {
+                                    // TODO: implement listener
+                                  },
+                                  builder: (context, state) {
+                                    if (state is TenantLoaded) {
+                                      return SizedBox(
+                                        height: 40,
+                                        width: 250,
+                                        child: TextField(
+                                          onChanged: (value) {
+                                            BlocProvider.of<VidicAdminBloc>(
+                                                    context)
+                                                .add(TenantSearchEvent(
+                                                    searchMe: value));
+                                          },
+                                          decoration: InputDecoration(
+                                            enabledBorder: OutlineInputBorder(
+                                              borderRadius:
+                                                  BorderRadius.circular(20),
+                                              borderSide: BorderSide.none,
+                                              // borderSide: const BorderSide(
+                                              //   color: Colors.green,
+                                              //   width: 1.0,
+                                              // ),
+                                            ),
+                                            focusedBorder: OutlineInputBorder(
+                                              borderRadius:
+                                                  BorderRadius.circular(25),
+                                              borderSide: const BorderSide(
+                                                color: Colors.white,
+                                                width: 1.0,
+                                              ),
+                                            ),
+                                            filled: true,
+                                            fillColor: Colors.grey.shade300,
+                                            // input border should appear when data is being modified
+                                            // border: OutlineInputBorder(
+                                            //   borderRadius: BorderRadius.circular(10.0),
+                                            // ),
+                                            floatingLabelStyle: const TextStyle(
+                                                color: Colors.black),
+                                            labelText: 'Search',
+                                            prefixIcon: const Icon(
+                                              Icons.search,
+                                              color: Colors.black,
+                                            ),
+                                          ),
                                         ),
-                                      ),
-                                      filled: true,
-                                      fillColor: Colors.grey.shade300,
-                                      // input border should appear when data is being modified
-                                      // border: OutlineInputBorder(
-                                      //   borderRadius: BorderRadius.circular(10.0),
-                                      // ),
-                                      floatingLabelStyle:
-                                          const TextStyle(color: Colors.black),
-                                      labelText: 'Search',
-                                      prefixIcon: const Icon(
-                                        Icons.search,
-                                        color: Colors.black,
-                                      ),
-                                    ),
-                                  ),
+                                      );
+                                    }
+                                    return const Text('');
+                                  },
                                 ),
                                 const SizedBox(
                                   height: 20,
@@ -1641,6 +1671,17 @@ class MyHomePage extends StatelessWidget {
                 onPressed: () {
                   BlocProvider.of<VidicAdminBloc>(context)
                       .add(TenantGetEvent());
+                  _controllerName.text = '';
+                  _controllerNumber.text = '';
+                  _controllerEmail.text = '';
+                  _controllerAbout.text = '';
+                  selectedValue = null;
+                  _controllerSize.text = '';
+                  _controllerRent.text = '';
+                  _controllerEscalation.text = '';
+                  _controllerPoBox.text = '';
+                  _controllerLeaseStart.text = '';
+                  _controllerLeaseEnd.text = '';
                 },
 
                 tooltip: 'Back',
@@ -1654,6 +1695,17 @@ class MyHomePage extends StatelessWidget {
                 onPressed: () {
                   BlocProvider.of<VidicAdminBloc>(context)
                       .add(TenantGetEvent());
+                  _controllerName.text = '';
+                  _controllerNumber.text = '';
+                  _controllerEmail.text = '';
+                  _controllerAbout.text = '';
+                  selectedValue = null;
+                  _controllerSize.text = '';
+                  _controllerRent.text = '';
+                  _controllerEscalation.text = '';
+                  _controllerPoBox.text = '';
+                  _controllerLeaseStart.text = '';
+                  _controllerLeaseEnd.text = '';
                 },
 
                 tooltip: 'Back',
