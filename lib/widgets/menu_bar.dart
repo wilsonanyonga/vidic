@@ -31,6 +31,10 @@ class _MyAppState extends State<MenuBarWidget> {
   // ignore: must_call_super
   initState() {
     //
+    // await Future.delayed(const Duration(seconds: 4));
+    if (kDebugMode) {
+      print("waiting");
+    }
     userName();
     if (kDebugMode) {
       print("initState Called");
@@ -41,11 +45,16 @@ class _MyAppState extends State<MenuBarWidget> {
   void userName() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     //Return String
-
+    if (kDebugMode) {
+      print("waiting2");
+    }
     String? stringValue = prefs.getString('user_name');
 
     if (stringValue == null) {
-      await Future.delayed(const Duration(seconds: 2));
+      await Future.delayed(const Duration(seconds: 4));
+      if (kDebugMode) {
+        print("waiting again");
+      }
       setState(() {
         name = stringValue!;
       });
