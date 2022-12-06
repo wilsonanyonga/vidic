@@ -154,8 +154,10 @@ class VidicAdminBloc extends Bloc<VidicAdminEvent, VidicAdminState> {
           email: event.email,
           password: event.password,
         );
+        var tok = await Auth().getToken();
         if (kDebugMode) {
           print('we are trying');
+          print('token is $tok');
         }
         final myJwt = await _client.getToken(event.email);
         SharedPreferences prefs = await SharedPreferences.getInstance();
@@ -645,6 +647,12 @@ class VidicAdminBloc extends Bloc<VidicAdminEvent, VidicAdminState> {
         if (kDebugMode) {
           print("$tenantStatementName is state");
         }
+
+        // int parsedId = int.parse(tenantStatementName!);
+        // String email = tenantsList![parsedId].officialEmail;
+        // if (kDebugMode) {
+        //   print(email);
+        // }
         // emit(CreateTenantState(0));
         if (statementFileName == null) {
           emit(CreateStatementState(0, '', dropdownItems));
@@ -666,12 +674,18 @@ class VidicAdminBloc extends Bloc<VidicAdminEvent, VidicAdminState> {
             print(statementEndDate);
             print(statementFileName);
           }
+          int parsedId = int.parse(tenantStatementName!);
+          String email = tenantsList![parsedId].officialEmail;
+          if (kDebugMode) {
+            print(email);
+          }
           final newStatement = await _client.createStatement(
             tenantStatementName: tenantStatementName,
             amount: event.amount,
             statementStartDate: statementStartDate,
             statementEndDate: statementEndDate,
             statementFile: statementFile,
+            email: email,
           );
           if (kDebugMode) {
             print("statement response");
@@ -779,12 +793,18 @@ class VidicAdminBloc extends Bloc<VidicAdminEvent, VidicAdminState> {
             print(tenantInvoiceMonth);
             // print(invoiceFile);
           }
+          int parsedId = int.parse(tenantInvoiceId!);
+          String email = tenantsList![parsedId].officialEmail;
+          if (kDebugMode) {
+            print(email);
+          }
           final newInvoice = await _client.createInvoice(
             tenantInvoiceId: tenantInvoiceId,
             amount: event.amount,
             purpose: event.purpose,
             invoiceMonth: tenantInvoiceMonth,
             invoiceFile: invoiceFile,
+            email: email,
           );
           if (kDebugMode) {
             print("invoice response");
@@ -889,11 +909,17 @@ class VidicAdminBloc extends Bloc<VidicAdminEvent, VidicAdminState> {
             // print(tenantInvoiceMonth);
             // print(invoiceFile);
           }
+          int parsedId = int.parse(tenantLetterId!);
+          String email = tenantsList![parsedId].officialEmail;
+          if (kDebugMode) {
+            print(email);
+          }
           final newLetter = await _client.createLetter(
             tenantLetterId: tenantLetterId,
             subject: event.subject,
             date: date.toString().replaceAll(' 00:00:00.000', ''),
             letterFile: letterFile,
+            email: email,
           );
           if (kDebugMode) {
             print("invoice response");
