@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:syncfusion_flutter_datepicker/datepicker.dart';
 import 'package:vidic/bloc/vidic_admin_bloc.dart';
+import 'package:vidic/models/statement/get_statement_type.dart';
 import 'package:vidic/utils/dio_client.dart';
 import 'package:vidic/widgets/menu_bar.dart';
 import 'package:vidic/widgets/navigation_rail.dart';
@@ -729,6 +730,12 @@ class StatementScreen extends StatelessWidget {
                                   itemCount: state.data.length,
                                   itemBuilder:
                                       (BuildContext context, int index) {
+                                    List<StatementType> statementList =
+                                        state.data[index].statementTypes;
+                                    statementList.sort((a, b) {
+                                      return b.statementTypeId
+                                          .compareTo(a.statementTypeId);
+                                    });
                                     return Column(
                                       children: [
                                         ListTile(
@@ -898,11 +905,7 @@ class StatementScreen extends StatelessWidget {
                                                 ],
                                                 rows: [
                                                   for (var i = 0;
-                                                      i <
-                                                          state
-                                                              .data[index]
-                                                              .statementTypes
-                                                              .length;
+                                                      i < statementList.length;
                                                       i++)
                                                     DataRow(
                                                       cells: [
@@ -918,31 +921,21 @@ class StatementScreen extends StatelessWidget {
                                                                       context)
                                                                   .add(
                                                                 UpdateStatementsEvent(
-                                                                  id: state
-                                                                      .data[
-                                                                          index]
-                                                                      .statementTypes[
+                                                                  id: statementList[
                                                                           i]
                                                                       .statementTypeId,
-                                                                  amount: state
-                                                                      .data[
-                                                                          index]
-                                                                      .statementTypes[
+                                                                  amount: statementList[
                                                                           i]
                                                                       .amount
                                                                       .toString(),
-                                                                  statementStartDate: state
-                                                                      .data[
-                                                                          index]
-                                                                      .statementTypes[
-                                                                          i]
-                                                                      .startDate,
-                                                                  statementEndDate: state
-                                                                      .data[
-                                                                          index]
-                                                                      .statementTypes[
-                                                                          i]
-                                                                      .endDate,
+                                                                  statementStartDate:
+                                                                      statementList[
+                                                                              i]
+                                                                          .startDate,
+                                                                  statementEndDate:
+                                                                      statementList[
+                                                                              i]
+                                                                          .endDate,
                                                                 ),
                                                               );
                                                             },
@@ -1049,10 +1042,7 @@ class StatementScreen extends StatelessWidget {
                                                                       context)
                                                                   .add(
                                                                 DeleteStatementRequestEvent(
-                                                                  id: state
-                                                                      .data[
-                                                                          index]
-                                                                      .statementTypes[
+                                                                  id: statementList[
                                                                           i]
                                                                       .statementTypeId,
                                                                 ),
