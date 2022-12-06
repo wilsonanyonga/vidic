@@ -51,7 +51,7 @@ class _MyAppState extends State<MenuBarWidget> {
     String? stringValue = prefs.getString('user_name');
 
     if (stringValue == null) {
-      await Future.delayed(const Duration(seconds: 4));
+      await Future.delayed(const Duration(seconds: 1));
       if (kDebugMode) {
         print("waiting again");
       }
@@ -60,6 +60,9 @@ class _MyAppState extends State<MenuBarWidget> {
       });
     }
     setState(() {
+      if (kDebugMode) {
+        print("waiting3");
+      }
       name = stringValue!;
     });
   }
