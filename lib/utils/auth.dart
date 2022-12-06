@@ -13,6 +13,10 @@ class Auth {
     await _firebaseAuth.sendPasswordResetEmail(email: email);
   }
 
+  Future<String> getToken() async {
+    return await _firebaseAuth.currentUser!.getIdToken();
+  }
+
   Future<void> signInWithEmailAndPassword({
     required String email,
     required String password,
