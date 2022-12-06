@@ -22,11 +22,13 @@ class DioClient {
   String? stringValue;
   final Dio _dio = Dio(
     BaseOptions(
-      // baseUrl: 'http://127.0.0.1:8010/api',
-      baseUrl: 'https://backend.vidic.co.ke/api',
+      baseUrl: 'http://127.0.0.1:8010/api',
+      // baseUrl: 'https://backend.vidic.co.ke/api',
       // baseUrl: 'https://mwambaapp.mwambabuilders.com/mwambaApp/api',
       connectTimeout: 5000,
+      // 5000
       receiveTimeout: 3000,
+      // 3000
       // headers: {
       //   "Access-Control-Allow-Origin": "*",
       //   "Access-Control-Allow-Headers": "Content-Type, Authorization",
@@ -491,6 +493,7 @@ class DioClient {
     String? statementStartDate,
     String? statementEndDate,
     Uint8List? statementFile,
+    String? email,
     // String? floor,
   }) async {
     PostStatement? createStatement;
@@ -510,7 +513,8 @@ class DioClient {
         'start_date': statementStartDate,
         'end_date': statementEndDate,
         'amount': amount,
-        'tenant_id': tenantStatementName
+        'tenant_id': tenantStatementName,
+        'email': email
       });
       if (kDebugMode) {
         print(formData);
@@ -551,6 +555,7 @@ class DioClient {
     String? purpose,
     String? invoiceMonth,
     Uint8List? invoiceFile,
+    String? email,
     // String? floor,
   }) async {
     PostInvoice? createInvoice;
@@ -570,7 +575,8 @@ class DioClient {
         'month': invoiceMonth,
         'amount': amount,
         'purpose': purpose,
-        'tenant_id': tenantInvoiceId
+        'tenant_id': tenantInvoiceId,
+        'email': email,
       });
       if (kDebugMode) {
         print(formData);
@@ -610,6 +616,7 @@ class DioClient {
     String? subject,
     String? date,
     Uint8List? letterFile,
+    String? email,
   }) async {
     PostLetter? createLetter;
     // print(imageFile);
@@ -627,6 +634,7 @@ class DioClient {
         'tenant_id': tenantLetterId,
         'subject': subject,
         'date': date,
+        'email': email,
       });
       if (kDebugMode) {
         print(formData);
