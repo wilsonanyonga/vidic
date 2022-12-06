@@ -4,6 +4,7 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:vidic/bloc/vidic_admin_bloc.dart';
+import 'package:vidic/models/invoice/get_invoice3.dart';
 import 'package:vidic/utils/dio_client.dart';
 import 'package:vidic/widgets/menu_bar.dart';
 import 'package:vidic/widgets/navigation_rail.dart';
@@ -718,6 +719,16 @@ class InvoiceScreen extends StatelessWidget {
                                   itemCount: state.data.length,
                                   itemBuilder:
                                       (BuildContext context, int index) {
+                                    List<InvoiceType> invoiceList =
+                                        state.data[index].invoiceTypes;
+                                    invoiceList.sort((a, b) {
+                                      return b.invoiceTypeId
+                                          .compareTo(a.invoiceTypeId);
+                                    });
+                                    if (kDebugMode) {
+                                      print("new list is ");
+                                      print(invoiceList);
+                                    }
                                     return Column(
                                       children: [
                                         ListTile(
@@ -883,11 +894,7 @@ class InvoiceScreen extends StatelessWidget {
                                                 ],
                                                 rows: [
                                                   for (var i = 0;
-                                                      i <
-                                                          state
-                                                              .data[index]
-                                                              .invoiceTypes
-                                                              .length;
+                                                      i < invoiceList.length;
                                                       i++)
                                                     DataRow(
                                                       cells: [
@@ -903,31 +910,21 @@ class InvoiceScreen extends StatelessWidget {
                                                                       context)
                                                                   .add(
                                                                 UpdateInvoicesEvent(
-                                                                  amount: state
-                                                                      .data[
-                                                                          index]
-                                                                      .invoiceTypes[
+                                                                  amount: invoiceList[
                                                                           i]
                                                                       .amount
                                                                       .toString(),
-                                                                  id: state
-                                                                      .data[
-                                                                          index]
-                                                                      .invoiceTypes[
+                                                                  id: invoiceList[
                                                                           i]
                                                                       .invoiceTypeId,
-                                                                  invoiceMonth: state
-                                                                      .data[
-                                                                          index]
-                                                                      .invoiceTypes[
-                                                                          i]
-                                                                      .month,
-                                                                  purpose: state
-                                                                      .data[
-                                                                          index]
-                                                                      .invoiceTypes[
-                                                                          i]
-                                                                      .purpose,
+                                                                  invoiceMonth:
+                                                                      invoiceList[
+                                                                              i]
+                                                                          .month,
+                                                                  purpose:
+                                                                      invoiceList[
+                                                                              i]
+                                                                          .purpose,
                                                                 ),
                                                               );
                                                             },
@@ -935,22 +932,16 @@ class InvoiceScreen extends StatelessWidget {
                                                         ),
                                                         DataCell(
                                                           Text(
-                                                            state
-                                                                .data[index]
-                                                                .invoiceTypes[i]
+                                                            invoiceList[i]
                                                                 .purpose,
                                                           ),
                                                         ),
                                                         DataCell(
-                                                          Text(state
-                                                              .data[index]
-                                                              .invoiceTypes[i]
+                                                          Text(invoiceList[i]
                                                               .month),
                                                         ),
                                                         DataCell(
-                                                          Text(state
-                                                              .data[index]
-                                                              .invoiceTypes[i]
+                                                          Text(invoiceList[i]
                                                               .amount
                                                               .toString()),
                                                         ),
