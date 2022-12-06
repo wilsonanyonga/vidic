@@ -2,6 +2,7 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:vidic/bloc/vidic_admin_bloc.dart';
+import 'package:vidic/models/tenant_letter/get_tenant_letter3.dart';
 import 'package:vidic/utils/dio_client.dart';
 import 'package:vidic/widgets/menu_bar.dart';
 import 'package:vidic/widgets/navigation_rail.dart';
@@ -45,7 +46,7 @@ class ComplaintsScreen extends StatelessWidget {
             const VerticalDivider(thickness: 1, width: 2),
             Expanded(
               child: Align(
-                alignment: Alignment.topLeft,
+                alignment: Alignment.topRight,
                 child: SingleChildScrollView(
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
@@ -151,6 +152,12 @@ class ComplaintsScreen extends StatelessWidget {
                               physics: const NeverScrollableScrollPhysics(),
                               itemCount: state.data.length,
                               itemBuilder: (BuildContext context, int index) {
+                                List<LettersTenantType> letterTenantList =
+                                    state.data[index].lettersTenantTypes;
+                                letterTenantList.sort((a, b) {
+                                  return b.lettersTenantTypeId
+                                      .compareTo(a.lettersTenantTypeId);
+                                });
                                 return Column(
                                   children: [
                                     ListTile(
@@ -311,29 +318,27 @@ class ComplaintsScreen extends StatelessWidget {
                                               ),
                                             ],
                                             rows: [
+                                              // for (var i = 0;
+                                              //     i <
+                                              //         state
+                                              //             .data[index]
+                                              //             .lettersTenantTypes
+                                              //             .length;
+                                              //     i++)
                                               for (var i = 0;
-                                                  i <
-                                                      state
-                                                          .data[index]
-                                                          .lettersTenantTypes
-                                                          .length;
+                                                  i < letterTenantList.length;
                                                   i++)
                                                 DataRow(
                                                   cells: [
                                                     DataCell(
                                                       Text(
-                                                        state
-                                                            .data[index]
-                                                            .lettersTenantTypes[
-                                                                i]
+                                                        letterTenantList[i]
                                                             .subject
                                                             .toString(),
                                                       ),
                                                     ),
                                                     DataCell(
-                                                      Text(state
-                                                          .data[index]
-                                                          .lettersTenantTypes[i]
+                                                      Text(letterTenantList[i]
                                                           .date
                                                           .toLocal()
                                                           .toString()
@@ -372,10 +377,7 @@ class ComplaintsScreen extends StatelessWidget {
                                                         onPressed: () {
                                                           js.context.callMethod(
                                                               'open', [
-                                                            (state
-                                                                .data[index]
-                                                                .lettersTenantTypes[
-                                                                    i]
+                                                            (letterTenantList[i]
                                                                 .letterName)
                                                           ]);
                                                         },
