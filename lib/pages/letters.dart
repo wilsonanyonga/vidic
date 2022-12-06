@@ -4,6 +4,7 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:vidic/bloc/vidic_admin_bloc.dart';
+import 'package:vidic/models/letter/get_letter3.dart';
 import 'package:vidic/utils/dio_client.dart';
 import 'package:vidic/widgets/menu_bar.dart';
 import 'package:vidic/widgets/navigation_rail.dart';
@@ -623,6 +624,12 @@ class LettersScreen extends StatelessWidget {
                                   itemCount: state.data.length,
                                   itemBuilder:
                                       (BuildContext context, int index) {
+                                    List<LettersType> letterList =
+                                        state.data[index].lettersTypes;
+                                    letterList.sort((a, b) {
+                                      return b.lettersTypeId
+                                          .compareTo(a.lettersTypeId);
+                                    });
                                     return Column(
                                       children: [
                                         ListTile(
@@ -787,11 +794,7 @@ class LettersScreen extends StatelessWidget {
                                                 ],
                                                 rows: [
                                                   for (var i = 0;
-                                                      i <
-                                                          state
-                                                              .data[index]
-                                                              .lettersTypes
-                                                              .length;
+                                                      i < letterList.length;
                                                       i++)
                                                     DataRow(
                                                       cells: [
@@ -807,10 +810,7 @@ class LettersScreen extends StatelessWidget {
                                                                       context)
                                                                   .add(
                                                                 UpdateLettersPatchEvent(
-                                                                  id: state
-                                                                      .data[
-                                                                          index]
-                                                                      .lettersTypes[
+                                                                  id: letterList[
                                                                           i]
                                                                       .lettersTypeId,
                                                                   // date: state
@@ -823,12 +823,10 @@ class LettersScreen extends StatelessWidget {
                                                                   //     .replaceAll(
                                                                   //         '21:00:00.000Z',
                                                                   //         ''),
-                                                                  subject: state
-                                                                      .data[
-                                                                          index]
-                                                                      .lettersTypes[
-                                                                          i]
-                                                                      .subject,
+                                                                  subject:
+                                                                      letterList[
+                                                                              i]
+                                                                          .subject,
                                                                 ),
                                                               );
                                                             },
@@ -910,10 +908,7 @@ class LettersScreen extends StatelessWidget {
                                                                       context)
                                                                   .add(
                                                                 DeleteLetterRequestEvent(
-                                                                  id: state
-                                                                      .data[
-                                                                          index]
-                                                                      .lettersTypes[
+                                                                  id: letterList[
                                                                           i]
                                                                       .lettersTypeId,
                                                                 ),
