@@ -22,8 +22,8 @@ class DioClient {
   String? stringValue;
   final Dio _dio = Dio(
     BaseOptions(
-      baseUrl: 'http://127.0.0.1:8010/api',
-      // baseUrl: 'https://backend.vidic.co.ke/api',
+      // baseUrl: 'http://127.0.0.1:8010/api',
+      baseUrl: 'https://backend.vidic.co.ke/api',
       // baseUrl: 'https://mwambaapp.mwambabuilders.com/mwambaApp/api',
       connectTimeout: 5000,
       // 5000
