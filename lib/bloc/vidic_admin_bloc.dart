@@ -675,9 +675,17 @@ class VidicAdminBloc extends Bloc<VidicAdminEvent, VidicAdminState> {
             print(statementFileName);
           }
           int parsedId = int.parse(tenantStatementName!);
-          String email = tenantsList![parsedId].officialEmail;
+          String? email;
+          for (var i = 0; i < tenantsList!.length; i++) {
+            if (tenantsList![i].datumId == parsedId) {
+              email = tenantsList![i].officialEmail;
+            }
+          }
+          // email = tenantsList![parsedId].officialEmail;
           if (kDebugMode) {
             print(email);
+            print(parsedId);
+            print(tenantsList!.length);
           }
           final newStatement = await _client.createStatement(
             tenantStatementName: tenantStatementName,
@@ -702,6 +710,7 @@ class VidicAdminBloc extends Bloc<VidicAdminEvent, VidicAdminState> {
           if (kDebugMode) {
             print('statement submit error');
             print('statement submit error is $e');
+            print(tenantsList!.length);
           }
           emit(CreateStatementState(0, statementFileName, dropdownItems));
         }
@@ -794,7 +803,13 @@ class VidicAdminBloc extends Bloc<VidicAdminEvent, VidicAdminState> {
             // print(invoiceFile);
           }
           int parsedId = int.parse(tenantInvoiceId!);
-          String email = tenantsList![parsedId].officialEmail;
+          String? email;
+          for (var i = 0; i < tenantsList!.length; i++) {
+            if (tenantsList![i].datumId == parsedId) {
+              email = tenantsList![i].officialEmail;
+            }
+          }
+          // String email = tenantsList![parsedId].officialEmail;
           if (kDebugMode) {
             print(email);
           }
@@ -910,7 +925,13 @@ class VidicAdminBloc extends Bloc<VidicAdminEvent, VidicAdminState> {
             // print(invoiceFile);
           }
           int parsedId = int.parse(tenantLetterId!);
-          String email = tenantsList![parsedId].officialEmail;
+          String? email;
+          for (var i = 0; i < tenantsList!.length; i++) {
+            if (tenantsList![i].datumId == parsedId) {
+              email = tenantsList![i].officialEmail;
+            }
+          }
+          // String email = tenantsList![parsedId].officialEmail;
           if (kDebugMode) {
             print(email);
           }
