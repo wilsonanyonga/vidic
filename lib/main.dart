@@ -121,7 +121,7 @@ class MyApp extends StatelessWidget {
           ),
           GoRoute(
             path: 'nyumba',
-            redirect: (state) => '/',
+            redirect: (BuildContext context, GoRouterState state) => '/',
           ),
           GoRoute(
             path: 'dala',
