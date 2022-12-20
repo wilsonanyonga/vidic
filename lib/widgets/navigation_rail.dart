@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
 class WidgetNavigationRail extends StatelessWidget {
-  WidgetNavigationRail({
+  const WidgetNavigationRail({
     Key? key,
     required int selectedIndex,
   })  : _selectedIndex = selectedIndex,
