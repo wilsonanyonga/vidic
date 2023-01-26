@@ -2,6 +2,7 @@ import 'dart:io';
 
 // ignore: depend_on_referenced_packages
 import 'package:bloc/bloc.dart';
+import 'package:dart_jsonwebtoken/dart_jsonwebtoken.dart';
 import 'package:dio/dio.dart';
 import 'package:equatable/equatable.dart';
 import 'package:file_picker/file_picker.dart';
@@ -159,15 +160,49 @@ class VidicAdminBloc extends Bloc<VidicAdminEvent, VidicAdminState> {
           print('we are trying');
           print('token is $tok');
         }
-        final myJwt = await _client.getToken(event.email);
+
+        // Create a json web token
+// Pass the payload to be sent in the form of a map
+        final jwt = JWT(
+          // Payload
+          {
+            'data': {
+              'id': 123,
+              'email': event.email,
+            },
+            'iss': 'issuer',
+            // 'exp': 1703065614,
+            'exp': DateTime.now()
+                .add(
+                  const Duration(days: 50),
+                )
+                .millisecondsSinceEpoch,
+          },
+
+          // issuer: 'issuer',
+        );
+
+        // Sign it (default with HS256 algorithm)
+        var token = jwt.sign(SecretKey('VIDICsupersecretkey'));
+
+        if (kDebugMode) {
+          print('Signed token: $token\n');
+        }
+
+        // final myJwt = await _client.getToken(event.email);
         SharedPreferences prefs = await SharedPreferences.getInstance();
         prefs.setString('email', event.email);
-        prefs.setString('jwt_token', myJwt!.data);
-        prefs.setString('user_name', myJwt.user[0].name);
+        // prefs.setString('jwt_token', myJwt!.data);
+        prefs.setString('jwt_token', token);
+        // prefs.setString('user_name', myJwt.user[0].name);
+        prefs.setString('user_name', event.email);
+
+        // This is a delay to alow for writing of the jwt
+        await Future.delayed(const Duration(seconds: 2));
 
         if (kDebugMode) {
           print('email is ${event.email}');
-          print('token is ${myJwt.data}');
+          // print('token is ${myJwt!.data}');
         }
 
         // email: _controllerEmail.text,
