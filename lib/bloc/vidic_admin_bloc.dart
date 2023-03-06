@@ -156,6 +156,23 @@ class VidicAdminBloc extends Bloc<VidicAdminEvent, VidicAdminState> {
           email: event.email,
           password: event.password,
         );
+
+        // final user = await Auth().signInWithEmailAndPassword(
+        //   email: event.email,
+        //   password: event.password,
+        // );
+
+        // if (user != null) {
+        //   // setState(() {
+        //   //   _success = true;
+        //   //   _userEmail = user.email;
+        //   // });
+        // } else {
+        //   // setState(() {
+        //   //   _success = false;
+        //   // });
+        // }
+
         // var tok = await Auth().getToken();
         // if (kDebugMode) {
         //   print('we are trying');
