@@ -27,6 +27,17 @@ class Auth {
     );
   }
 
+  // Future<User?> signInWithEmailAndPassword({
+  //   required String email,
+  //   required String password,
+  // }) async {
+  //    return (await _firebaseAuth.signInWithEmailAndPassword(
+  //     email: email,
+  //     password: password,
+  //   ))
+  //       .user;
+  // }
+
   Future<void> createUserWithEmailAndPassword({
     required String email,
     required String password,
