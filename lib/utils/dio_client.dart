@@ -25,9 +25,9 @@ class DioClient {
       // baseUrl: 'http://127.0.0.1:8010/api',
       baseUrl: 'https://backend.vidic.co.ke/api',
       // baseUrl: 'https://mwambaapp.mwambabuilders.com/mwambaApp/api',
-      connectTimeout: 5000,
+      connectTimeout: 11000,
       // 5000
-      receiveTimeout: 3000,
+      receiveTimeout: 8000,
       // 3000
       // headers: {
       //   "Access-Control-Allow-Origin": "*",
