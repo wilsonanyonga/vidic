@@ -48,6 +48,8 @@ dependencies:
   firebase_core: ^2.3.0
   firebase_auth: ^4.1.4
 
+  firebase_remote_config: ^3.0.13 #handling key retrieval
+
   awesome_dialog: ^3.0.1 #handling custom dialogs
 
   shared_preferences: ^2.0.15 
