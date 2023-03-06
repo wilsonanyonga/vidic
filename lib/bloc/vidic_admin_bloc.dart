@@ -7,6 +7,7 @@ import 'package:dio/dio.dart';
 import 'package:equatable/equatable.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_remote_config/firebase_remote_config.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -155,11 +156,11 @@ class VidicAdminBloc extends Bloc<VidicAdminEvent, VidicAdminState> {
           email: event.email,
           password: event.password,
         );
-        var tok = await Auth().getToken();
-        if (kDebugMode) {
-          print('we are trying');
-          print('token is $tok');
-        }
+        // var tok = await Auth().getToken();
+        // if (kDebugMode) {
+        //   print('we are trying');
+        //   print('token is $tok');
+        // }
 
         // Create a json web token
 // Pass the payload to be sent in the form of a map
@@ -183,7 +184,18 @@ class VidicAdminBloc extends Bloc<VidicAdminEvent, VidicAdminState> {
         );
 
         // Sign it (default with HS256 algorithm)
-        var token = jwt.sign(SecretKey('VIDICsupersecretkey'));
+
+        FirebaseRemoteConfig remoteConfig = FirebaseRemoteConfig.instance;
+        await remoteConfig.fetch();
+        await remoteConfig.fetchAndActivate();
+
+        var myKey = remoteConfig.getValue('jwt_key').asString();
+        if (kDebugMode) {
+          print("the key is");
+          print(myKey);
+        }
+        var token = jwt.sign(SecretKey(myKey));
+        // var token = jwt.sign(SecretKey('VIDICsupersecretkey'));
 
         if (kDebugMode) {
           print('Signed token: $token\n');
