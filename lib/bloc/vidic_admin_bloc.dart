@@ -10,6 +10,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_remote_config/firebase_remote_config.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:hive_flutter/hive_flutter.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:vidic/models/invoice/get_invoice.dart';
 import 'package:vidic/models/invoice/get_invoice2.dart';
@@ -110,6 +111,8 @@ class VidicAdminBloc extends Bloc<VidicAdminEvent, VidicAdminState> {
   GetInvoice? searchInvoice;
   GetLetter? searchLetters;
   GetTenantLetter? searchComplaint;
+
+  final myBox = Hive.box('myBox');
 
   List<DropdownMenuItem<String>> get dropdownItems {
     List<DropdownMenuItem<String>> menuItems = [
@@ -219,20 +222,28 @@ class VidicAdminBloc extends Bloc<VidicAdminEvent, VidicAdminState> {
         }
 
         // final myJwt = await _client.getToken(event.email);
-        SharedPreferences prefs = await SharedPreferences.getInstance();
-        prefs.setString('email', event.email);
-        // prefs.setString('jwt_token', myJwt!.data);
-        prefs.setString('jwt_token', token);
-        // prefs.setString('user_name', myJwt.user[0].name);
-        prefs.setString('user_name', event.email);
+        // SharedPreferences prefs = await SharedPreferences.getInstance();
+        // prefs.setString('email', event.email);
+        // // prefs.setString('jwt_token', myJwt!.data);
+        // prefs.setString('jwt_token', token);
+        // // prefs.setString('user_name', myJwt.user[0].name);
+        // prefs.setString('user_name', event.email);
+
+        myBox.put('email', event.email);
+        myBox.put('jwt_token', token);
+        myBox.put('user_name', event.email);
+
+        myBox.put('logedIn', true);
+        myBox.put('myRoute', "/home");
 
         // This is a delay to alow for writing of the jwt
-        await Future.delayed(const Duration(seconds: 2));
+        // await Future.delayed(const Duration(seconds: 2));
 
         if (kDebugMode) {
           print('email is ${event.email}');
           // print('token is ${myJwt!.data}');
         }
+        emit(LoginSuccess());
 
         // email: _controllerEmail.text,
       } on FirebaseAuthException catch (e) {
