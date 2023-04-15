@@ -13,6 +13,8 @@ class LoginState extends VidicAdminState {}
 
 class LoginLoading extends VidicAdminState {}
 
+class LoginSuccess extends VidicAdminState {}
+
 class LoginError extends VidicAdminState {
   final String? message;
   const LoginError(this.message);
