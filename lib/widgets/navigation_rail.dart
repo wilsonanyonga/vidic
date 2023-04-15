@@ -1,14 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:hive_flutter/hive_flutter.dart';
 
 class WidgetNavigationRail extends StatelessWidget {
-  const WidgetNavigationRail({
+  WidgetNavigationRail({
     Key? key,
     required int selectedIndex,
   })  : _selectedIndex = selectedIndex,
         super(key: key);
 
   final int _selectedIndex;
+  final myBox = Hive.box('myBox');
 
   @override
   Widget build(BuildContext context) {
@@ -19,17 +21,29 @@ class WidgetNavigationRail extends StatelessWidget {
         //   _selectedIndex = index;
         // });
         if (index == 0) {
-          context.go('/dala');
+          myBox.put('myRoute', "/dala");
+          context.goNamed("dala");
+          // context.go('/dala');
         } else if (index == 1) {
-          context.go('/statement');
+          myBox.put('myRoute', "/statement");
+          context.goNamed("statement");
+          // context.go('/statement');
         } else if (index == 2) {
-          context.go('/invoice');
+          myBox.put('myRoute', "/invoice");
+          context.goNamed("invoice");
+          // context.go('/invoice');
         } else if (index == 3) {
-          context.go('/letters');
+          myBox.put('myRoute', "/letters");
+          context.goNamed("letters");
+          // context.go('/letters');
         } else if (index == 4) {
-          context.go('/occupancy');
+          myBox.put('myRoute', "/occupancy");
+          context.goNamed("occupancy");
+          // context.go('/occupancy');
         } else if (index == 5) {
-          context.go('/complaints');
+          myBox.put('myRoute', "/complaints");
+          context.goNamed("complaints");
+          // context.go('/complaints');
         }
       },
       leading: const CircleAvatar(
