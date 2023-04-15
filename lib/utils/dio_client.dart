@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:dio/dio.dart';
 import 'package:flutter/foundation.dart';
+import 'package:hive_flutter/hive_flutter.dart';
 import 'package:vidic/models/invoice/get_invoice.dart';
 import 'package:vidic/models/invoice/post/post_invoice.dart';
 import 'package:vidic/models/jwt.dart';
@@ -20,14 +21,15 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 class DioClient {
   String? stringValue;
+  final myBox = Hive.box('myBox');
   final Dio _dio = Dio(
     BaseOptions(
       // baseUrl: 'http://127.0.0.1:8010/api',
       baseUrl: 'https://backend.vidic.co.ke/api',
       // baseUrl: 'https://mwambaapp.mwambabuilders.com/mwambaApp/api',
-      connectTimeout: 11000,
+      connectTimeout: 16000,
       // 5000
-      receiveTimeout: 8000,
+      receiveTimeout: 16000,
       // 3000
       // headers: {
       //   "Access-Control-Allow-Origin": "*",
@@ -92,9 +94,11 @@ class DioClient {
   // get tenants
   Future<GetTenant?> getTenants() async {
     GetTenant? user;
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    //Return String
-    stringValue = prefs.getString('jwt_token');
+
+    String? stringValue = myBox.get('jwt_token');
+    // SharedPreferences prefs = await SharedPreferences.getInstance();
+    // //Return String
+    // stringValue = prefs.getString('jwt_token');
     if (kDebugMode) {
       print(stringValue);
     }
@@ -146,9 +150,10 @@ class DioClient {
   // get statement
   Future<GetStatement?> getStatement() async {
     GetStatement? user;
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    //Return String
-    stringValue = prefs.getString('jwt_token');
+    // SharedPreferences prefs = await SharedPreferences.getInstance();
+    // //Return String
+    // stringValue = prefs.getString('jwt_token');
+    String? stringValue = myBox.get('jwt_token');
     if (kDebugMode) {
       print(stringValue);
     }
@@ -199,9 +204,10 @@ class DioClient {
   // get Invoice
   Future<GetInvoice?> getInvoice() async {
     GetInvoice? user;
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    //Return String
-    stringValue = prefs.getString('jwt_token');
+    // SharedPreferences prefs = await SharedPreferences.getInstance();
+    // //Return String
+    // stringValue = prefs.getString('jwt_token');
+    String? stringValue = myBox.get('jwt_token');
     if (kDebugMode) {
       print(stringValue);
     }
@@ -245,9 +251,10 @@ class DioClient {
   // get Letters
   Future<GetLetter?> getLetter() async {
     GetLetter? user;
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    //Return String
-    stringValue = prefs.getString('jwt_token');
+    // SharedPreferences prefs = await SharedPreferences.getInstance();
+    // //Return String
+    // stringValue = prefs.getString('jwt_token');
+    String? stringValue = myBox.get('jwt_token');
     if (kDebugMode) {
       print(stringValue);
     }
@@ -292,9 +299,10 @@ class DioClient {
   // get tenant Letters
   Future<GetTenantLetter?> getTenantLetter() async {
     GetTenantLetter? user;
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    //Return String
-    stringValue = prefs.getString('jwt_token');
+    // SharedPreferences prefs = await SharedPreferences.getInstance();
+    // //Return String
+    // stringValue = prefs.getString('jwt_token');
+    String? stringValue = myBox.get('jwt_token');
     if (kDebugMode) {
       print(stringValue);
     }
@@ -339,9 +347,10 @@ class DioClient {
   // get tenant Letters
   Future<GetOccupancy?> getOccupancy() async {
     GetOccupancy? user;
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    //Return String
-    stringValue = prefs.getString('jwt_token');
+    // SharedPreferences prefs = await SharedPreferences.getInstance();
+    // //Return String
+    // stringValue = prefs.getString('jwt_token');
+    String? stringValue = myBox.get('jwt_token');
     if (kDebugMode) {
       print(stringValue);
     }
@@ -418,9 +427,10 @@ class DioClient {
       // print(us2.toJson());
       print("object is testing............");
     }
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    //Return String
-    stringValue = prefs.getString('jwt_token');
+    // SharedPreferences prefs = await SharedPreferences.getInstance();
+    // //Return String
+    // stringValue = prefs.getString('jwt_token');
+    String? stringValue = myBox.get('jwt_token');
     try {
       // var formData = FormData.fromMap({
       //   'name': us2.name,
@@ -502,9 +512,10 @@ class DioClient {
       // print(us2.toJson());
       print("object is testing............");
     }
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    //Return String
-    stringValue = prefs.getString('jwt_token');
+    // SharedPreferences prefs = await SharedPreferences.getInstance();
+    // //Return String
+    // stringValue = prefs.getString('jwt_token');
+    String? stringValue = myBox.get('jwt_token');
     try {
       var formData = FormData.fromMap({
         'file_statement': MultipartFile.fromBytes(statementFile!.toList(),
@@ -564,9 +575,10 @@ class DioClient {
       // print(us2.toJson());
       print("object is testing............");
     }
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    //Return String
-    stringValue = prefs.getString('jwt_token');
+    // SharedPreferences prefs = await SharedPreferences.getInstance();
+    // //Return String
+    // stringValue = prefs.getString('jwt_token');
+    String? stringValue = myBox.get('jwt_token');
     try {
       var formData = FormData.fromMap({
         'file_invoice': MultipartFile.fromBytes(invoiceFile!.toList(),
@@ -624,9 +636,10 @@ class DioClient {
       // print(us2.toJson());
       print("object is testing............");
     }
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    //Return String
-    stringValue = prefs.getString('jwt_token');
+    // SharedPreferences prefs = await SharedPreferences.getInstance();
+    // //Return String
+    // stringValue = prefs.getString('jwt_token');
+    String? stringValue = myBox.get('jwt_token');
     try {
       var formData = FormData.fromMap({
         'file_letter': MultipartFile.fromBytes(letterFile!.toList(),
@@ -680,9 +693,10 @@ class DioClient {
       // print(us2.toJson());
       print("object is testing............");
     }
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    //Return String
-    stringValue = prefs.getString('jwt_token');
+    // SharedPreferences prefs = await SharedPreferences.getInstance();
+    // //Return String
+    // stringValue = prefs.getString('jwt_token');
+    String? stringValue = myBox.get('jwt_token');
     try {
       // var formData = FormData.fromMap({
       //   'file_letter': MultipartFile.fromBytes(letterFile!.toList(),
@@ -742,9 +756,10 @@ class DioClient {
       // print(us2.toJson());
       print("object is testing............");
     }
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    //Return String
-    stringValue = prefs.getString('jwt_token');
+    // SharedPreferences prefs = await SharedPreferences.getInstance();
+    // //Return String
+    // stringValue = prefs.getString('jwt_token');
+    String? stringValue = myBox.get('jwt_token');
     try {
       var formData = FormData.fromMap({
         'file_letter': letterFile != null
@@ -800,9 +815,10 @@ class DioClient {
       // print(us2.toJson());
       print("object is testing............");
     }
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    //Return String
-    stringValue = prefs.getString('jwt_token');
+    // SharedPreferences prefs = await SharedPreferences.getInstance();
+    // //Return String
+    // stringValue = prefs.getString('jwt_token');
+    String? stringValue = myBox.get('jwt_token');
     try {
       var formData = FormData.fromMap({
         'file_invoice': invoiceFile != null
@@ -862,9 +878,10 @@ class DioClient {
       // print(us2.toJson());
       print("object is testing............");
     }
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    //Return String
-    stringValue = prefs.getString('jwt_token');
+    // SharedPreferences prefs = await SharedPreferences.getInstance();
+    // //Return String
+    // stringValue = prefs.getString('jwt_token');
+    String? stringValue = myBox.get('jwt_token');
     try {
       var formData = FormData.fromMap({
         'file_statement': statementFile != null
@@ -942,9 +959,10 @@ class DioClient {
       // print(us2.toJson());
       print("object is testing............");
     }
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    //Return String
-    stringValue = prefs.getString('jwt_token');
+    // SharedPreferences prefs = await SharedPreferences.getInstance();
+    // //Return String
+    // stringValue = prefs.getString('jwt_token');
+    String? stringValue = myBox.get('jwt_token');
     try {
       if (kDebugMode) {
         print("object is here");
@@ -1001,9 +1019,11 @@ class DioClient {
   }) async {
     DeleteLetter? deleteLetter;
 
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    //Return String
-    stringValue = prefs.getString('jwt_token');
+    // SharedPreferences prefs = await SharedPreferences.getInstance();
+    // //Return String
+    // stringValue = prefs.getString('jwt_token');
+
+    String? stringValue = myBox.get('jwt_token');
 
     try {
       Response response = await _dio.delete(
@@ -1035,9 +1055,10 @@ class DioClient {
   }) async {
     DeleteLetter? deleteLetter;
 
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    //Return String
-    stringValue = prefs.getString('jwt_token');
+    // SharedPreferences prefs = await SharedPreferences.getInstance();
+    // //Return String
+    // stringValue = prefs.getString('jwt_token');
+    String? stringValue = myBox.get('jwt_token');
 
     try {
       Response response = await _dio.delete(
@@ -1069,9 +1090,10 @@ class DioClient {
   }) async {
     DeleteLetter? deleteStatement;
 
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    //Return String
-    stringValue = prefs.getString('jwt_token');
+    // SharedPreferences prefs = await SharedPreferences.getInstance();
+    // //Return String
+    // stringValue = prefs.getString('jwt_token');
+    String? stringValue = myBox.get('jwt_token');
 
     try {
       Response response = await _dio.delete(
@@ -1103,9 +1125,11 @@ class DioClient {
   }) async {
     DeleteLetter? deleteTenant;
 
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    //Return String
-    stringValue = prefs.getString('jwt_token');
+    // SharedPreferences prefs = await SharedPreferences.getInstance();
+    // //Return String
+    // stringValue = prefs.getString('jwt_token');
+
+    String? stringValue = myBox.get('jwt_token');
 
     try {
       Response response = await _dio.delete(

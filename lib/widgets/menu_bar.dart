@@ -1,6 +1,8 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_router/go_router.dart';
+import 'package:hive_flutter/hive_flutter.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:vidic/bloc/vidic_admin_bloc.dart';
 import 'package:vidic/utils/auth.dart';
@@ -15,12 +17,13 @@ class MenuBarWidget extends StatefulWidget {
 }
 
 class _MyAppState extends State<MenuBarWidget> {
+  final myBox = Hive.box('myBox');
   Future<void> signOut() async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    //Return String
-    String? stringValue = prefs.getString('email');
+    // SharedPreferences prefs = await SharedPreferences.getInstance();
+    // //Return String
+    // String? stringValue = prefs.getString('email');
     if (kDebugMode) {
-      print(stringValue);
+      // print(stringValue);
     }
 
     await Auth().signOut();
@@ -43,12 +46,14 @@ class _MyAppState extends State<MenuBarWidget> {
 
   // millicent.odhiambo@vidic.co.ke
   void userName() async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
+    // SharedPreferences prefs = await SharedPreferences.getInstance();
     //Return String
     if (kDebugMode) {
       print("waiting2");
     }
-    String? stringValue = prefs.getString('user_name');
+    // String? stringValue = prefs.getString('user_name');
+
+    String? stringValue = myBox.get('user_name');
 
     if (stringValue == null) {
       await Future.delayed(const Duration(seconds: 1));
@@ -83,6 +88,8 @@ class _MyAppState extends State<MenuBarWidget> {
               ),
               child: GestureDetector(
                 onTap: () {
+                  myBox.put('logedIn', false);
+                  context.goNamed("login");
                   signOut();
                 },
                 child: Stack(
@@ -125,6 +132,8 @@ class _MyAppState extends State<MenuBarWidget> {
                           IconButton(
                             tooltip: 'Log Out',
                             onPressed: () {
+                              myBox.put('logedIn', false);
+                              context.goNamed("login");
                               signOut();
                             },
                             icon: const Icon(Icons.logout),
