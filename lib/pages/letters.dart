@@ -11,6 +11,7 @@ import 'package:vidic/widgets/navigation_rail.dart';
 
 import 'dart:js' as js;
 
+// ignore: must_be_immutable
 class LettersScreen extends StatelessWidget {
   LettersScreen({Key? key}) : super(key: key);
 
@@ -190,12 +191,12 @@ class LettersScreen extends StatelessWidget {
               },
               builder: (context, state) {
                 if (state is DeleteLetterSuccessLoadingState) {
-                  return Expanded(
+                  return const Expanded(
                     child: SingleChildScrollView(
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.center,
                         crossAxisAlignment: CrossAxisAlignment.center,
-                        children: const [
+                        children: [
                           SizedBox(
                             height: 30,
                           ),
@@ -331,8 +332,8 @@ class LettersScreen extends StatelessWidget {
                                               );
                                             }
                                           },
-                                          child: Row(
-                                            children: const [
+                                          child: const Row(
+                                            children: [
                                               Text('Update Letter'),
                                               SizedBox(
                                                 width: 10,
@@ -476,8 +477,8 @@ class LettersScreen extends StatelessWidget {
                                               );
                                             }
                                           },
-                                          child: Row(
-                                            children: const [
+                                          child: const Row(
+                                            children: [
                                               Text('Create New Letter'),
                                               SizedBox(
                                                 width: 10,
