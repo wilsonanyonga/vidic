@@ -11,6 +11,7 @@ import 'package:vidic/widgets/navigation_rail.dart';
 
 import 'dart:js' as js;
 
+// ignore: must_be_immutable
 class InvoiceScreen extends StatelessWidget {
   InvoiceScreen({Key? key}) : super(key: key);
 
@@ -191,12 +192,12 @@ class InvoiceScreen extends StatelessWidget {
               },
               builder: (context, state) {
                 if (state is DeleteInvoiceSuccessLoadingState) {
-                  return Expanded(
+                  return const Expanded(
                     child: SingleChildScrollView(
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.center,
                         crossAxisAlignment: CrossAxisAlignment.center,
-                        children: const [
+                        children: [
                           SizedBox(
                             height: 30,
                           ),
@@ -362,8 +363,8 @@ class InvoiceScreen extends StatelessWidget {
                                               );
                                             }
                                           },
-                                          child: Row(
-                                            children: const [
+                                          child: const Row(
+                                            children: [
                                               Text('Update Invoice'),
                                               SizedBox(
                                                 width: 10,
@@ -553,8 +554,8 @@ class InvoiceScreen extends StatelessWidget {
                                               );
                                             }
                                           },
-                                          child: Row(
-                                            children: const [
+                                          child: const Row(
+                                            children: [
                                               Text('Create New Invoice'),
                                               SizedBox(
                                                 width: 10,
