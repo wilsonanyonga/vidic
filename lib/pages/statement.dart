@@ -12,6 +12,7 @@ import 'package:vidic/widgets/navigation_rail.dart';
 
 import 'dart:js' as js;
 
+// ignore: must_be_immutable
 class StatementScreen extends StatelessWidget {
   StatementScreen({Key? key}) : super(key: key);
 
@@ -169,12 +170,12 @@ class StatementScreen extends StatelessWidget {
               },
               builder: (context, state) {
                 if (state is DeleteStatementSuccessLoadingState) {
-                  return Expanded(
+                  return const Expanded(
                     child: SingleChildScrollView(
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.center,
                         crossAxisAlignment: CrossAxisAlignment.center,
-                        children: const [
+                        children: [
                           SizedBox(
                             height: 30,
                           ),
@@ -365,8 +366,8 @@ class StatementScreen extends StatelessWidget {
                                               );
                                             }
                                           },
-                                          child: Row(
-                                            children: const [
+                                          child: const Row(
+                                            children: [
                                               Text('Update Statement'),
                                               SizedBox(
                                                 width: 10,
@@ -382,10 +383,10 @@ class StatementScreen extends StatelessWidget {
                                             ],
                                           ),
                                         )
-                                      : ElevatedButton(
+                                      : const ElevatedButton(
                                           onPressed: null,
                                           child: Row(
-                                            children: const [
+                                            children: [
                                               Text('Creating New Statement'),
                                               SizedBox(
                                                 width: 10,
@@ -566,8 +567,8 @@ class StatementScreen extends StatelessWidget {
                                               );
                                             }
                                           },
-                                          child: Row(
-                                            children: const [
+                                          child: const Row(
+                                            children: [
                                               Text('Create New Statement'),
                                               SizedBox(
                                                 width: 10,
@@ -583,10 +584,10 @@ class StatementScreen extends StatelessWidget {
                                             ],
                                           ),
                                         )
-                                      : ElevatedButton(
+                                      : const ElevatedButton(
                                           onPressed: null,
                                           child: Row(
-                                            children: const [
+                                            children: [
                                               Text('Creating New Statement'),
                                               SizedBox(
                                                 width: 10,
