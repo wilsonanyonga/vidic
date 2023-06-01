@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:hive_flutter/hive_flutter.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 import 'package:vidic/bloc/vidic_admin_bloc.dart';
 import 'package:vidic/utils/auth.dart';
 import 'package:vidic/utils/dio_client.dart';
