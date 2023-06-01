@@ -1,4 +1,3 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -12,7 +11,6 @@ import 'package:vidic/pages/letters.dart';
 import 'package:vidic/pages/login.dart';
 import 'package:vidic/pages/occupancy.dart';
 import 'package:vidic/pages/statement.dart';
-import 'package:vidic/utils/auth.dart';
 import 'package:vidic/utils/dio_client.dart';
 
 void main() async {
@@ -22,6 +20,7 @@ void main() async {
   await Hive.initFlutter();
 
   // open the box
+  // ignore: unused_local_variable
   var box = await Hive.openBox('mybox');
 
   runApp(MyApp());
@@ -185,6 +184,7 @@ class MyApp extends StatelessWidget {
       } else {
         return "/";
       }
+      return null;
     },
   );
 
