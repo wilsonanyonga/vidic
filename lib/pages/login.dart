@@ -8,6 +8,7 @@ import 'package:vidic/bloc/vidic_admin_bloc.dart';
 import 'package:vidic/utils/auth.dart';
 import 'package:vidic/utils/dio_client.dart';
 
+// ignore: must_be_immutable
 class Login extends StatelessWidget {
   Login({super.key});
 
@@ -146,10 +147,10 @@ class Login extends StatelessWidget {
                           },
                           builder: (context, state) {
                             if (state is LoginLoading) {
-                              return ElevatedButton(
+                              return const ElevatedButton(
                                 onPressed: null,
                                 child: Row(
-                                  children: const [
+                                  children: [
                                     Text('Login'),
                                     SizedBox(
                                       width: 10,
@@ -186,8 +187,8 @@ class Login extends StatelessWidget {
                                     );
                                   }
                                 },
-                                child: Row(
-                                  children: const [
+                                child: const Row(
+                                  children: [
                                     Text('Login'),
                                   ],
                                 ),
