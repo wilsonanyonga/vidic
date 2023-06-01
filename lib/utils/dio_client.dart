@@ -1,4 +1,3 @@
-
 import 'package:dio/dio.dart';
 import 'package:flutter/foundation.dart';
 import 'package:hive_flutter/hive_flutter.dart';
@@ -25,9 +24,9 @@ class DioClient {
       // baseUrl: 'http://127.0.0.1:8010/api',
       baseUrl: 'https://backend.vidic.co.ke/api',
       // baseUrl: 'https://mwambaapp.mwambabuilders.com/mwambaApp/api',
-      connectTimeout: 16000,
+      connectTimeout: const Duration(seconds: 16),
       // 5000
-      receiveTimeout: 16000,
+      receiveTimeout: const Duration(seconds: 16),
       // 3000
       // headers: {
       //   "Access-Control-Allow-Origin": "*",
