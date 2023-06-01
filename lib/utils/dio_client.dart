@@ -1,4 +1,3 @@
-import 'dart:io';
 
 import 'package:dio/dio.dart';
 import 'package:flutter/foundation.dart';
@@ -17,7 +16,6 @@ import 'package:vidic/models/statement/get_statement.dart';
 import 'package:vidic/models/statement/post/post_statement.dart';
 import 'package:vidic/models/tenant_letter/get_tenant_letter.dart';
 import 'package:vidic/utils/logging.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 class DioClient {
   String? stringValue;
