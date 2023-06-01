@@ -8,6 +8,7 @@ import 'package:vidic/utils/dio_client.dart';
 import 'package:vidic/widgets/menu_bar.dart';
 import 'package:vidic/widgets/navigation_rail.dart';
 
+// ignore: must_be_immutable
 class OccupancyScreen extends StatelessWidget {
   OccupancyScreen({Key? key}) : super(key: key);
 
@@ -181,8 +182,8 @@ class OccupancyScreen extends StatelessWidget {
                                               );
                                             }
                                           },
-                                          child: Row(
-                                            children: const [
+                                          child: const Row(
+                                            children: [
                                               Text('Update Occupancy'),
                                               SizedBox(
                                                 width: 10,
