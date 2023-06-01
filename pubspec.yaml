@@ -30,11 +30,13 @@ dependencies:
   flutter:
     sdk: flutter
 
-  dio: ^4.0.6
-  # go_router: ^4.3.0
-  go_router: ^6.0.0
+  # dio: ^4.0.6
+  dio: ^5.1.2
+  # go_router: ^6.0.0
+  go_router: ^7.1.1
   json_annotation: ^4.6.0
-  string_validator: ^0.3.0
+  # string_validator: ^0.3.0
+  string_validator: ^1.0.0
   flutter_bloc: ^8.1.1
   equatable: ^2.0.5
   # The following adds the Cupertino Icons font to your application.
@@ -48,15 +50,18 @@ dependencies:
   firebase_core: ^2.3.0
   firebase_auth: ^4.1.4
 
-  firebase_remote_config: ^3.0.13 #handling key retrieval
+  # firebase_remote_config: ^3.0.13 #handling key retrieval
+  firebase_remote_config: ^4.2.2 #handling key retrieval
 
   awesome_dialog: ^3.0.1 #handling custom dialogs
 
   shared_preferences: ^2.0.15 
-  syncfusion_flutter_datepicker: ^20.3.56
+  # syncfusion_flutter_datepicker: ^20.3.56
+  syncfusion_flutter_datepicker: ^21.2.8
   file_picker: ^5.2.2
 
-  dart_jsonwebtoken: ^2.6.2 #for generating jwt
+  # dart_jsonwebtoken: ^2.6.2 #for generating jwt
+  dart_jsonwebtoken: ^2.8.0 #for generating jwt
 
   hive: ^2.2.3
   hive_flutter: ^1.1.0
