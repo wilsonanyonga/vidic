@@ -5,7 +5,6 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 // import 'package:percent_indicator/percent_indicator.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 import 'package:syncfusion_flutter_datepicker/datepicker.dart';
 import 'package:vidic/bloc/vidic_admin_bloc.dart';
 import 'package:vidic/utils/auth.dart';
@@ -15,6 +14,7 @@ import 'package:vidic/widgets/menu_bar.dart';
 import 'package:vidic/widgets/navigation_rail.dart';
 // import 'package:percent_indicator/percent_indicator.dart';
 
+// ignore: must_be_immutable
 class MyHomePage extends StatelessWidget {
   MyHomePage({Key? key, required this.title}) : super(key: key);
 
@@ -287,12 +287,12 @@ class MyHomePage extends StatelessWidget {
               },
               builder: (context, state) {
                 if (state is DeleteTenantSuccessLoadingState) {
-                  return Expanded(
+                  return const Expanded(
                     child: SingleChildScrollView(
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.center,
                         crossAxisAlignment: CrossAxisAlignment.center,
-                        children: const [
+                        children: [
                           SizedBox(
                             height: 30,
                           ),
@@ -668,8 +668,8 @@ class MyHomePage extends StatelessWidget {
                                               // _controllerLeaseEnd.text = '';
                                             }
                                           },
-                                          child: Row(
-                                            children: const [
+                                          child: const Row(
+                                            children: [
                                               Text('Update Tenant'),
                                               SizedBox(
                                                 width: 10,
@@ -685,10 +685,10 @@ class MyHomePage extends StatelessWidget {
                                             ],
                                           ),
                                         )
-                                      : ElevatedButton(
+                                      : const ElevatedButton(
                                           onPressed: null,
                                           child: Row(
-                                            children: const [
+                                            children: [
                                               Text('Updating Tenant'),
                                               SizedBox(
                                                 width: 10,
@@ -1030,8 +1030,8 @@ class MyHomePage extends StatelessWidget {
                                               // _controllerLeaseEnd.text = '';
                                             }
                                           },
-                                          child: Row(
-                                            children: const [
+                                          child: const Row(
+                                            children: [
                                               Text('Create New Tenant'),
                                               SizedBox(
                                                 width: 10,
@@ -1049,8 +1049,8 @@ class MyHomePage extends StatelessWidget {
                                         )
                                       : ElevatedButton(
                                           onPressed: () {},
-                                          child: Row(
-                                            children: const [
+                                          child: const Row(
+                                            children: [
                                               Text('Creating New Tenant'),
                                               SizedBox(
                                                 width: 10,
