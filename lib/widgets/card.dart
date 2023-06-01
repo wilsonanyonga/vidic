@@ -3,6 +3,7 @@ import 'dart:core';
 import 'package:flutter/material.dart';
 import 'package:percent_indicator/percent_indicator.dart';
 
+// ignore: must_be_immutable
 class NewWidgetCardHome extends StatelessWidget {
   var mediaQsize, mediaQheight, mediaQwidth;
   int capacity;
