@@ -9,6 +9,7 @@ import 'package:vidic/widgets/navigation_rail.dart';
 
 import 'dart:js' as js;
 
+// ignore: must_be_immutable
 class ComplaintsScreen extends StatelessWidget {
   ComplaintsScreen({Key? key}) : super(key: key);
 
