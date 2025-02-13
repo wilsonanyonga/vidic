@@ -1,5 +1,21 @@
 # This is a generated file; do not edit or check into version control.
-firebase_auth=/home/thelaptop/snap/flutter/common/flutter/.pub-cache/hosted/pub.dartlang.org/firebase_auth-3.11.1/
-firebase_auth_web=/home/thelaptop/snap/flutter/common/flutter/.pub-cache/hosted/pub.dartlang.org/firebase_auth_web-4.6.0/
-firebase_core=/home/thelaptop/snap/flutter/common/flutter/.pub-cache/hosted/pub.dartlang.org/firebase_core-1.24.0/
-firebase_core_web=/home/thelaptop/snap/flutter/common/flutter/.pub-cache/hosted/pub.dartlang.org/firebase_core_web-1.7.3/
+file_picker=C:\\Users\\shanelle\\AppData\\Local\\Pub\\Cache\\hosted\\pub.dev\\file_picker-5.3.1\\
+firebase_auth=C:\\Users\\shanelle\\AppData\\Local\\Pub\\Cache\\hosted\\pub.dev\\firebase_auth-4.6.2\\
+firebase_auth_web=C:\\Users\\shanelle\\AppData\\Local\\Pub\\Cache\\hosted\\pub.dev\\firebase_auth_web-5.5.2\\
+firebase_core=C:\\Users\\shanelle\\AppData\\Local\\Pub\\Cache\\hosted\\pub.dev\\firebase_core-2.13.1\\
+firebase_core_web=C:\\Users\\shanelle\\AppData\\Local\\Pub\\Cache\\hosted\\pub.dev\\firebase_core_web-2.5.0\\
+firebase_remote_config=C:\\Users\\shanelle\\AppData\\Local\\Pub\\Cache\\hosted\\pub.dev\\firebase_remote_config-4.2.2\\
+firebase_remote_config_web=C:\\Users\\shanelle\\AppData\\Local\\Pub\\Cache\\hosted\\pub.dev\\firebase_remote_config_web-1.4.2\\
+flutter_plugin_android_lifecycle=C:\\Users\\shanelle\\AppData\\Local\\Pub\\Cache\\hosted\\pub.dev\\flutter_plugin_android_lifecycle-2.0.15\\
+path_provider=C:\\Users\\shanelle\\AppData\\Local\\Pub\\Cache\\hosted\\pub.dev\\path_provider-2.0.15\\
+path_provider_android=C:\\Users\\shanelle\\AppData\\Local\\Pub\\Cache\\hosted\\pub.dev\\path_provider_android-2.0.27\\
+path_provider_foundation=C:\\Users\\shanelle\\AppData\\Local\\Pub\\Cache\\hosted\\pub.dev\\path_provider_foundation-2.2.3\\
+path_provider_linux=C:\\Users\\shanelle\\AppData\\Local\\Pub\\Cache\\hosted\\pub.dev\\path_provider_linux-2.1.11\\
+path_provider_windows=C:\\Users\\shanelle\\AppData\\Local\\Pub\\Cache\\hosted\\pub.dev\\path_provider_windows-2.1.6\\
+rive_common=C:\\Users\\shanelle\\AppData\\Local\\Pub\\Cache\\hosted\\pub.dev\\rive_common-0.0.9\\
+shared_preferences=C:\\Users\\shanelle\\AppData\\Local\\Pub\\Cache\\hosted\\pub.dev\\shared_preferences-2.1.1\\
+shared_preferences_android=C:\\Users\\shanelle\\AppData\\Local\\Pub\\Cache\\hosted\\pub.dev\\shared_preferences_android-2.1.4\\
+shared_preferences_foundation=C:\\Users\\shanelle\\AppData\\Local\\Pub\\Cache\\hosted\\pub.dev\\shared_preferences_foundation-2.2.2\\
+shared_preferences_linux=C:\\Users\\shanelle\\AppData\\Local\\Pub\\Cache\\hosted\\pub.dev\\shared_preferences_linux-2.2.0\\
+shared_preferences_web=C:\\Users\\shanelle\\AppData\\Local\\Pub\\Cache\\hosted\\pub.dev\\shared_preferences_web-2.1.0\\
+shared_preferences_windows=C:\\Users\\shanelle\\AppData\\Local\\Pub\\Cache\\hosted\\pub.dev\\shared_preferences_windows-2.2.0\\

@@ -3,465 +3,723 @@
   "packages": [
     {
       "name": "_fe_analyzer_shared",
-      "rootUri": "file:///home/thelaptop/snap/flutter/common/flutter/.pub-cache/hosted/pub.dartlang.org/_fe_analyzer_shared-47.0.0",
+      "rootUri": "file:///C:/Users/shanelle/AppData/Local/Pub/Cache/hosted/pub.dev/_fe_analyzer_shared-61.0.0",
       "packageUri": "lib/",
       "languageVersion": "2.17"
     },
     {
-      "name": "analyzer",
-      "rootUri": "file:///home/thelaptop/snap/flutter/common/flutter/.pub-cache/hosted/pub.dartlang.org/analyzer-4.7.0",
+      "name": "_flutterfire_internals",
+      "rootUri": "file:///C:/Users/shanelle/AppData/Local/Pub/Cache/hosted/pub.dev/_flutterfire_internals-1.3.2",
       "packageUri": "lib/",
-      "languageVersion": "2.17"
+      "languageVersion": "2.18"
     },
     {
-      "name": "args",
-      "rootUri": "file:///home/thelaptop/snap/flutter/common/flutter/.pub-cache/hosted/pub.dartlang.org/args-2.3.1",
+      "name": "adaptive_number",
+      "rootUri": "file:///C:/Users/shanelle/AppData/Local/Pub/Cache/hosted/pub.dev/adaptive_number-1.0.0",
       "packageUri": "lib/",
       "languageVersion": "2.12"
     },
     {
+      "name": "analyzer",
+      "rootUri": "file:///C:/Users/shanelle/AppData/Local/Pub/Cache/hosted/pub.dev/analyzer-5.13.0",
+      "packageUri": "lib/",
+      "languageVersion": "2.19"
+    },
+    {
+      "name": "args",
+      "rootUri": "file:///C:/Users/shanelle/AppData/Local/Pub/Cache/hosted/pub.dev/args-2.4.1",
+      "packageUri": "lib/",
+      "languageVersion": "2.18"
+    },
+    {
       "name": "async",
-      "rootUri": "file:///home/thelaptop/snap/flutter/common/flutter/.pub-cache/hosted/pub.dartlang.org/async-2.8.2",
+      "rootUri": "file:///C:/Users/shanelle/AppData/Local/Pub/Cache/hosted/pub.dev/async-2.11.0",
+      "packageUri": "lib/",
+      "languageVersion": "2.18"
+    },
+    {
+      "name": "awesome_dialog",
+      "rootUri": "file:///C:/Users/shanelle/AppData/Local/Pub/Cache/hosted/pub.dev/awesome_dialog-3.1.0",
       "packageUri": "lib/",
       "languageVersion": "2.12"
     },
     {
       "name": "bloc",
-      "rootUri": "file:///home/thelaptop/snap/flutter/common/flutter/.pub-cache/hosted/pub.dartlang.org/bloc-8.1.0",
+      "rootUri": "file:///C:/Users/shanelle/AppData/Local/Pub/Cache/hosted/pub.dev/bloc-8.1.2",
       "packageUri": "lib/",
       "languageVersion": "2.12"
     },
     {
       "name": "boolean_selector",
-      "rootUri": "file:///home/thelaptop/snap/flutter/common/flutter/.pub-cache/hosted/pub.dartlang.org/boolean_selector-2.1.0",
+      "rootUri": "file:///C:/Users/shanelle/AppData/Local/Pub/Cache/hosted/pub.dev/boolean_selector-2.1.1",
       "packageUri": "lib/",
-      "languageVersion": "2.12"
+      "languageVersion": "2.17"
     },
     {
       "name": "build",
-      "rootUri": "file:///home/thelaptop/snap/flutter/common/flutter/.pub-cache/hosted/pub.dartlang.org/build-2.3.0",
+      "rootUri": "file:///C:/Users/shanelle/AppData/Local/Pub/Cache/hosted/pub.dev/build-2.4.0",
       "packageUri": "lib/",
-      "languageVersion": "2.14"
+      "languageVersion": "2.18"
     },
     {
       "name": "build_config",
-      "rootUri": "file:///home/thelaptop/snap/flutter/common/flutter/.pub-cache/hosted/pub.dartlang.org/build_config-1.1.0",
+      "rootUri": "file:///C:/Users/shanelle/AppData/Local/Pub/Cache/hosted/pub.dev/build_config-1.1.1",
       "packageUri": "lib/",
       "languageVersion": "2.14"
     },
     {
       "name": "build_daemon",
-      "rootUri": "file:///home/thelaptop/snap/flutter/common/flutter/.pub-cache/hosted/pub.dartlang.org/build_daemon-3.1.0",
+      "rootUri": "file:///C:/Users/shanelle/AppData/Local/Pub/Cache/hosted/pub.dev/build_daemon-4.0.0",
       "packageUri": "lib/",
       "languageVersion": "2.14"
     },
     {
       "name": "build_resolvers",
-      "rootUri": "file:///home/thelaptop/snap/flutter/common/flutter/.pub-cache/hosted/pub.dartlang.org/build_resolvers-2.0.9",
+      "rootUri": "file:///C:/Users/shanelle/AppData/Local/Pub/Cache/hosted/pub.dev/build_resolvers-2.2.0",
       "packageUri": "lib/",
-      "languageVersion": "2.14"
+      "languageVersion": "2.18"
     },
     {
       "name": "build_runner",
-      "rootUri": "file:///home/thelaptop/snap/flutter/common/flutter/.pub-cache/hosted/pub.dartlang.org/build_runner-2.2.0",
+      "rootUri": "file:///C:/Users/shanelle/AppData/Local/Pub/Cache/hosted/pub.dev/build_runner-2.4.4",
       "packageUri": "lib/",
-      "languageVersion": "2.14"
+      "languageVersion": "3.0"
     },
     {
       "name": "build_runner_core",
-      "rootUri": "file:///home/thelaptop/snap/flutter/common/flutter/.pub-cache/hosted/pub.dartlang.org/build_runner_core-7.2.3",
+      "rootUri": "file:///C:/Users/shanelle/AppData/Local/Pub/Cache/hosted/pub.dev/build_runner_core-7.2.9",
       "packageUri": "lib/",
-      "languageVersion": "2.14"
+      "languageVersion": "2.19"
     },
     {
       "name": "built_collection",
-      "rootUri": "file:///home/thelaptop/snap/flutter/common/flutter/.pub-cache/hosted/pub.dartlang.org/built_collection-5.1.1",
+      "rootUri": "file:///C:/Users/shanelle/AppData/Local/Pub/Cache/hosted/pub.dev/built_collection-5.1.1",
       "packageUri": "lib/",
       "languageVersion": "2.12"
     },
     {
       "name": "built_value",
-      "rootUri": "file:///home/thelaptop/snap/flutter/common/flutter/.pub-cache/hosted/pub.dartlang.org/built_value-8.4.1",
+      "rootUri": "file:///C:/Users/shanelle/AppData/Local/Pub/Cache/hosted/pub.dev/built_value-8.6.0",
       "packageUri": "lib/",
       "languageVersion": "2.12"
     },
     {
       "name": "characters",
-      "rootUri": "file:///home/thelaptop/snap/flutter/common/flutter/.pub-cache/hosted/pub.dartlang.org/characters-1.2.0",
-      "packageUri": "lib/",
-      "languageVersion": "2.12"
-    },
-    {
-      "name": "charcode",
-      "rootUri": "file:///home/thelaptop/snap/flutter/common/flutter/.pub-cache/hosted/pub.dartlang.org/charcode-1.3.1",
+      "rootUri": "file:///C:/Users/shanelle/AppData/Local/Pub/Cache/hosted/pub.dev/characters-1.3.0",
       "packageUri": "lib/",
       "languageVersion": "2.12"
     },
     {
       "name": "checked_yaml",
-      "rootUri": "file:///home/thelaptop/snap/flutter/common/flutter/.pub-cache/hosted/pub.dartlang.org/checked_yaml-2.0.1",
+      "rootUri": "file:///C:/Users/shanelle/AppData/Local/Pub/Cache/hosted/pub.dev/checked_yaml-2.0.3",
       "packageUri": "lib/",
-      "languageVersion": "2.12"
+      "languageVersion": "2.19"
     },
     {
       "name": "clock",
-      "rootUri": "file:///home/thelaptop/snap/flutter/common/flutter/.pub-cache/hosted/pub.dartlang.org/clock-1.1.0",
+      "rootUri": "file:///C:/Users/shanelle/AppData/Local/Pub/Cache/hosted/pub.dev/clock-1.1.1",
       "packageUri": "lib/",
       "languageVersion": "2.12"
     },
     {
       "name": "code_builder",
-      "rootUri": "file:///home/thelaptop/snap/flutter/common/flutter/.pub-cache/hosted/pub.dartlang.org/code_builder-4.2.0",
+      "rootUri": "file:///C:/Users/shanelle/AppData/Local/Pub/Cache/hosted/pub.dev/code_builder-4.5.0",
       "packageUri": "lib/",
-      "languageVersion": "2.17"
+      "languageVersion": "2.19"
     },
     {
       "name": "collection",
-      "rootUri": "file:///home/thelaptop/snap/flutter/common/flutter/.pub-cache/hosted/pub.dartlang.org/collection-1.16.0",
+      "rootUri": "file:///C:/Users/shanelle/AppData/Local/Pub/Cache/hosted/pub.dev/collection-1.17.1",
       "packageUri": "lib/",
-      "languageVersion": "2.12"
+      "languageVersion": "2.18"
     },
     {
       "name": "convert",
-      "rootUri": "file:///home/thelaptop/snap/flutter/common/flutter/.pub-cache/hosted/pub.dartlang.org/convert-3.0.2",
+      "rootUri": "file:///C:/Users/shanelle/AppData/Local/Pub/Cache/hosted/pub.dev/convert-3.1.1",
       "packageUri": "lib/",
-      "languageVersion": "2.12"
+      "languageVersion": "2.18"
     },
     {
       "name": "crypto",
-      "rootUri": "file:///home/thelaptop/snap/flutter/common/flutter/.pub-cache/hosted/pub.dartlang.org/crypto-3.0.2",
+      "rootUri": "file:///C:/Users/shanelle/AppData/Local/Pub/Cache/hosted/pub.dev/crypto-3.0.3",
       "packageUri": "lib/",
-      "languageVersion": "2.14"
+      "languageVersion": "2.19"
     },
     {
-      "name": "cupertino_icons",
-      "rootUri": "file:///home/thelaptop/snap/flutter/common/flutter/.pub-cache/hosted/pub.dartlang.org/cupertino_icons-1.0.5",
+      "name": "dart_jsonwebtoken",
+      "rootUri": "file:///C:/Users/shanelle/AppData/Local/Pub/Cache/hosted/pub.dev/dart_jsonwebtoken-2.8.0",
       "packageUri": "lib/",
       "languageVersion": "2.12"
     },
     {
       "name": "dart_style",
-      "rootUri": "file:///home/thelaptop/snap/flutter/common/flutter/.pub-cache/hosted/pub.dartlang.org/dart_style-2.2.3",
+      "rootUri": "file:///C:/Users/shanelle/AppData/Local/Pub/Cache/hosted/pub.dev/dart_style-2.3.1",
       "packageUri": "lib/",
-      "languageVersion": "2.12"
+      "languageVersion": "2.19"
     },
     {
       "name": "dio",
-      "rootUri": "file:///home/thelaptop/snap/flutter/common/flutter/.pub-cache/hosted/pub.dartlang.org/dio-4.0.6",
+      "rootUri": "file:///C:/Users/shanelle/AppData/Local/Pub/Cache/hosted/pub.dev/dio-5.1.2",
+      "packageUri": "lib/",
+      "languageVersion": "2.15"
+    },
+    {
+      "name": "ed25519_edwards",
+      "rootUri": "file:///C:/Users/shanelle/AppData/Local/Pub/Cache/hosted/pub.dev/ed25519_edwards-0.3.1",
       "packageUri": "lib/",
       "languageVersion": "2.12"
     },
     {
       "name": "equatable",
-      "rootUri": "file:///home/thelaptop/snap/flutter/common/flutter/.pub-cache/hosted/pub.dartlang.org/equatable-2.0.5",
+      "rootUri": "file:///C:/Users/shanelle/AppData/Local/Pub/Cache/hosted/pub.dev/equatable-2.0.5",
       "packageUri": "lib/",
       "languageVersion": "2.12"
     },
     {
       "name": "fake_async",
-      "rootUri": "file:///home/thelaptop/snap/flutter/common/flutter/.pub-cache/hosted/pub.dartlang.org/fake_async-1.3.0",
+      "rootUri": "file:///C:/Users/shanelle/AppData/Local/Pub/Cache/hosted/pub.dev/fake_async-1.3.1",
       "packageUri": "lib/",
       "languageVersion": "2.12"
+    },
+    {
+      "name": "ffi",
+      "rootUri": "file:///C:/Users/shanelle/AppData/Local/Pub/Cache/hosted/pub.dev/ffi-2.0.2",
+      "packageUri": "lib/",
+      "languageVersion": "2.17"
     },
     {
       "name": "file",
-      "rootUri": "file:///home/thelaptop/snap/flutter/common/flutter/.pub-cache/hosted/pub.dartlang.org/file-6.1.4",
+      "rootUri": "file:///C:/Users/shanelle/AppData/Local/Pub/Cache/hosted/pub.dev/file-6.1.4",
       "packageUri": "lib/",
       "languageVersion": "2.12"
+    },
+    {
+      "name": "file_picker",
+      "rootUri": "file:///C:/Users/shanelle/AppData/Local/Pub/Cache/hosted/pub.dev/file_picker-5.3.1",
+      "packageUri": "lib/",
+      "languageVersion": "2.17"
+    },
+    {
+      "name": "firebase_auth",
+      "rootUri": "file:///C:/Users/shanelle/AppData/Local/Pub/Cache/hosted/pub.dev/firebase_auth-4.6.2",
+      "packageUri": "lib/",
+      "languageVersion": "2.18"
+    },
+    {
+      "name": "firebase_auth_platform_interface",
+      "rootUri": "file:///C:/Users/shanelle/AppData/Local/Pub/Cache/hosted/pub.dev/firebase_auth_platform_interface-6.15.2",
+      "packageUri": "lib/",
+      "languageVersion": "2.18"
+    },
+    {
+      "name": "firebase_auth_web",
+      "rootUri": "file:///C:/Users/shanelle/AppData/Local/Pub/Cache/hosted/pub.dev/firebase_auth_web-5.5.2",
+      "packageUri": "lib/",
+      "languageVersion": "2.18"
+    },
+    {
+      "name": "firebase_core",
+      "rootUri": "file:///C:/Users/shanelle/AppData/Local/Pub/Cache/hosted/pub.dev/firebase_core-2.13.1",
+      "packageUri": "lib/",
+      "languageVersion": "2.18"
+    },
+    {
+      "name": "firebase_core_platform_interface",
+      "rootUri": "file:///C:/Users/shanelle/AppData/Local/Pub/Cache/hosted/pub.dev/firebase_core_platform_interface-4.8.0",
+      "packageUri": "lib/",
+      "languageVersion": "2.18"
+    },
+    {
+      "name": "firebase_core_web",
+      "rootUri": "file:///C:/Users/shanelle/AppData/Local/Pub/Cache/hosted/pub.dev/firebase_core_web-2.5.0",
+      "packageUri": "lib/",
+      "languageVersion": "2.18"
+    },
+    {
+      "name": "firebase_remote_config",
+      "rootUri": "file:///C:/Users/shanelle/AppData/Local/Pub/Cache/hosted/pub.dev/firebase_remote_config-4.2.2",
+      "packageUri": "lib/",
+      "languageVersion": "2.18"
+    },
+    {
+      "name": "firebase_remote_config_platform_interface",
+      "rootUri": "file:///C:/Users/shanelle/AppData/Local/Pub/Cache/hosted/pub.dev/firebase_remote_config_platform_interface-1.4.2",
+      "packageUri": "lib/",
+      "languageVersion": "2.18"
+    },
+    {
+      "name": "firebase_remote_config_web",
+      "rootUri": "file:///C:/Users/shanelle/AppData/Local/Pub/Cache/hosted/pub.dev/firebase_remote_config_web-1.4.2",
+      "packageUri": "lib/",
+      "languageVersion": "2.18"
     },
     {
       "name": "fixnum",
-      "rootUri": "file:///home/thelaptop/snap/flutter/common/flutter/.pub-cache/hosted/pub.dartlang.org/fixnum-1.0.1",
+      "rootUri": "file:///C:/Users/shanelle/AppData/Local/Pub/Cache/hosted/pub.dev/fixnum-1.1.0",
       "packageUri": "lib/",
-      "languageVersion": "2.12"
+      "languageVersion": "2.19"
     },
     {
       "name": "flutter",
-      "rootUri": "file:///home/thelaptop/snap/flutter/common/flutter/packages/flutter",
+      "rootUri": "file:///D:/mobile/flutter/packages/flutter",
       "packageUri": "lib/",
-      "languageVersion": "2.12"
+      "languageVersion": "3.0"
     },
     {
       "name": "flutter_bloc",
-      "rootUri": "file:///home/thelaptop/snap/flutter/common/flutter/.pub-cache/hosted/pub.dartlang.org/flutter_bloc-8.1.1",
+      "rootUri": "file:///C:/Users/shanelle/AppData/Local/Pub/Cache/hosted/pub.dev/flutter_bloc-8.1.3",
       "packageUri": "lib/",
       "languageVersion": "2.12"
     },
     {
       "name": "flutter_lints",
-      "rootUri": "file:///home/thelaptop/snap/flutter/common/flutter/.pub-cache/hosted/pub.dartlang.org/flutter_lints-2.0.1",
+      "rootUri": "file:///C:/Users/shanelle/AppData/Local/Pub/Cache/hosted/pub.dev/flutter_lints-2.0.1",
       "packageUri": "lib/",
       "languageVersion": "2.17"
+    },
+    {
+      "name": "flutter_plugin_android_lifecycle",
+      "rootUri": "file:///C:/Users/shanelle/AppData/Local/Pub/Cache/hosted/pub.dev/flutter_plugin_android_lifecycle-2.0.15",
+      "packageUri": "lib/",
+      "languageVersion": "2.18"
     },
     {
       "name": "flutter_test",
-      "rootUri": "file:///home/thelaptop/snap/flutter/common/flutter/packages/flutter_test",
+      "rootUri": "file:///D:/mobile/flutter/packages/flutter_test",
       "packageUri": "lib/",
-      "languageVersion": "2.17"
+      "languageVersion": "3.0"
     },
     {
       "name": "flutter_web_plugins",
-      "rootUri": "file:///home/thelaptop/snap/flutter/common/flutter/packages/flutter_web_plugins",
+      "rootUri": "file:///D:/mobile/flutter/packages/flutter_web_plugins",
       "packageUri": "lib/",
-      "languageVersion": "2.17"
+      "languageVersion": "3.0"
     },
     {
       "name": "frontend_server_client",
-      "rootUri": "file:///home/thelaptop/snap/flutter/common/flutter/.pub-cache/hosted/pub.dartlang.org/frontend_server_client-2.1.3",
+      "rootUri": "file:///C:/Users/shanelle/AppData/Local/Pub/Cache/hosted/pub.dev/frontend_server_client-3.2.0",
       "packageUri": "lib/",
       "languageVersion": "2.12"
     },
     {
       "name": "glob",
-      "rootUri": "file:///home/thelaptop/snap/flutter/common/flutter/.pub-cache/hosted/pub.dartlang.org/glob-2.1.0",
+      "rootUri": "file:///C:/Users/shanelle/AppData/Local/Pub/Cache/hosted/pub.dev/glob-2.1.2",
       "packageUri": "lib/",
-      "languageVersion": "2.15"
+      "languageVersion": "2.19"
     },
     {
       "name": "go_router",
-      "rootUri": "file:///home/thelaptop/snap/flutter/common/flutter/.pub-cache/hosted/pub.dartlang.org/go_router-4.3.0",
+      "rootUri": "file:///C:/Users/shanelle/AppData/Local/Pub/Cache/hosted/pub.dev/go_router-7.1.1",
       "packageUri": "lib/",
-      "languageVersion": "2.17"
+      "languageVersion": "2.18"
     },
     {
       "name": "graphs",
-      "rootUri": "file:///home/thelaptop/snap/flutter/common/flutter/.pub-cache/hosted/pub.dartlang.org/graphs-2.1.0",
+      "rootUri": "file:///C:/Users/shanelle/AppData/Local/Pub/Cache/hosted/pub.dev/graphs-2.3.1",
+      "packageUri": "lib/",
+      "languageVersion": "2.18"
+    },
+    {
+      "name": "hive",
+      "rootUri": "file:///C:/Users/shanelle/AppData/Local/Pub/Cache/hosted/pub.dev/hive-2.2.3",
       "packageUri": "lib/",
       "languageVersion": "2.12"
     },
     {
+      "name": "hive_flutter",
+      "rootUri": "file:///C:/Users/shanelle/AppData/Local/Pub/Cache/hosted/pub.dev/hive_flutter-1.1.0",
+      "packageUri": "lib/",
+      "languageVersion": "2.12"
+    },
+    {
+      "name": "hive_generator",
+      "rootUri": "file:///C:/Users/shanelle/AppData/Local/Pub/Cache/hosted/pub.dev/hive_generator-2.0.0",
+      "packageUri": "lib/",
+      "languageVersion": "2.12"
+    },
+    {
+      "name": "http",
+      "rootUri": "file:///C:/Users/shanelle/AppData/Local/Pub/Cache/hosted/pub.dev/http-0.13.6",
+      "packageUri": "lib/",
+      "languageVersion": "2.19"
+    },
+    {
       "name": "http_multi_server",
-      "rootUri": "file:///home/thelaptop/snap/flutter/common/flutter/.pub-cache/hosted/pub.dartlang.org/http_multi_server-3.2.1",
+      "rootUri": "file:///C:/Users/shanelle/AppData/Local/Pub/Cache/hosted/pub.dev/http_multi_server-3.2.1",
       "packageUri": "lib/",
       "languageVersion": "2.12"
     },
     {
       "name": "http_parser",
-      "rootUri": "file:///home/thelaptop/snap/flutter/common/flutter/.pub-cache/hosted/pub.dartlang.org/http_parser-4.0.1",
+      "rootUri": "file:///C:/Users/shanelle/AppData/Local/Pub/Cache/hosted/pub.dev/http_parser-4.0.2",
+      "packageUri": "lib/",
+      "languageVersion": "2.12"
+    },
+    {
+      "name": "intl",
+      "rootUri": "file:///C:/Users/shanelle/AppData/Local/Pub/Cache/hosted/pub.dev/intl-0.18.1",
       "packageUri": "lib/",
       "languageVersion": "2.12"
     },
     {
       "name": "io",
-      "rootUri": "file:///home/thelaptop/snap/flutter/common/flutter/.pub-cache/hosted/pub.dartlang.org/io-1.0.3",
+      "rootUri": "file:///C:/Users/shanelle/AppData/Local/Pub/Cache/hosted/pub.dev/io-1.0.4",
       "packageUri": "lib/",
       "languageVersion": "2.12"
     },
     {
       "name": "js",
-      "rootUri": "file:///home/thelaptop/snap/flutter/common/flutter/.pub-cache/hosted/pub.dartlang.org/js-0.6.4",
+      "rootUri": "file:///C:/Users/shanelle/AppData/Local/Pub/Cache/hosted/pub.dev/js-0.6.7",
       "packageUri": "lib/",
-      "languageVersion": "2.16"
+      "languageVersion": "2.19"
     },
     {
       "name": "json_annotation",
-      "rootUri": "file:///home/thelaptop/snap/flutter/common/flutter/.pub-cache/hosted/pub.dartlang.org/json_annotation-4.6.0",
+      "rootUri": "file:///C:/Users/shanelle/AppData/Local/Pub/Cache/hosted/pub.dev/json_annotation-4.8.1",
       "packageUri": "lib/",
-      "languageVersion": "2.14"
+      "languageVersion": "2.19"
     },
     {
       "name": "json_serializable",
-      "rootUri": "file:///home/thelaptop/snap/flutter/common/flutter/.pub-cache/hosted/pub.dartlang.org/json_serializable-6.3.1",
+      "rootUri": "file:///C:/Users/shanelle/AppData/Local/Pub/Cache/hosted/pub.dev/json_serializable-6.7.0",
       "packageUri": "lib/",
-      "languageVersion": "2.14"
+      "languageVersion": "3.0"
     },
     {
       "name": "lints",
-      "rootUri": "file:///home/thelaptop/snap/flutter/common/flutter/.pub-cache/hosted/pub.dartlang.org/lints-2.0.0",
+      "rootUri": "file:///C:/Users/shanelle/AppData/Local/Pub/Cache/hosted/pub.dev/lints-2.1.0",
       "packageUri": "lib/",
-      "languageVersion": "2.17"
+      "languageVersion": "3.0"
     },
     {
       "name": "logging",
-      "rootUri": "file:///home/thelaptop/snap/flutter/common/flutter/.pub-cache/hosted/pub.dartlang.org/logging-1.0.2",
+      "rootUri": "file:///C:/Users/shanelle/AppData/Local/Pub/Cache/hosted/pub.dev/logging-1.2.0",
       "packageUri": "lib/",
-      "languageVersion": "2.12"
+      "languageVersion": "2.19"
     },
     {
       "name": "matcher",
-      "rootUri": "file:///home/thelaptop/snap/flutter/common/flutter/.pub-cache/hosted/pub.dartlang.org/matcher-0.12.11",
+      "rootUri": "file:///C:/Users/shanelle/AppData/Local/Pub/Cache/hosted/pub.dev/matcher-0.12.15",
       "packageUri": "lib/",
-      "languageVersion": "2.12"
+      "languageVersion": "2.18"
     },
     {
       "name": "material_color_utilities",
-      "rootUri": "file:///home/thelaptop/snap/flutter/common/flutter/.pub-cache/hosted/pub.dartlang.org/material_color_utilities-0.1.4",
+      "rootUri": "file:///C:/Users/shanelle/AppData/Local/Pub/Cache/hosted/pub.dev/material_color_utilities-0.2.0",
       "packageUri": "lib/",
       "languageVersion": "2.13"
     },
     {
       "name": "meta",
-      "rootUri": "file:///home/thelaptop/snap/flutter/common/flutter/.pub-cache/hosted/pub.dartlang.org/meta-1.7.0",
+      "rootUri": "file:///C:/Users/shanelle/AppData/Local/Pub/Cache/hosted/pub.dev/meta-1.9.1",
       "packageUri": "lib/",
       "languageVersion": "2.12"
     },
     {
       "name": "mime",
-      "rootUri": "file:///home/thelaptop/snap/flutter/common/flutter/.pub-cache/hosted/pub.dartlang.org/mime-1.0.2",
+      "rootUri": "file:///C:/Users/shanelle/AppData/Local/Pub/Cache/hosted/pub.dev/mime-1.0.4",
       "packageUri": "lib/",
-      "languageVersion": "2.12"
+      "languageVersion": "2.18"
     },
     {
       "name": "nested",
-      "rootUri": "file:///home/thelaptop/snap/flutter/common/flutter/.pub-cache/hosted/pub.dartlang.org/nested-1.0.0",
+      "rootUri": "file:///C:/Users/shanelle/AppData/Local/Pub/Cache/hosted/pub.dev/nested-1.0.0",
       "packageUri": "lib/",
       "languageVersion": "2.12"
     },
     {
       "name": "package_config",
-      "rootUri": "file:///home/thelaptop/snap/flutter/common/flutter/.pub-cache/hosted/pub.dartlang.org/package_config-2.1.0",
+      "rootUri": "file:///C:/Users/shanelle/AppData/Local/Pub/Cache/hosted/pub.dev/package_config-2.1.0",
       "packageUri": "lib/",
       "languageVersion": "2.12"
     },
     {
       "name": "path",
-      "rootUri": "file:///home/thelaptop/snap/flutter/common/flutter/.pub-cache/hosted/pub.dartlang.org/path-1.8.1",
+      "rootUri": "file:///C:/Users/shanelle/AppData/Local/Pub/Cache/hosted/pub.dev/path-1.8.3",
       "packageUri": "lib/",
       "languageVersion": "2.12"
+    },
+    {
+      "name": "path_provider",
+      "rootUri": "file:///C:/Users/shanelle/AppData/Local/Pub/Cache/hosted/pub.dev/path_provider-2.0.15",
+      "packageUri": "lib/",
+      "languageVersion": "2.17"
+    },
+    {
+      "name": "path_provider_android",
+      "rootUri": "file:///C:/Users/shanelle/AppData/Local/Pub/Cache/hosted/pub.dev/path_provider_android-2.0.27",
+      "packageUri": "lib/",
+      "languageVersion": "2.17"
+    },
+    {
+      "name": "path_provider_foundation",
+      "rootUri": "file:///C:/Users/shanelle/AppData/Local/Pub/Cache/hosted/pub.dev/path_provider_foundation-2.2.3",
+      "packageUri": "lib/",
+      "languageVersion": "2.18"
+    },
+    {
+      "name": "path_provider_linux",
+      "rootUri": "file:///C:/Users/shanelle/AppData/Local/Pub/Cache/hosted/pub.dev/path_provider_linux-2.1.11",
+      "packageUri": "lib/",
+      "languageVersion": "2.18"
+    },
+    {
+      "name": "path_provider_platform_interface",
+      "rootUri": "file:///C:/Users/shanelle/AppData/Local/Pub/Cache/hosted/pub.dev/path_provider_platform_interface-2.0.6",
+      "packageUri": "lib/",
+      "languageVersion": "2.12"
+    },
+    {
+      "name": "path_provider_windows",
+      "rootUri": "file:///C:/Users/shanelle/AppData/Local/Pub/Cache/hosted/pub.dev/path_provider_windows-2.1.6",
+      "packageUri": "lib/",
+      "languageVersion": "2.17"
     },
     {
       "name": "percent_indicator",
-      "rootUri": "file:///home/thelaptop/snap/flutter/common/flutter/.pub-cache/hosted/pub.dartlang.org/percent_indicator-4.2.2",
+      "rootUri": "file:///C:/Users/shanelle/AppData/Local/Pub/Cache/hosted/pub.dev/percent_indicator-4.2.3",
       "packageUri": "lib/",
       "languageVersion": "2.12"
+    },
+    {
+      "name": "platform",
+      "rootUri": "file:///C:/Users/shanelle/AppData/Local/Pub/Cache/hosted/pub.dev/platform-3.1.0",
+      "packageUri": "lib/",
+      "languageVersion": "2.12"
+    },
+    {
+      "name": "plugin_platform_interface",
+      "rootUri": "file:///C:/Users/shanelle/AppData/Local/Pub/Cache/hosted/pub.dev/plugin_platform_interface-2.1.4",
+      "packageUri": "lib/",
+      "languageVersion": "2.17"
+    },
+    {
+      "name": "pointycastle",
+      "rootUri": "file:///C:/Users/shanelle/AppData/Local/Pub/Cache/hosted/pub.dev/pointycastle-3.7.3",
+      "packageUri": "lib/",
+      "languageVersion": "2.14"
     },
     {
       "name": "pool",
-      "rootUri": "file:///home/thelaptop/snap/flutter/common/flutter/.pub-cache/hosted/pub.dartlang.org/pool-1.5.1",
+      "rootUri": "file:///C:/Users/shanelle/AppData/Local/Pub/Cache/hosted/pub.dev/pool-1.5.1",
       "packageUri": "lib/",
       "languageVersion": "2.12"
     },
     {
+      "name": "process",
+      "rootUri": "file:///C:/Users/shanelle/AppData/Local/Pub/Cache/hosted/pub.dev/process-4.2.4",
+      "packageUri": "lib/",
+      "languageVersion": "2.14"
+    },
+    {
       "name": "provider",
-      "rootUri": "file:///home/thelaptop/snap/flutter/common/flutter/.pub-cache/hosted/pub.dartlang.org/provider-6.0.3",
+      "rootUri": "file:///C:/Users/shanelle/AppData/Local/Pub/Cache/hosted/pub.dev/provider-6.0.5",
       "packageUri": "lib/",
       "languageVersion": "2.12"
     },
     {
       "name": "pub_semver",
-      "rootUri": "file:///home/thelaptop/snap/flutter/common/flutter/.pub-cache/hosted/pub.dartlang.org/pub_semver-2.1.1",
+      "rootUri": "file:///C:/Users/shanelle/AppData/Local/Pub/Cache/hosted/pub.dev/pub_semver-2.1.4",
       "packageUri": "lib/",
-      "languageVersion": "2.12"
+      "languageVersion": "2.17"
     },
     {
       "name": "pubspec_parse",
-      "rootUri": "file:///home/thelaptop/snap/flutter/common/flutter/.pub-cache/hosted/pub.dartlang.org/pubspec_parse-1.2.1",
+      "rootUri": "file:///C:/Users/shanelle/AppData/Local/Pub/Cache/hosted/pub.dev/pubspec_parse-1.2.3",
+      "packageUri": "lib/",
+      "languageVersion": "2.18"
+    },
+    {
+      "name": "rive",
+      "rootUri": "file:///C:/Users/shanelle/AppData/Local/Pub/Cache/hosted/pub.dev/rive-0.11.2",
       "packageUri": "lib/",
       "languageVersion": "2.14"
+    },
+    {
+      "name": "rive_common",
+      "rootUri": "file:///C:/Users/shanelle/AppData/Local/Pub/Cache/hosted/pub.dev/rive_common-0.0.9",
+      "packageUri": "lib/",
+      "languageVersion": "2.12"
+    },
+    {
+      "name": "shared_preferences",
+      "rootUri": "file:///C:/Users/shanelle/AppData/Local/Pub/Cache/hosted/pub.dev/shared_preferences-2.1.1",
+      "packageUri": "lib/",
+      "languageVersion": "2.17"
+    },
+    {
+      "name": "shared_preferences_android",
+      "rootUri": "file:///C:/Users/shanelle/AppData/Local/Pub/Cache/hosted/pub.dev/shared_preferences_android-2.1.4",
+      "packageUri": "lib/",
+      "languageVersion": "2.17"
+    },
+    {
+      "name": "shared_preferences_foundation",
+      "rootUri": "file:///C:/Users/shanelle/AppData/Local/Pub/Cache/hosted/pub.dev/shared_preferences_foundation-2.2.2",
+      "packageUri": "lib/",
+      "languageVersion": "2.17"
+    },
+    {
+      "name": "shared_preferences_linux",
+      "rootUri": "file:///C:/Users/shanelle/AppData/Local/Pub/Cache/hosted/pub.dev/shared_preferences_linux-2.2.0",
+      "packageUri": "lib/",
+      "languageVersion": "2.17"
+    },
+    {
+      "name": "shared_preferences_platform_interface",
+      "rootUri": "file:///C:/Users/shanelle/AppData/Local/Pub/Cache/hosted/pub.dev/shared_preferences_platform_interface-2.2.0",
+      "packageUri": "lib/",
+      "languageVersion": "2.17"
+    },
+    {
+      "name": "shared_preferences_web",
+      "rootUri": "file:///C:/Users/shanelle/AppData/Local/Pub/Cache/hosted/pub.dev/shared_preferences_web-2.1.0",
+      "packageUri": "lib/",
+      "languageVersion": "2.17"
+    },
+    {
+      "name": "shared_preferences_windows",
+      "rootUri": "file:///C:/Users/shanelle/AppData/Local/Pub/Cache/hosted/pub.dev/shared_preferences_windows-2.2.0",
+      "packageUri": "lib/",
+      "languageVersion": "2.17"
     },
     {
       "name": "shelf",
-      "rootUri": "file:///home/thelaptop/snap/flutter/common/flutter/.pub-cache/hosted/pub.dartlang.org/shelf-1.3.2",
+      "rootUri": "file:///C:/Users/shanelle/AppData/Local/Pub/Cache/hosted/pub.dev/shelf-1.4.1",
       "packageUri": "lib/",
-      "languageVersion": "2.16"
+      "languageVersion": "2.17"
     },
     {
       "name": "shelf_web_socket",
-      "rootUri": "file:///home/thelaptop/snap/flutter/common/flutter/.pub-cache/hosted/pub.dartlang.org/shelf_web_socket-1.0.2",
+      "rootUri": "file:///C:/Users/shanelle/AppData/Local/Pub/Cache/hosted/pub.dev/shelf_web_socket-1.0.4",
       "packageUri": "lib/",
-      "languageVersion": "2.14"
+      "languageVersion": "2.17"
     },
     {
       "name": "sky_engine",
-      "rootUri": "file:///home/thelaptop/snap/flutter/common/flutter/bin/cache/pkg/sky_engine",
+      "rootUri": "file:///D:/mobile/flutter/bin/cache/pkg/sky_engine",
       "packageUri": "lib/",
-      "languageVersion": "2.12"
+      "languageVersion": "3.0"
     },
     {
       "name": "source_gen",
-      "rootUri": "file:///home/thelaptop/snap/flutter/common/flutter/.pub-cache/hosted/pub.dartlang.org/source_gen-1.2.2",
+      "rootUri": "file:///C:/Users/shanelle/AppData/Local/Pub/Cache/hosted/pub.dev/source_gen-1.3.2",
       "packageUri": "lib/",
-      "languageVersion": "2.12"
+      "languageVersion": "2.18"
     },
     {
       "name": "source_helper",
-      "rootUri": "file:///home/thelaptop/snap/flutter/common/flutter/.pub-cache/hosted/pub.dartlang.org/source_helper-1.3.2",
+      "rootUri": "file:///C:/Users/shanelle/AppData/Local/Pub/Cache/hosted/pub.dev/source_helper-1.3.3",
       "packageUri": "lib/",
-      "languageVersion": "2.12"
+      "languageVersion": "2.17"
     },
     {
       "name": "source_span",
-      "rootUri": "file:///home/thelaptop/snap/flutter/common/flutter/.pub-cache/hosted/pub.dartlang.org/source_span-1.8.2",
+      "rootUri": "file:///C:/Users/shanelle/AppData/Local/Pub/Cache/hosted/pub.dev/source_span-1.9.1",
       "packageUri": "lib/",
       "languageVersion": "2.14"
     },
     {
       "name": "stack_trace",
-      "rootUri": "file:///home/thelaptop/snap/flutter/common/flutter/.pub-cache/hosted/pub.dartlang.org/stack_trace-1.10.0",
+      "rootUri": "file:///C:/Users/shanelle/AppData/Local/Pub/Cache/hosted/pub.dev/stack_trace-1.11.0",
       "packageUri": "lib/",
-      "languageVersion": "2.12"
+      "languageVersion": "2.18"
     },
     {
       "name": "stream_channel",
-      "rootUri": "file:///home/thelaptop/snap/flutter/common/flutter/.pub-cache/hosted/pub.dartlang.org/stream_channel-2.1.0",
+      "rootUri": "file:///C:/Users/shanelle/AppData/Local/Pub/Cache/hosted/pub.dev/stream_channel-2.1.1",
       "packageUri": "lib/",
-      "languageVersion": "2.12"
+      "languageVersion": "2.14"
     },
     {
       "name": "stream_transform",
-      "rootUri": "file:///home/thelaptop/snap/flutter/common/flutter/.pub-cache/hosted/pub.dartlang.org/stream_transform-2.0.0",
+      "rootUri": "file:///C:/Users/shanelle/AppData/Local/Pub/Cache/hosted/pub.dev/stream_transform-2.1.0",
       "packageUri": "lib/",
-      "languageVersion": "2.12"
+      "languageVersion": "2.14"
     },
     {
       "name": "string_scanner",
-      "rootUri": "file:///home/thelaptop/snap/flutter/common/flutter/.pub-cache/hosted/pub.dartlang.org/string_scanner-1.1.0",
+      "rootUri": "file:///C:/Users/shanelle/AppData/Local/Pub/Cache/hosted/pub.dev/string_scanner-1.2.0",
       "packageUri": "lib/",
-      "languageVersion": "2.12"
+      "languageVersion": "2.18"
     },
     {
       "name": "string_validator",
-      "rootUri": "file:///home/thelaptop/snap/flutter/common/flutter/.pub-cache/hosted/pub.dartlang.org/string_validator-0.3.0",
+      "rootUri": "file:///C:/Users/shanelle/AppData/Local/Pub/Cache/hosted/pub.dev/string_validator-1.0.0",
       "packageUri": "lib/",
       "languageVersion": "2.12"
     },
     {
+      "name": "syncfusion_flutter_core",
+      "rootUri": "file:///C:/Users/shanelle/AppData/Local/Pub/Cache/hosted/pub.dev/syncfusion_flutter_core-21.2.8",
+      "packageUri": "lib/",
+      "languageVersion": "2.17"
+    },
+    {
+      "name": "syncfusion_flutter_datepicker",
+      "rootUri": "file:///C:/Users/shanelle/AppData/Local/Pub/Cache/hosted/pub.dev/syncfusion_flutter_datepicker-21.2.8",
+      "packageUri": "lib/",
+      "languageVersion": "2.17"
+    },
+    {
       "name": "term_glyph",
-      "rootUri": "file:///home/thelaptop/snap/flutter/common/flutter/.pub-cache/hosted/pub.dartlang.org/term_glyph-1.2.0",
+      "rootUri": "file:///C:/Users/shanelle/AppData/Local/Pub/Cache/hosted/pub.dev/term_glyph-1.2.1",
       "packageUri": "lib/",
       "languageVersion": "2.12"
     },
     {
       "name": "test_api",
-      "rootUri": "file:///home/thelaptop/snap/flutter/common/flutter/.pub-cache/hosted/pub.dartlang.org/test_api-0.4.9",
+      "rootUri": "file:///C:/Users/shanelle/AppData/Local/Pub/Cache/hosted/pub.dev/test_api-0.5.1",
       "packageUri": "lib/",
-      "languageVersion": "2.12"
+      "languageVersion": "2.18"
     },
     {
       "name": "timing",
-      "rootUri": "file:///home/thelaptop/snap/flutter/common/flutter/.pub-cache/hosted/pub.dartlang.org/timing-1.0.0",
+      "rootUri": "file:///C:/Users/shanelle/AppData/Local/Pub/Cache/hosted/pub.dev/timing-1.0.1",
       "packageUri": "lib/",
-      "languageVersion": "2.12"
+      "languageVersion": "2.14"
     },
     {
       "name": "typed_data",
-      "rootUri": "file:///home/thelaptop/snap/flutter/common/flutter/.pub-cache/hosted/pub.dartlang.org/typed_data-1.3.1",
+      "rootUri": "file:///C:/Users/shanelle/AppData/Local/Pub/Cache/hosted/pub.dev/typed_data-1.3.2",
       "packageUri": "lib/",
-      "languageVersion": "2.12"
+      "languageVersion": "2.17"
     },
     {
       "name": "vector_math",
-      "rootUri": "file:///home/thelaptop/snap/flutter/common/flutter/.pub-cache/hosted/pub.dartlang.org/vector_math-2.1.2",
+      "rootUri": "file:///C:/Users/shanelle/AppData/Local/Pub/Cache/hosted/pub.dev/vector_math-2.1.4",
       "packageUri": "lib/",
       "languageVersion": "2.14"
     },
     {
       "name": "watcher",
-      "rootUri": "file:///home/thelaptop/snap/flutter/common/flutter/.pub-cache/hosted/pub.dartlang.org/watcher-1.0.1",
+      "rootUri": "file:///C:/Users/shanelle/AppData/Local/Pub/Cache/hosted/pub.dev/watcher-1.1.0",
       "packageUri": "lib/",
-      "languageVersion": "2.14"
+      "languageVersion": "3.0"
     },
     {
       "name": "web_socket_channel",
-      "rootUri": "file:///home/thelaptop/snap/flutter/common/flutter/.pub-cache/hosted/pub.dartlang.org/web_socket_channel-2.2.0",
+      "rootUri": "file:///C:/Users/shanelle/AppData/Local/Pub/Cache/hosted/pub.dev/web_socket_channel-2.4.0",
       "packageUri": "lib/",
-      "languageVersion": "2.12"
+      "languageVersion": "2.15"
+    },
+    {
+      "name": "win32",
+      "rootUri": "file:///C:/Users/shanelle/AppData/Local/Pub/Cache/hosted/pub.dev/win32-4.1.4",
+      "packageUri": "lib/",
+      "languageVersion": "2.17"
+    },
+    {
+      "name": "xdg_directories",
+      "rootUri": "file:///C:/Users/shanelle/AppData/Local/Pub/Cache/hosted/pub.dev/xdg_directories-1.0.0",
+      "packageUri": "lib/",
+      "languageVersion": "2.17"
     },
     {
       "name": "yaml",
-      "rootUri": "file:///home/thelaptop/snap/flutter/common/flutter/.pub-cache/hosted/pub.dartlang.org/yaml-3.1.1",
+      "rootUri": "file:///C:/Users/shanelle/AppData/Local/Pub/Cache/hosted/pub.dev/yaml-3.1.2",
       "packageUri": "lib/",
-      "languageVersion": "2.12"
+      "languageVersion": "2.19"
     },
     {
       "name": "vidic",
@@ -470,7 +728,7 @@
       "languageVersion": "2.17"
     }
   ],
-  "generated": "2022-09-09T07:50:02.049537Z",
+  "generated": "2023-06-01T05:18:48.990236Z",
   "generator": "pub",
-  "generatorVersion": "2.17.6"
+  "generatorVersion": "3.0.2"
 }
